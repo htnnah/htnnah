@@ -1,7 +1,7 @@
 - 👋 Hi, I’m @htnnah
 - 👀 I go to Texas A&M
 - 🌱 I’m currently learning the basics
-- 💞️ I’m looking to collaborate on clockfaces and other coding formatws for appl, mac and fitbit.
+- 💞️ I’m looking to collaborate on clockfaces and other coding formats for apple, mac and fitbit.
 - 📫 How to reach me ms.young_98@yahoo.com
 
 <!---
