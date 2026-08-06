@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#2d2734" />
+  <title>Hannah Young</title>
+
+  <style>
+    :root {
+      --cream: #f7efe5;
+      --warm: #ffd2aa;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      overflow: hidden;
+      background: #2d2734;
+      color: var(--cream);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .page {
+      position: relative;
+      min-height: 100svh;
+      width: 100%;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
+
+    /* Base image */
+    .background,
+    .palm-layer {
+      position: absolute;
+      inset: -3%;
+      background: url("background.png") center center / cover no-repeat;
+      pointer-events: none;
+    }
+
+    .background {
+      z-index: -5;
+      transform: scale(1.03);
+      animation: slow-zoom 24s ease-in-out infinite alternate;
+    }
+
+    /*
+      We reuse the same image in two clipped layers so the left and right
+      palm regions can move independently.
+    */
+    .palm-layer {
+      z-index: -4;
+      transform-origin: bottom center;
+      will-change: transform;
+    }
+
+    .palm-left {
+      clip-path: polygon(0 0, 42% 0, 42% 100%, 0 100%);
+      animation: sway-left 4.8s ease-in-out infinite alternate;
+    }
+
+    .palm-right {
+      clip-path: polygon(58% 0, 100% 0, 100% 100%, 58% 100%);
+      animation: sway-right 5.6s ease-in-out .5s infinite alternate;
+    }
+
+    /* Softly covers the text baked into the screenshot */
+    .center-wash {
+      position: absolute;
+      z-index: -2;
+      width: min(78vw, 900px);
+      height: min(48vh, 430px);
+      left: 50%;
+      top: 51%;
+      transform: translate(-50%, -50%);
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at center,
+          rgba(151, 102, 103, .68) 0%,
+          rgba(151, 102, 103, .46) 38%,
+          rgba(151, 102, 103, .18) 68%,
+          transparent 100%);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      pointer-events: none;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(circle at 50% 50%, transparent 22%, rgba(20, 13, 21, .06) 65%, rgba(20, 13, 21, .18) 100%);
+      pointer-events: none;
+    }
+
+    .content {
+      width: min(92vw, 980px);
+      text-align: center;
+      padding: 24px;
+      animation: float-content 4.8s ease-in-out infinite;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Times New Roman", Georgia, serif;
+      font-size: clamp(4rem, 10.8vw, 9rem);
+      line-height: .94;
+      font-weight: 300;
+      letter-spacing: -.045em;
+      text-shadow: 0 10px 30px rgba(0, 0, 0, .18);
+    }
+
+    .message {
+      margin: 26px 0 0;
+      font-size: clamp(.78rem, 1.45vw, 1.05rem);
+      letter-spacing: .34em;
+      text-transform: lowercase;
+      color: rgba(247, 239, 229, .92);
+      text-shadow: 0 4px 14px rgba(0, 0, 0, .16);
+    }
+
+    .loader {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .loader span {
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 242, 228, .62);
+      opacity: .44;
+      animation: dot-glow 1.35s ease-in-out infinite;
+    }
+
+    .loader span:nth-child(2) { animation-delay: .18s; }
+    .loader span:nth-child(3) { animation-delay: .36s; }
+
+    @keyframes float-content {
+      0%, 100% { transform: translateY(-4px); }
+      50% { transform: translateY(7px); }
+    }
+
+    @keyframes dot-glow {
+      0%, 60%, 100% {
+        opacity: .4;
+        background: transparent;
+        box-shadow: none;
+        transform: scale(.9);
+      }
+
+      30% {
+        opacity: 1;
+        background: var(--warm);
+        border-color: var(--warm);
+        box-shadow:
+          0 0 12px rgba(255, 194, 145, .95),
+          0 0 28px rgba(255, 157, 92, .45);
+        transform: scale(1.12);
+      }
+    }
+
+    @keyframes sway-left {
+      from {
+        transform: scale(1.03) rotate(-1deg) translate3d(-.3%, 0, 0);
+      }
+      to {
+        transform: scale(1.035) rotate(1.6deg) translate3d(.5%, -.15%, 0);
+      }
+    }
+
+    @keyframes sway-right {
+      from {
+        transform: scale(1.03) rotate(1deg) translate3d(.3%, 0, 0);
+      }
+      to {
+        transform: scale(1.035) rotate(-1.5deg) translate3d(-.45%, -.15%, 0);
+      }
+    }
+
+    @keyframes slow-zoom {
+      from { transform: scale(1.03); }
+      to { transform: scale(1.055); }
+    }
+
+    @media (max-width: 700px) {
+      .content {
+        width: 95vw;
+        padding-inline: 18px;
+      }
+
+      h1 {
+        font-size: clamp(3.35rem, 16vw, 6rem);
+      }
+
+      .message {
+        margin-top: 20px;
+        font-size: .75rem;
+        letter-spacing: .2em;
+      }
+
+      .loader {
+        margin-top: 18px;
+        gap: 11px;
+      }
+
+      .loader span {
+        width: 9px;
+        height: 9px;
+      }
+
+      .center-wash {
+        width: 94vw;
+        height: 40vh;
+      }
+    }
+
+    @media (max-height: 650px) {
+      h1 {
+        font-size: clamp(3rem, 12vh, 6rem);
+      }
+
+      .message {
+        margin-top: 16px;
+      }
+
+      .loader {
+        margin-top: 14px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .background,
+      .palm-layer,
+      .content,
+      .loader span {
+        animation: none;
+      }
+
+      .loader span:first-child {
+        opacity: 1;
+        background: var(--warm);
+        border-color: var(--warm);
+        box-shadow: 0 0 16px rgba(255, 194, 145, .8);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <div class="background" aria-hidden="true"></div>
+    <div class="palm-layer palm-left" aria-hidden="true"></div>
+    <div class="palm-layer palm-right" aria-hidden="true"></div>
+    <div class="center-wash" aria-hidden="true"></div>
+    <div class="overlay" aria-hidden="true"></div>
+
+    <section class="content">
+      <h1>Hannah Young</h1>
+      <p class="message">working on something special</p>
+
+      <div class="loader" aria-label="Loading">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
