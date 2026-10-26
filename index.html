@@ -3368,5 +3368,12 @@ window.addEventListener('hashchange', () => go(routeOf()));
 
 render(current);
 </script>
+<script>
+document.addEventListener('error', function (e) {
+  if (e.target.tagName === 'IMG' && e.target.classList.contains('shot')) {
+    e.target.remove();
+  }
+}, true);
+</script>
 </body>
 </html>
