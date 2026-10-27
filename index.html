@@ -804,9 +804,9 @@
   .pl-s { position: absolute; display: none; width: 48px; height: 48px; left: calc(var(--hx) * -1px); top: calc(var(--hy) * -1px); overflow: visible;
           transform-origin: calc(var(--hx) * 1px) calc(var(--hy) * 1px); transition: scale .25s var(--ease); filter: drop-shadow(0 3px 3px rgba(73, 77, 95, .3)); }
   .pl-s.ball { --hx: 24; --hy: 24; } .pl-s.heart { --hx: 24; --hy: 24; } .pl-s.cone { --hx: 24; --hy: 20; }
-  .pl-s.note { --hx: 24; --hy: 24; } .pl-s.brush { --hx: 6; --hy: 43; } .pl-s.mug { --hx: 22; --hy: 26; }
+  .pl-s.note { --hx: 24; --hy: 24; } .pl-s.brush { --hx: 6; --hy: 43; } .pl-s.mug { --hx: 22; --hy: 26; } .pl-s.popcorn { --hx: 24; --hy: 28; }
   html[data-cur="ball"] .pl-s.ball, html[data-cur="heart"] .pl-s.heart, html[data-cur="cone"] .pl-s.cone,
-  html[data-cur="note"] .pl-s.note, html[data-cur="brush"] .pl-s.brush, html[data-cur="mug"] .pl-s.mug { display: block; }
+  html[data-cur="note"] .pl-s.note, html[data-cur="brush"] .pl-s.brush, html[data-cur="mug"] .pl-s.mug, html[data-cur="popcorn"] .pl-s.popcorn { display: block; }
   #plane.hot .pl-s { scale: 1.2; } #plane.press .pl-s { scale: .86; }
   .pl-s.heart { animation: plBeat 1.1s ease-in-out infinite; }
   @keyframes plBeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.1); } 30% { transform: scale(1); } 45% { transform: scale(1.07); } }
@@ -1100,9 +1100,6 @@
   @media (max-width: 640px) { .job-cs { grid-template-columns: 1fr; } .job-cs li, .job-cs li:nth-child(n+4) { grid-column: auto; } }
   .job-cs li { display: flex; flex-direction: column; padding: 14px 18px 22px; border-radius: 24px; background: var(--mist); box-shadow: 0 10px 26px rgba(73, 77, 95, .14); transition: transform .4s var(--ease), background .3s; }
   .job-cs li:hover { transform: translateY(-6px); background: #fff; }
-  .job-cs .jc-l { font-size: 4.2rem; font-weight: 700; line-height: 1; margin-bottom: 4px; color: transparent; background: linear-gradient(135deg, var(--c1, var(--purple)), var(--c2, var(--cobalt))); -webkit-background-clip: text; background-clip: text; }
-  .job-cs li:nth-child(2) { --c1: #e0508a; --c2: var(--purple); } .job-cs li:nth-child(3) { --c1: var(--cobalt); --c2: #4cc9c0; }
-  .job-cs li:nth-child(4) { --c1: var(--lava); --c2: #e0508a; } .job-cs li:nth-child(5) { --c1: var(--purple); --c2: #4cc9c0; }
   .job-cs strong { font-family: var(--font); font-size: 1.3rem; line-height: 1.1; margin-bottom: 8px; }
   .job-cs li > span:last-child { font-family: "Nunito", ui-rounded, system-ui, sans-serif; font-size: .72rem; line-height: 1.5; opacity: .85; }
 
@@ -1257,6 +1254,85 @@
   @keyframes mfSway { 0%, 100% { transform: rotate(-.9deg); } 50% { transform: rotate(.9deg); } }
   .mf-scene { opacity: .6; }
   .mf-scene { -webkit-mask-image: radial-gradient(closest-side, #000 45%, transparent 100%); mask-image: radial-gradient(closest-side, #000 45%, transparent 100%); }
+
+  /* the first C of each word is colorful, at the same size as the word */
+  .job-cs li { padding-top: 22px; }
+  .job-cs strong { font-size: 1.5rem; margin-bottom: 8px; }
+  .cc.c1 { color: #8458B3; } .cc.c2 { color: #e0508a; } .cc.c3 { color: #1d4ea1; } .cc.c4 { color: #ff7a3d; } .cc.c5 { color: #2fb8ae; }
+
+  .art-feature .art-fbody .art-aka { font-size: .95rem; font-style: italic; font-weight: 600; opacity: 1; color: var(--purple); margin-bottom: 6px; }
+
+  /* movies: a left-to-right poster grid, with the Spider-Man collage as a wide row */
+  .art-grid.movie-grid { column-count: auto; display: grid; grid-template-columns: repeat(5, 1fr); gap: 26px 18px; align-items: start; }
+  .movie-grid .movie-item { margin: 0; }
+  .movie-grid .art-open { border-radius: 14px; }
+  .movie-grid .movie-item img { aspect-ratio: 2 / 3; object-fit: cover; }
+  .movie-grid .movie-wide { grid-column: 1 / -1; justify-self: center; width: min(100%, 640px); margin: 6px 0 14px; }
+  .movie-grid .movie-wide img { aspect-ratio: auto; }
+  @media (max-width: 1100px) { .art-grid.movie-grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 800px) { .art-grid.movie-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 560px) { .art-grid.movie-grid { grid-template-columns: repeat(2, 1fr); gap: 22px 14px; } }
+
+  .movie-grid .movie-sq img { aspect-ratio: 1 / 1; }
+
+  /* ================= lightsaber: cursor (only after she picks a blade), site glow, eyes, duel ================= */
+  .pl-s.saber { width: 64px; height: 64px; --hx: 58; --hy: 6; filter: none; }
+  html[data-cur="saber"] .pl-s.saber { display: block; }
+  .pl-s.saber .blade { transform-origin: 21px 43px; filter: drop-shadow(0 0 4px var(--blade)) drop-shadow(0 0 10px var(--blade)); animation: plIgnite .45s ease-out; }
+  @keyframes plIgnite { from { transform: scale(0); } to { transform: scale(1); } }
+
+  .saber-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+  .saber-btn, .duel-btn { font: inherit; font-size: 1.15rem; line-height: 1.2; padding: 2px 22px 6px; border-radius: 999px; cursor: pointer; transition: transform .25s var(--ease), box-shadow .25s; }
+  .saber-btn { color: #fff; background: linear-gradient(135deg, var(--purple), #c26bd6); border: 0; box-shadow: 0 8px 22px rgba(132, 88, 179, .4); }
+  .duel-btn { color: #ffe9ec; background: #1a1438; border: 2px solid #ff3b4e; box-shadow: 0 0 16px rgba(255, 59, 78, .45); }
+  .saber-btn:hover, .duel-btn:hover { transform: translateY(-2px); } .saber-btn:focus-visible, .duel-btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  .saber-panel { margin-top: 14px; max-width: 520px; padding: 16px 20px 18px; border-radius: 20px; background: rgba(26, 20, 56, .93); color: #f3eeff; box-shadow: 0 14px 34px rgba(26, 20, 56, .35); }
+  .saber-panel[hidden], .duel[hidden], .sp-off[hidden] { display: none; }
+  .sp-title { font-size: 1.4rem; line-height: 1.1; }
+  .sp-sw { display: flex; flex-wrap: wrap; gap: 14px; margin: 12px 0 10px; }
+  .sp-s { width: 44px; height: 44px; border: 0; border-radius: 50%; cursor: pointer; background: radial-gradient(circle at 35% 30%, #fff, var(--c) 48%); box-shadow: 0 0 14px var(--c), 0 0 30px var(--c); transition: transform .25s var(--ease); }
+  .sp-s:hover { transform: scale(1.16); } .sp-s[aria-pressed="true"] { outline: 3px solid #fff; outline-offset: 3px; } .sp-s:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  .sp-note { font-family: "Nunito", ui-rounded, system-ui, sans-serif; font-size: .78rem; line-height: 1.5; opacity: .88; max-width: 44ch; }
+  .sp-off { margin-top: 10px; font: inherit; font-size: 1rem; color: #f3eeff; background: transparent; border: 2px solid rgba(243, 238, 255, .6); border-radius: 999px; padding: 1px 16px 4px; cursor: pointer; }
+  .sp-off:hover { background: #f3eeff; color: #1a1438; }
+
+  .duel { margin-top: 16px; max-width: 560px; }
+  .duel-svg { width: 100%; display: block; border-radius: 18px; box-shadow: 0 14px 34px rgba(26, 20, 56, .4); }
+  .du-s-you { transform-origin: 118px 146px; } .du-s-him { transform-origin: 326px 146px; }
+  .du-s line:nth-child(-n+2) { filter: drop-shadow(0 0 5px currentColor); }
+  .du-spark > * { opacity: 0; transform-box: fill-box; transform-origin: center; }
+  .duel-svg.swing .du-s-you { animation: duYou .6s ease-in-out; } .duel-svg.swing .du-s-him { animation: duHim .6s ease-in-out; }
+  .duel-svg.swing .du-spark > * { animation: duSpark .6s ease-out; } .duel-svg.swing { animation: duShake .45s ease-in-out .2s; }
+  @keyframes duYou { 0% { transform: rotate(0); } 35% { transform: rotate(17deg); } 55% { transform: rotate(14deg); } 100% { transform: rotate(0); } }
+  @keyframes duHim { 0% { transform: rotate(0); } 35% { transform: rotate(-19deg); } 55% { transform: rotate(-15deg); } 100% { transform: rotate(0); } }
+  @keyframes duSpark { 0%, 28% { opacity: 0; transform: scale(.3); } 40% { opacity: 1; transform: scale(1.25); } 100% { opacity: 0; transform: scale(1.5); } }
+  @keyframes duShake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+  .du-eye { animation: eyePulse 1.8s ease-in-out infinite; }
+  .duel-line { margin-top: 12px; min-height: 2.8em; font-style: italic; font-size: 1rem; line-height: 1.35; }
+  .duel-actions { display: flex; gap: 12px; margin-top: 8px; }
+  .duel-actions button { font: inherit; font-size: 1.1rem; padding: 1px 20px 5px; border-radius: 999px; cursor: pointer; border: 2px solid var(--ink); background: transparent; color: var(--ink); transition: background .25s, color .25s; }
+  .duel-actions .duel-swing { background: #1a1438; color: #fff; border-color: #ff3b4e; box-shadow: 0 0 14px rgba(255, 59, 78, .4); }
+  .duel-actions button:hover { background: var(--ink); color: #fff; }
+
+  .art-feature .art-open { position: relative; }
+  .anon-eyes { position: absolute; inset: 0; pointer-events: none; transition: transform .9s var(--ease); }
+  .anon-eyes i { position: absolute; top: 27.2%; width: 2.4%; height: .8%; margin: -.4% 0 0 -1.2%; border-radius: 50%; background: var(--eyes, #ff3b4e); box-shadow: 0 0 8px 3px var(--eyes, #ff3b4e), 0 0 20px 8px var(--eyes, #ff3b4e); opacity: 0; transition: opacity .6s; }
+  .anon-eyes .e1 { left: 43.1%; } .anon-eyes .e2 { left: 47.5%; }
+  html[data-saber] .anon-eyes i { --eyes: var(--blade); opacity: 1; animation: eyePulse 2.6s ease-in-out infinite; }
+  html.duelling .anon-eyes i { --eyes: #ff3b4e; opacity: 1; }
+  .art-feature .art-open:hover .anon-eyes { transform: scale(1.04); }
+  @keyframes eyePulse { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.7); } }
+
+  /* pick a side: the site's accent color and glow follow the blade */
+  html[data-saber] { --purple: var(--saber-accent); }
+  html[data-saber]::after { content: ''; position: fixed; inset: 0; z-index: 4; pointer-events: none; animation: saberGlow 5s ease-in-out infinite alternate;
+    background: radial-gradient(70% 42% at 50% -6%, var(--glow1), transparent 72%), radial-gradient(60% 36% at 50% 110%, var(--glow2), transparent 72%); }
+  @keyframes saberGlow { from { opacity: .6; } to { opacity: 1; } }
+  html[data-saber] nav .brand, html[data-saber] nav ul { box-shadow: 0 8px 22px rgba(73, 77, 95, .22), 0 0 18px var(--glow1), inset 0 0 0 1px rgba(255, 255, 255, .6); }
+  #saber-chip { position: fixed; left: 14px; bottom: 14px; z-index: 6; font: inherit; font-size: 1rem; color: #fff; background: rgba(26, 20, 56, .9); border: 1px solid var(--blade); border-radius: 999px; padding: 2px 16px 5px; cursor: pointer; box-shadow: 0 0 16px var(--glow1); }
+  #saber-chip:hover { background: #000; } #saber-chip:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  @media (max-width: 640px) { .saber-btn, .duel-btn { font-size: 1rem; } #saber-chip { font-size: .85rem; } }
+  @media (prefers-reduced-motion: reduce) { html[data-saber]::after, .anon-eyes i, .du-eye { animation: none !important; } }
 </style>
 </head>
 <body>
@@ -3646,7 +3722,7 @@ const ARTISTS_TOP = [
 const ARTISTS_MORE = ['Royel Otis', 'Tame Impala', 'Florence + The Machine', 'Bob Moses', 'Elton John', 'ODIE', 'Lady Gaga', 'Miley Cyrus', 'Ian Asher', 'Britney Spears',
   'The Neighborhood', 'Bunt', 'Rihanna', 'Ke$ha', 'Childish Gambino', 'Swedish House Mafia', 'Fred again..', 'Justin Bieber', 'Chase Atlantic', 'Lavern', 'Ariana Grande',
   'Grimes', 'Hozier', 'Luke Combs', 'Gwen Stefani', 'Julia Wolfe', 'Tyler, The Creator', 'SZA', 'Post Malone', 'Joji', 'Dom Dolla', 'The Chicks', 'ABBA', 'Aries', 'Pitbull',
-  'Frank Ocean', 'Sia'];
+  'Frank Ocean', 'Sia', 'M83', 'Madison Beer', 'Flume', 'Lana Del Rey', 'Billie Eilish'];
 const TOP_SONGS = [
   { title: 'Crystallized', artist: 'John Summit' },
   { title: 'Go Back', artist: 'John Summit' },
@@ -3727,9 +3803,11 @@ const ART_PAINTINGS = [
   { img: 'photos/art-the-swing.jpg', title: 'The Swing', by: 'Jean-Honoré Fragonard', where: 'Wallace Collection, London', year: '1767' }
 ];
 const ART_FEATURED = {
-  img: 'photos/art-anonymus-budapest.jpg', title: 'Anonymus', by: 'Miklós Ligeti', where: 'City Park (Városliget), Budapest, Hungary', year: '1903',
+  img: 'photos/art-anonymus-budapest.jpg', title: 'The Statue of the Anonymus', aka: 'The Anonymous Sith Lord of the City Park', by: 'Miklós Ligeti', where: 'City Park (Városliget), Budapest, Hungary', year: '1903',
   facts: [
-    'Nobody knows who he was. The statue honors the unnamed notary of King Béla, who wrote the Gesta Hungarorum, an early history of the Hungarians, and signed it only “P. dictus magister.” The hood hides his face because his identity is a mystery.',
+    'Lots of people swear he is a Sith lord in disguise. The hood, the dark robes, and the missing face give off some serious Darth Sidious energy.',
+    'The truth is much less evil. He is a medieval writer, and the most dangerous thing he has ever done is make historians argue for centuries. The only thing he is about to strike down is a typo.',
+    'Nobody knows who he really was. He wrote an early history of the Hungarians and never gave his name, so he is simply called Anonymus. Most historians think he was a royal secretary, and a few even argue the writer might have been a woman, which would make this a Sith lady.',
     'Rubbing the tip of his pen is said to bring good luck, and writers with a creative block go there for inspiration. Years of visitors touching it have polished the pen shiny.',
     'Ligeti loved the statue so much he wanted to be buried beneath it. That never happened. He is buried in Fiumei Road Cemetery.'
   ]
@@ -3748,6 +3826,27 @@ const ART_STATUES = [
   { img: 'photos/art-guan-yu.jpg', title: 'Statue of Guan Yu', by: 'Han Meilin', where: 'Jingzhou, Hubei, China (taken down in 2021–22 to be moved)', year: '2016' },
   { img: 'photos/art-strauss-vienna.jpg', title: 'Johann Strauss Monument', by: 'Edmund Hellmer', where: 'Stadtpark, Vienna, Austria', year: '1921' }
 ];
+const SABER_LIST = [['blue', 'Blue', '#3d8bff'], ['green', 'Green', '#43e06d'], ['purple', 'Purple', '#b36bff'], ['yellow', 'Yellow', '#ffd23d'], ['white', 'White', '#eef3ff'], ['red', 'Red', '#ff3b4e']];
+const saberHtml = () => `<div class="saber-row"><button type="button" class="saber-btn" aria-expanded="false">Choose your lightsaber</button><button type="button" class="duel-btn" aria-expanded="false">Duel the Anonymus</button></div>
+      <div class="saber-panel" hidden><p class="sp-title">Pick a side</p>
+        <div class="sp-sw">${SABER_LIST.map(s => `<button type="button" class="sp-s" data-c="${s[0]}" style="--c:${s[2]}" aria-pressed="false" aria-label="${s[1]} lightsaber${s[0] === 'red' ? ', the dark side' : ''}"></button>`).join('')}</div>
+        <p class="sp-note">Your mouse turns into the saber you pick, and the whole site glows to match. Red is the dark side.</p>
+        <button type="button" class="sp-off" hidden>Back to my normal mouse</button></div>
+      <div class="duel" hidden>
+        <svg class="duel-svg" viewBox="0 0 440 210" aria-hidden="true">
+          <defs><linearGradient id="dlBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a1438"/><stop offset="1" stop-color="#3b2b6c"/></linearGradient></defs>
+          <rect width="440" height="210" rx="18" fill="url(#dlBg)"/>
+          <g fill="#fff" opacity=".7"><circle cx="40" cy="30" r="1.4"/><circle cx="120" cy="18" r="1"/><circle cx="210" cy="34" r="1.2"/><circle cx="300" cy="16" r="1.4"/><circle cx="400" cy="38" r="1"/><circle cx="80" cy="70" r="1"/><circle cx="360" cy="80" r="1.2"/></g>
+          <rect y="176" width="440" height="34" fill="#120d2a"/>
+          <g class="du-you"><circle cx="70" cy="108" r="15" fill="#0d0a22"/><path d="M44 190 C46 150 54 128 70 124 C86 128 94 150 96 190Z" fill="#0d0a22"/><path d="M84 138 L116 146" stroke="#0d0a22" stroke-width="9" stroke-linecap="round"/></g>
+          <g class="du-s du-s-you"><line x1="118" y1="146" x2="196" y2="50" style="stroke:var(--blade, #3d8bff)" stroke-width="11" stroke-linecap="round" opacity=".5"/><line x1="118" y1="146" x2="196" y2="50" style="stroke:var(--blade, #3d8bff)" stroke-width="6" stroke-linecap="round"/><line x1="118" y1="146" x2="195" y2="51" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><line x1="118" y1="146" x2="108" y2="158" stroke="#cfd3e6" stroke-width="6" stroke-linecap="round"/></g>
+          <g class="du-him"><path d="M338 192 C326 154 334 114 352 96 C358 82 376 76 392 82 C408 90 412 112 408 130 C418 152 424 174 426 192Z" fill="#0d0a22"/><ellipse cx="380" cy="100" rx="15" ry="18" fill="#000"/><circle class="du-eye" cx="374" cy="98" r="2.6" fill="#ff3b4e"/><circle class="du-eye" cx="386" cy="98" r="2.6" fill="#ff3b4e"/><path d="M356 128 L328 144" stroke="#0d0a22" stroke-width="9" stroke-linecap="round"/></g>
+          <g class="du-s du-s-him"><line x1="326" y1="146" x2="250" y2="52" stroke="#ff3b4e" stroke-width="11" stroke-linecap="round" opacity=".5"/><line x1="326" y1="146" x2="250" y2="52" stroke="#ff3b4e" stroke-width="6" stroke-linecap="round"/><line x1="326" y1="146" x2="251" y2="53" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><line x1="326" y1="146" x2="336" y2="158" stroke="#6b7088" stroke-width="6" stroke-linecap="round"/><path d="M336 158 q10 8 6 22 q-8 -6 -12 -16z" fill="#ece6d4"/></g>
+          <g class="du-spark" transform="translate(222 79)"><g stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M0 -24 V24 M-24 0 H24 M-16 -16 L16 16 M-16 16 L16 -16"/></g><circle r="9" fill="#fff"/><circle r="15" fill="#ffd66b" opacity=".6"/></g>
+        </svg>
+        <p class="duel-line" aria-live="polite"></p>
+        <div class="duel-actions"><button type="button" class="duel-swing">Swing!</button><button type="button" class="duel-close">Run away</button></div>
+      </div>`;
 const artSrc = p => (window.__P || {})[p] || p;
 const artCap = a => `<figcaption><strong>${a.title}</strong>${a.by ? `<span>${a.by}</span>` : ''}<span class="ar-loc">${a.where}${a.year ? `, ${a.year}` : ''}</span></figcaption>`;
 const artItem = a => `<figure class="art-item"><button type="button" class="art-open" aria-label="View larger: ${a.title.replace(/"/g, '&quot;')}"><img src="${artSrc(a.img)}" alt="${a.title}${a.by ? ' by ' + a.by : ''}" loading="lazy" decoding="async"></button>${artCap(a)}</figure>`;
@@ -3760,11 +3859,47 @@ const artHtml = () => `
       <div class="art-grid">${ART_PAINTINGS.map(artItem).join('')}</div></section>
     <section class="foodsec" id="art-statues"><h2>Statues</h2>
       <div class="art-grid">
-        <figure class="art-item art-feature"><button type="button" class="art-open" aria-label="View larger: ${ART_FEATURED.title}"><img src="${artSrc(ART_FEATURED.img)}" alt="${ART_FEATURED.title} by ${ART_FEATURED.by}" decoding="async"></button>
-          <figcaption class="art-fbody"><span class="art-tag">my favorite</span><strong>${ART_FEATURED.title}</strong><span>${ART_FEATURED.by}</span><span class="ar-loc">${ART_FEATURED.where}, ${ART_FEATURED.year}</span>
-            <ul class="art-facts">${ART_FEATURED.facts.map(f => `<li>${f}</li>`).join('')}</ul></figcaption></figure>
+        <figure class="art-item art-feature"><button type="button" class="art-open" aria-label="View larger: ${ART_FEATURED.title}"><img src="${artSrc(ART_FEATURED.img)}" alt="${ART_FEATURED.title} by ${ART_FEATURED.by}" decoding="async"><span class="anon-eyes" aria-hidden="true"><i class="e1"></i><i class="e2"></i></span></button>
+          <figcaption class="art-fbody"><span class="art-tag">my favorite</span><strong>${ART_FEATURED.title}</strong><span class="art-aka">aka ${ART_FEATURED.aka}</span><span>${ART_FEATURED.by}</span><span class="ar-loc">${ART_FEATURED.where}, ${ART_FEATURED.year}</span>
+            <ul class="art-facts">${ART_FEATURED.facts.map(f => `<li>${f}</li>`).join('')}</ul>
+            ${saberHtml()}</figcaption></figure>
         ${ART_STATUES.map(artItem).join('')}
       </div></section>`;
+
+/* ---------- movies: favorite posters ---------- */
+const MOVIES = [
+  { img: 'photos/movie-soul-surfer.jpg', title: 'Soul Surfer', year: '2011' },
+  { img: 'photos/movie-revenge-of-the-sith.jpg', title: 'Star Wars: Episode III – Revenge of the Sith', year: '2005' },
+  { img: 'photos/movie-empire-strikes-back.jpg', title: 'Star Wars: Episode V – The Empire Strikes Back', year: '1980' },
+  { img: 'photos/movie-fellowship.jpg', title: 'The Lord of the Rings: The Fellowship of the Ring', year: '2001' },
+  { img: 'photos/movie-two-towers.jpg', title: 'The Lord of the Rings: The Two Towers', year: '2002' },
+  { img: 'photos/movie-return-of-the-king.jpg', title: 'The Lord of the Rings: The Return of the King', year: '2003' },
+  { img: 'photos/movie-aladdin.jpg', title: 'Aladdin', year: '1992' },
+  { img: 'photos/movie-forrest-gump.jpg', title: 'Forrest Gump', year: '1994' },
+  { img: 'photos/movie-inception.jpg', title: 'Inception', year: '2010' },
+  { img: 'photos/movie-interstellar.jpg', title: 'Interstellar', year: '2014' },
+  { img: 'photos/movie-terminator-2.jpg', title: 'Terminator 2: Judgment Day', year: '1991' },
+  { img: 'photos/movie-parasite.jpg', title: 'Parasite', year: '2019' },
+  { img: 'photos/movie-lion-king.jpg', title: 'The Lion King', year: '1994' },
+  { img: 'photos/movie-whiplash.jpg', title: 'Whiplash', year: '2014' },
+  { img: 'photos/movie-kung-pow.jpg', title: 'Kung Pow! Enter the Fist', year: '2002' },
+  { img: 'photos/movie-spider-man.jpg', title: 'Every Spider-Man', year: '2002–2017', wide: true },
+  { img: 'photos/movie-coco.jpg', title: 'Coco', year: '2017' },
+  { img: 'photos/movie-joker.jpg', title: 'Joker', year: '2019' },
+  { img: 'photos/movie-wolf-of-wall-street.jpg', title: 'The Wolf of Wall Street', year: '2013' },
+  { img: 'photos/movie-shutter-island.jpg', title: 'Shutter Island', year: '2010' },
+  { img: 'photos/movie-catch-me-if-you-can.jpg', title: 'Catch Me If You Can', year: '2002' },
+  { img: 'photos/movie-eight-below.jpg', title: 'Eight Below', year: '2006' },
+  { img: 'photos/movie-charlie-chocolate-factory.jpg', title: 'Charlie and the Chocolate Factory', year: '2005' },
+  { img: 'photos/movie-bridge-to-terabithia.jpg', title: 'Bridge to Terabithia', year: '2007' },
+  { img: 'photos/movie-slumdog-millionaire.jpg', title: 'Slumdog Millionaire', year: '2008' }
+];
+const movieItem = m => `<figure class="art-item movie-item${m.wide ? ' movie-wide' : ''}${m.sq ? ' movie-sq' : ''}"><button type="button" class="art-open" aria-label="View larger: ${m.title.replace(/"/g, '&quot;')}"><img src="${artSrc(m.img)}" alt="${m.title.replace(/"/g, '&quot;')} poster" loading="lazy" decoding="async"${m.pos ? ` style="object-position:${m.pos}"` : ''}></button><figcaption><strong>${m.title}</strong><span class="ar-loc">${m.year}</span></figcaption></figure>`;
+const moviesHtml = () => `
+    ${back('#/loves', 'loves')}
+    <h1>Movies</h1>
+    <p class="lead">The ones I could watch again and again.</p>
+    <div class="art-grid movie-grid">${MOVIES.map(movieItem).join('')}</div>`;
 
 /* ---------- pages ---------- */
 const back = (href, text) => `<a class="backlink" href="${href}">&larr; ${text}</a>`;
@@ -3836,6 +3971,7 @@ const pages = {
       <a href="#/loves/friends">Friends &amp; family <small>my people</small></a>
       <a href="#/loves/artists">Artists <small>${ARTISTS_TOP.length + ARTISTS_MORE.length} on repeat</small></a>
       <a href="#/loves/art">Art <small>${ART_PAINTINGS.length + ART_STATUES.length + 1} favorites</small></a>
+      <a href="#/loves/movies">Movies <small>${MOVIES.length} favorites</small></a>
     </div>` },
 
   '/loves/travel': { title: 'travel', html: () => `
@@ -3873,6 +4009,8 @@ const pages = {
 
   '/loves/art': { title: 'art', html: () => artHtml() },
 
+  '/loves/movies': { title: 'movies', html: () => moviesHtml() },
+
   '/goals': { title: 'goals', html: () => `
     <h1>My goals in life</h1>
     <p class="lead">I want to travel as much as I possibly can. Stepping into other places and learning how other people live is one of the coolest, most unique things in the world, and I never want to stop saying yes to it.</p>
@@ -3888,15 +4026,14 @@ const pages = {
 
     <section class="job-matters">
       <p class="jm-big">Health care can be stressful. I get to make that journey a little easier for someone, and <mark>that matters to me</mark>.</p>
-      <p class="jm-small">Every person who writes in is dealing with something real. How I show up can change how the whole experience feels.</p>
     </section>
     <section class="foodsec" id="job-cs"><h2>What my job takes</h2>
       <ul class="job-cs">
-        <li><span class="jc-l" aria-hidden="true">C</span><strong>Computer</strong><span>Most of my day is spent in a lot of different systems, so I need to learn tools fast.</span></li>
-        <li><span class="jc-l" aria-hidden="true">C</span><strong>Compassion</strong><span>Behind every question is a real person, often at a stressful moment.</span></li>
-        <li><span class="jc-l" aria-hidden="true">C</span><strong>Critical thinking</strong><span>Every case is a little different, so I dig in, check the facts, and connect the dots.</span></li>
-        <li><span class="jc-l" aria-hidden="true">C</span><strong>Communication</strong><span>Insurance is confusing. I explain things clearly, in plain words.</span></li>
-        <li><span class="jc-l" aria-hidden="true">C</span><strong>Calm</strong><span>A steady voice helps when someone is worried.</span></li>
+        <li><strong><span class="cc c1">C</span>omputer</strong><span>Most of my day is spent in a lot of different systems, so I need to learn tools fast.</span></li>
+        <li><strong><span class="cc c2">C</span>ompassion</strong><span>Behind every question is a real person, often at a stressful moment.</span></li>
+        <li><strong><span class="cc c3">C</span>ritical thinking</strong><span>Every case is a little different, so I dig in, check the facts, and connect the dots.</span></li>
+        <li><strong><span class="cc c4">C</span>ommunication</strong><span>Insurance is confusing. I explain things clearly, in plain words.</span></li>
+        <li><strong><span class="cc c5">C</span>alm</strong><span>A steady voice helps when someone is worried.</span></li>
       </ul></section>
     <section class="foodsec" id="logo-puzzle-sec"><h2>Put Thatch back together</h2>
       <div id="logo-puzzle"></div></section>
@@ -4036,16 +4173,16 @@ document.addEventListener('error', function (e) {
   const root = document.documentElement;
   const view = document.getElementById('view');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let mf = null;                                   // the wish overlay, when it is open
+  let mf = null, saber = null, bladeColor = '#3d8bff', bladeRGB = [61, 139, 255];   // mf: the wish overlay when open; saber: the chosen lightsaber, if any
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-  /* if a new photo is not found in photos/, look in the folder it was uploaded inside (photos/photos-to-upload (1)/) */
-  const NEW_PHOTO = /(^|\/)(art-|artist-|austin-skyline|thatch-logo-puzzle)[^\/]*$/, NESTED = 'photos/photos-to-upload%20(1)/';
+  /* if a new photo is not found in photos/, look in the folder it may have been uploaded inside */
+  const NEW_PHOTO = /(^|\/)(art-|artist-|movie-|austin-skyline|thatch-logo-puzzle)[^\/]*$/, NESTED = 'photos/photos-to-upload%20(1)/', NESTED_DIRS = [NESTED, 'photos/movie-photos/', 'photos/photos-to-upload/'];
   document.addEventListener('error', e => {
     const im = e.target;
-    if (!im || im.tagName !== 'IMG' || im.dataset.retry) return;
-    const src = im.getAttribute('src') || '';
-    if (!NEW_PHOTO.test(src) || src.indexOf(NESTED) !== -1) return;
-    im.dataset.retry = '1'; im.src = NESTED + src.replace(/^.*\//, '');
+    if (!im || im.tagName !== 'IMG') return;
+    const src = im.getAttribute('src') || '', n = +(im.dataset.retry || 0);
+    if (!NEW_PHOTO.test(src) || n >= NESTED_DIRS.length) return;
+    im.dataset.retry = n + 1; im.src = NESTED_DIRS[n] + src.replace(/^.*\//, '');
   }, true);
 
   const ss = (a, b, v) => { const t = clamp((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
@@ -4099,8 +4236,15 @@ document.addEventListener('error', function (e) {
     <ellipse cx="21.5" cy="19" rx="12.5" ry="3.2" fill="#8a5a3a" stroke="${INKC}" stroke-width="2.4"/>
     <path d="M21.5 38 C14.5 33.5 14 30 14 28.2 C14 26 15.7 24.6 17.6 24.6 C19.4 24.6 20.7 25.6 21.5 27 C22.3 25.6 23.6 24.6 25.4 24.6 C27.3 24.6 29 26 29 28.2 C29 30 28.5 33.5 21.5 38Z" fill="#ff5a7a"/>
     <path class="steam s1" d="M14 13 q-3 -3 0 -6 q3 -3 0 -6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path class="steam s2" d="M21.5 13 q-3 -3 0 -6 q3 -3 0 -6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path class="steam s3" d="M29 13 q-3 -3 0 -6 q3 -3 0 -6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>`;
+  const POPCORN = `<svg class="pl-s popcorn" viewBox="0 0 48 48" aria-hidden="true">
+    <g fill="#fff7d6" stroke="#f0c96a" stroke-width="1.4"><circle cx="14" cy="19" r="6.4"/><circle cx="34" cy="19" r="6.4"/><circle cx="24" cy="13" r="7.4"/><circle cx="18.5" cy="9.5" r="5.4"/><circle cx="30.5" cy="9" r="5.4"/><circle cx="24" cy="20" r="6"/></g>
+    <g fill="#ffe08a"><circle cx="21" cy="12" r="1.8"/><circle cx="29" cy="7.5" r="1.5"/><circle cx="12" cy="18" r="1.6"/><circle cx="36" cy="20" r="1.5"/><circle cx="24" cy="19" r="1.7"/></g>
+    <path d="M9 22 L39 22 L35 46 L13 46Z" fill="#fff" stroke="#c9253a" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M9.4 22 L17 22 L15.6 46 L13 46Z M24.5 22 L31.5 22 L29.7 46 L22.5 46Z" fill="#e63946"/>
+    <circle cx="20" cy="32.5" r="1.7" fill="#7a1636"/><circle cx="28" cy="32.5" r="1.7" fill="#7a1636"/><path d="M21.5 36.5 q2.5 2.6 5 0" fill="none" stroke="#7a1636" stroke-width="1.6" stroke-linecap="round"/></svg>`;
   const WISH = `<svg class="pl-s wish" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="15" fill="#fff6c8" opacity=".35"/><path d="M24 3 L28.4 19.6 L45 24 L28.4 28.4 L24 45 L19.6 28.4 L3 24 L19.6 19.6Z" fill="#fff3b0" stroke="#e6b94a" stroke-width="1.6" stroke-linejoin="round"/><circle cx="24" cy="24" r="4.4" fill="#fff"/></svg>`;
-  const CUR = { plane: { dir: 1 }, rocket: { dir: 1 }, ball: { roll: 1 }, heart: { lean: 16 }, cone: { lean: 20 }, note: { lean: 12 }, brush: { lean: 10 }, mug: { lean: 14 }, wish: { lean: 8 } };
+  const SABER = `<svg class="pl-s saber" viewBox="0 0 64 64" aria-hidden="true"><g class="blade"><line x1="21" y1="43" x2="58" y2="6" style="stroke:var(--blade)" stroke-width="9" stroke-linecap="round" opacity=".5"/><line x1="21" y1="43" x2="58" y2="6" style="stroke:var(--blade)" stroke-width="5.5" stroke-linecap="round"/><line x1="22" y1="42" x2="57" y2="7" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></g><line x1="22" y1="42" x2="6" y2="58" stroke="#3a3f58" stroke-width="8" stroke-linecap="round"/><line x1="22" y1="42" x2="7" y2="57" stroke="#cfd3e6" stroke-width="5" stroke-linecap="round"/><line x1="19" y1="45" x2="22" y2="42" stroke="#8d94b6" stroke-width="9" stroke-linecap="round"/><line x1="15" y1="49" x2="11" y2="53" stroke="#6b7088" stroke-width="5.4" opacity=".85"/><circle cx="14" cy="47" r="1.7" fill="#ff5a5a"/></svg>`;
+  const CUR = { popcorn: { lean: 14 }, saber: { lean: 26 }, plane: { dir: 1 }, rocket: { dir: 1 }, ball: { roll: 1 }, heart: { lean: 16 }, cone: { lean: 20 }, note: { lean: 12 }, brush: { lean: 10 }, mug: { lean: 14 }, wish: { lean: 8 } };
   const themeFor = h => {
     const r = (h || '').replace(/^#/, '') || '/';
     if (r.startsWith('/about')) return 'cone';
@@ -4109,16 +4253,17 @@ document.addEventListener('error', function (e) {
     if (r.startsWith('/loves/artists')) return 'note';
     if (r.startsWith('/loves/art')) return 'brush';
     if (r.startsWith('/loves/food')) return 'cone';
+    if (r.startsWith('/loves/movies')) return 'popcorn';
     if (r === '/loves' || r.startsWith('/loves/friends')) return 'heart';
     return 'plane';
   };
-  const setTheme = () => { root.dataset.cur = mf ? 'wish' : themeFor(location.hash); };
+  const setTheme = () => { root.dataset.cur = mf ? 'wish' : saber ? 'saber' : themeFor(location.hash); };
   setTheme();
 
   if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const plane = document.createElement('div');
     plane.id = 'plane'; plane.setAttribute('aria-hidden', 'true');
-    plane.innerHTML = `<div class="pl-rot">${PLANE}${ROCKET}</div><div class="pl-free">${BALL}${HEART}${CONE}${NOTE}${BRUSH}${MUG}${WISH}</div>`;
+    plane.innerHTML = `<div class="pl-rot">${PLANE}${ROCKET}</div><div class="pl-free">${BALL}${HEART}${CONE}${NOTE}${BRUSH}${MUG}${POPCORN}${WISH}${SABER}</div>`;
     const rot = plane.querySelector('.pl-rot'), free = plane.querySelector('.pl-free');
     const cv = document.createElement('canvas'); cv.id = 'trail'; cv.setAttribute('aria-hidden', 'true');
     document.body.append(cv, plane);
@@ -4150,6 +4295,7 @@ document.addEventListener('error', function (e) {
       else if (th === 'cone') parts.push({ k: 's', x: bx + (r() - .5) * 14, y: by + (r() - .5) * 14, vx: (r() - .5) * .8, vy: .2 + r() * .6, a: r() * 6, s: 6 + r() * 3, c: SPR[(r() * 6) | 0], t: now, life: 750 });
       else if (th === 'mug') parts.push({ k: 'm', x: bx + (r() - .5) * 8, y: by + (r() - .5) * 8, vx: (r() - .5) * .3, vy: -.5 - r() * .4, s: 5 + r() * 4, t: now, life: 1000 });
       else if (th === 'wish') parts.push({ k: 'q', x: bx + (r() - .5) * 12, y: by + (r() - .5) * 12, vx: (r() - .5) * .5, vy: .1 + r() * .5, s: 3 + r() * 4.5, c: r() < .5 ? '#fff3b0' : '#ffffff', t: now, life: 800 });
+      else if (th === 'popcorn') parts.push({ k: 'pc', x: bx + (r() - .5) * 14, y: by + (r() - .5) * 10, vx: (r() - .5) * 1.2, vy: -1.4 - r() * 1.4, s: 3.5 + r() * 3.5, c: r() < .6 ? '#fff7d6' : '#ffe08a', t: now, life: 900 });
       else if (th === 'ball') parts.push({ k: 'g', x: bx + (r() - .5) * 12, y: by + 14 + (r() - .5) * 6, vx: (r() - .5) * .8, vy: -.1 - r() * .5, s: 2 + r() * 2, c: r() < .5 ? '#ffffff' : '#9be37a', t: now, life: 520 });
     };
     const drawHeart = (cx, cy, s) => { ctx.beginPath(); ctx.moveTo(cx, cy + s * .9); ctx.bezierCurveTo(cx - s * 1.6, cy - s * .2, cx - s * .8, cy - s * 1.2, cx, cy - s * .35); ctx.bezierCurveTo(cx + s * .8, cy - s * 1.2, cx + s * 1.6, cy - s * .2, cx, cy + s * .9); ctx.fill(); };
@@ -4174,26 +4320,28 @@ document.addEventListener('error', function (e) {
       }
       if (!reduced && seen) {
         ctx.clearRect(0, 0, innerWidth, innerHeight);
-        if (th === 'plane' || th === 'rocket' || th === 'brush') {
+        if (th === 'plane' || th === 'rocket' || th === 'brush' || th === 'saber') {
           if (sp > 2.5) pts.push(th === 'brush' ? { x, y, t: now } : { x: x - Math.cos(ang) * 36, y: y - Math.sin(ang) * 36, t: now });
           while (pts.length && now - pts[0].t > 700) pts.shift();
           ctx.lineCap = 'round';
           for (let i = 1; i < pts.length; i++) {
             const a = 1 - (now - pts[i].t) / 700;
-            ctx.strokeStyle = th === 'rocket' ? `rgba(255,${Math.round(150 + 80 * a)},90,${.6 * a})` : th === 'brush' ? `hsla(${(now * .14 + i * 6) % 360},90%,62%,${.85 * a})` : `rgba(255,255,255,${.7 * a})`;
-            ctx.lineWidth = th === 'brush' ? 2 + 7 * a : 1.5 + 5 * a;
+            ctx.strokeStyle = th === 'saber' ? `rgba(${bladeRGB},${.8 * a})` : th === 'rocket' ? `rgba(255,${Math.round(150 + 80 * a)},90,${.6 * a})` : th === 'brush' ? `hsla(${(now * .14 + i * 6) % 360},90%,62%,${.85 * a})` : `rgba(255,255,255,${.7 * a})`;
+            ctx.lineWidth = th === 'brush' ? 2 + 7 * a : th === 'saber' ? 2 + 9 * a : 1.5 + 5 * a;
+            if (th === 'saber') { ctx.shadowColor = bladeColor; ctx.shadowBlur = 14; } else ctx.shadowBlur = 0;
             ctx.beginPath(); ctx.moveTo(pts[i - 1].x, pts[i - 1].y); ctx.lineTo(pts[i].x, pts[i].y); ctx.stroke();
           }
         } else {
           if (sp > 2.2 && now - lastEmit > (th === 'mug' ? 55 : 38)) { emit(th, now); lastEmit = now; }
           parts = parts.filter(p => {
             const age = now - p.t, a = 1 - age / p.life; if (a <= 0) return false;
-            p.x += p.vx + (p.k === 'h' || p.k === 'n' ? Math.sin(age / 140 + p.s) * .35 : 0); p.y += p.vy; if (p.k === 's') p.vy += .04;
+            p.x += p.vx + (p.k === 'h' || p.k === 'n' ? Math.sin(age / 140 + p.s) * .35 : 0); p.y += p.vy; if (p.k === 's') p.vy += .04; if (p.k === 'pc') p.vy += .09;
             ctx.globalAlpha = Math.min(1, a * 1.4);
             if (p.k === 'h') { ctx.fillStyle = p.c; drawHeart(p.x, p.y, p.s * (.6 + a * .4)); }
             else if (p.k === 'n') { ctx.fillStyle = p.c; ctx.font = `700 ${p.s}px sans-serif`; ctx.fillText(p.g, p.x, p.y); }
             else if (p.k === 's') { ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a + age / 120); ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -1.4, p.s, 2.8); ctx.restore(); }
             else if (p.k === 'q') { const s = p.s * (.5 + a * .5); ctx.fillStyle = p.c; ctx.beginPath(); ctx.moveTo(p.x, p.y - s); ctx.lineTo(p.x + s * .3, p.y - s * .3); ctx.lineTo(p.x + s, p.y); ctx.lineTo(p.x + s * .3, p.y + s * .3); ctx.lineTo(p.x, p.y + s); ctx.lineTo(p.x - s * .3, p.y + s * .3); ctx.lineTo(p.x - s, p.y); ctx.lineTo(p.x - s * .3, p.y - s * .3); ctx.closePath(); ctx.fill(); }
+            else if (p.k === 'pc') { ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, 6.3); ctx.arc(p.x + p.s * .7, p.y - p.s * .3, p.s * .7, 0, 6.3); ctx.fill(); }
             else if (p.k === 'm') { ctx.fillStyle = '#fff'; ctx.globalAlpha = .45 * a; ctx.beginPath(); ctx.arc(p.x, p.y, p.s * (1.6 - a * .6), 0, 6.3); ctx.fill(); }
             else { ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(p.x, p.y, p.s * a + .6, 0, 6.3); ctx.fill(); }
             ctx.globalAlpha = 1; return true;
@@ -4534,7 +4682,7 @@ document.addEventListener('error', function (e) {
 
   /* ===== 5. art viewer (click a picture to enlarge) ===== */
   let lb = null, lbItems = [], lbIdx = 0, lbFrom = null;
-  const lbLines = f => { const s = f.querySelector('strong').textContent, rest = [...f.querySelectorAll('figcaption span:not(.art-tag)')].map(e => e.textContent); return `<b>${s}</b>${rest.map(t => `<span>${t}</span>`).join('')}`; };
+  const lbLines = f => { const s = f.querySelector('strong').textContent, rest = [...f.querySelectorAll('figcaption > span:not(.art-tag)')].map(e => e.textContent); return `<b>${s}</b>${rest.map(t => `<span>${t}</span>`).join('')}`; };
   function lbShow(i) {
     lbIdx = (i + lbItems.length) % lbItems.length;
     const f = lbItems[lbIdx], img = f.querySelector('img'), big = lb.querySelector('img');
@@ -5030,9 +5178,70 @@ document.addEventListener('error', function (e) {
     const b = document.querySelector('.gs-wish'); if (b) b.focus({ preventScroll: true });
   }
 
+  /* ===== 8. lightsaber: choose a blade (only then does the mouse change), the site glows to match, and a duel ===== */
+  const SABERS = { blue: ['#3d8bff', '#1d6fe0'], green: ['#43e06d', '#2fa84f'], purple: ['#b36bff', '#8458B3'], yellow: ['#ffd23d', '#c99a00'], white: ['#eef3ff', '#8793b5'], red: ['#ff3b4e', '#d6263b'] };
+  const sfxIgnite = () => { tone(130, .5, 'sawtooth', .035, 0, 4.5); noise(.35, .05, 900, .6); };
+  const sfxSwing = () => noise(.22, .06, 1300, .6);
+  const sfxClash = () => { tone(1568, .14, 'sawtooth', .035); tone(2349, .1, 'triangle', .03, .02); noise(.1, .09, 2800, 1); };
+  function applySaber(name, quiet) {
+    saber = name && SABERS[name] ? name : null;
+    const st = root.style;
+    if (saber) {
+      const [c, a] = SABERS[saber]; bladeColor = c; bladeRGB = [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16));
+      root.dataset.saber = saber; st.setProperty('--blade', c); st.setProperty('--saber-accent', a);
+      st.setProperty('--glow1', `rgba(${bladeRGB},.36)`); st.setProperty('--glow2', `rgba(${bladeRGB},.24)`);
+      if (!quiet) { unlockAudio(); sfxIgnite(); }
+    } else {
+      delete root.dataset.saber; ['--blade', '--saber-accent', '--glow1', '--glow2'].forEach(p => st.removeProperty(p));
+    }
+    setTheme(); syncSaberUI();
+  }
+  function syncSaberUI() {
+    view.querySelectorAll('.sp-s').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.c === saber)));
+    const off = view.querySelector('.sp-off'); if (off) off.hidden = !saber;
+    let chip = document.getElementById('saber-chip');
+    if (saber && !chip) { chip = document.createElement('button'); chip.id = 'saber-chip'; chip.type = 'button'; chip.addEventListener('click', () => applySaber(null)); document.body.append(chip); }
+    if (chip) { if (saber) chip.textContent = 'Lightsaber on \u00b7 turn it off'; else chip.remove(); }
+  }
+  const DUEL_LINES = ['A fine swing. I will footnote it.', 'I have chronicled worse.', 'En garde! Er... en quill.', 'You cannot defeat me. I am anonymous.', 'Is that all? I have survived eight centuries of bad reviews.'];
+  const DUEL_END = 'Enough! You win... but I am writing myself a better ending.';
+  let duelN = 0;
+  const duelSay = t => { const l = view.querySelector('.duel-line'); if (l) l.textContent = t; };
+  function openDuel() {
+    const d = view.querySelector('.duel'); if (!d) return;
+    d.hidden = false; view.querySelector('.duel-btn').setAttribute('aria-expanded', 'true'); root.classList.add('duelling');
+    duelN = 0; d.querySelector('.duel-swing').textContent = 'Swing!'; duelSay('The hood goes dark and a red quill-saber hums to life. \u201cCome, then.\u201d');
+    unlockAudio(); sfxIgnite();
+  }
+  function closeDuel() {
+    const d = view.querySelector('.duel'); if (d) d.hidden = true;
+    const b = view.querySelector('.duel-btn'); if (b) b.setAttribute('aria-expanded', 'false');
+    root.classList.remove('duelling');
+  }
+  function duelSwing() {
+    const d = view.querySelector('.duel'); if (!d) return;
+    if (duelN >= 5) { duelN = 0; d.querySelector('.duel-swing').textContent = 'Swing!'; duelSay('He lifts the quill-saber again. \u201cOne more round?\u201d'); return; }
+    duelN++;
+    const svg = d.querySelector('.duel-svg'); svg.classList.remove('swing'); void svg.getBoundingClientRect(); svg.classList.add('swing');
+    sfxSwing(); setTimeout(sfxClash, 170);
+    duelSay(duelN < 5 ? DUEL_LINES[duelN - 1] : DUEL_END);
+    if (duelN >= 5) d.querySelector('.duel-swing').textContent = 'Rematch';
+  }
+  document.addEventListener('click', e => {
+    const t = e.target;
+    if (t.closest('.saber-btn')) { const p = view.querySelector('.saber-panel'), b = t.closest('.saber-btn'); if (p) { p.hidden = !p.hidden; b.setAttribute('aria-expanded', String(!p.hidden)); } return; }
+    const sw = t.closest('.sp-s'); if (sw) { applySaber(sw.dataset.c); return; }
+    if (t.closest('.sp-off')) { applySaber(null); return; }
+    if (t.closest('.duel-btn')) { const d = view.querySelector('.duel'); if (d && d.hidden) openDuel(); else closeDuel(); return; }
+    if (t.closest('.duel-swing')) { duelSwing(); return; }
+    if (t.closest('.duel-close')) { closeDuel(); return; }
+  });
+  document.addEventListener('pointerdown', () => { if (saber && !mf) sfxSwing(); });   // a little whoosh with every click while a saber is on
+
   /* ===== wire up: react whenever the page is swapped ===== */
   function sync() {
     setTheme();
+    syncSaberUI(); if (!view.querySelector('.duel')) root.classList.remove('duelling');
     skyFade();
     const pz = view.querySelector('#logo-puzzle');
     if (pz && !pz.dataset.ready) { pz.dataset.ready = '1'; buildPuzzle(pz); }
