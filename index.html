@@ -6,7 +6,7 @@
 <title>Hannah Young</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Italianno&family=Nunito:wght@400;600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Italianno&family=Nunito:wght@400;600&family=Quicksand:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
   :root {
     --sky: #A0D2EB;
@@ -1138,6 +1138,125 @@
   /* type: cursive for the page-transition title and the big page titles, clean sans for everything else */
   :root { --script: "Italianno", "New Berolina", "Snell Roundhand", "Apple Chancery", "Segoe Script", cursive; }
   h1, #curtain { font-family: var(--script); }
+
+  /* ================= nav: scale with the window so nothing gets cut off (wide sans face) ================= */
+  @media (min-width: 641px) {
+    nav .brand { font-size: clamp(1.1rem, 2.2vw, 1.7rem); padding: 6px clamp(14px, 2.2vw, 28px) 10px; white-space: nowrap; }
+    nav ul { gap: clamp(12px, 2.3vw, 34px); padding: 6px clamp(14px, 2.2vw, 30px) 10px; }
+    nav ul a { font-size: clamp(1.05rem, 2.2vw, 1.7rem); white-space: nowrap; }
+    nav { padding-left: clamp(12px, 2.2vw, 32px); padding-right: clamp(12px, 2.2vw, 32px); }
+  }
+
+
+  /* ================= the wish (goddess, mermaid fountain, coin toss) ================= */
+  html.mf-open { overflow: hidden; }
+  #mf { position: fixed; inset: 0; z-index: 13; overflow: hidden; color: #fff; touch-action: none; transition: opacity .7s ease; }
+  #mf.out { opacity: 0; }
+  .mf-bg { position: absolute; inset: 0; opacity: 0; transition: opacity 1.8s ease; background: radial-gradient(120% 90% at 50% 62%, rgba(62, 36, 112, .985), rgba(12, 7, 30, 1) 72%); }
+  #mf.in .mf-bg { opacity: 1; }
+  .mf-rays { position: absolute; left: 50%; top: 50%; width: 170vmax; height: 170vmax; margin: -85vmax 0 0 -85vmax; opacity: 0; transition: opacity 2.6s ease 1.2s; animation: mfSpin 120s linear infinite;
+             background: repeating-conic-gradient(rgba(255, 255, 255, .075) 0 5deg, transparent 5deg 17deg); -webkit-mask-image: radial-gradient(circle, #000 0, transparent 42%); mask-image: radial-gradient(circle, #000 0, transparent 42%); }
+  #mf.in .mf-rays { opacity: 1; }
+  @keyframes mfSpin { to { transform: rotate(360deg); } }
+  .mf-motes i { position: absolute; left: var(--x); bottom: -12px; width: 4px; height: 4px; border-radius: 50%; background: #fff; opacity: 0; box-shadow: 0 0 9px 2px rgba(255, 255, 255, .75); animation: mfMote var(--t) linear infinite; animation-delay: var(--d); }
+  @keyframes mfMote { 0% { transform: translate(0, 0); opacity: 0; } 12% { opacity: .9; } 100% { transform: translate(var(--dx), -112vh); opacity: 0; } }
+
+  .mf-gd { position: absolute; left: 50%; bottom: 0; height: 82vh; aspect-ratio: 400 / 560; z-index: 3; opacity: 0; filter: blur(14px); transform: translate(-50%, 10vh);
+           transition: opacity 2.6s ease, transform 2.8s cubic-bezier(.2, .7, .2, 1), filter 2.4s ease, left 2s var(--ease), bottom 2s var(--ease), height 2s var(--ease); }
+  #mf.g .mf-gd { opacity: 1; filter: none; transform: translate(-50%, 0); }
+  #mf.s2 .mf-gd { left: 28%; }
+  .mf-scene, .mf-fig { position: absolute; inset: 0; } .mf-scene { opacity: .8; } .mf-scene svg, .mf-fig svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .mf-aura { position: absolute; inset: -22% -52%; pointer-events: none; background: radial-gradient(closest-side, rgba(255, 255, 255, .62), rgba(196, 176, 255, .26) 42%, transparent 72%); animation: mfPulse 4.4s ease-in-out infinite; }
+  .mf-halo { position: absolute; left: 50%; top: 8%; width: 74%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; border: 2px solid rgba(255, 255, 255, .4); box-shadow: 0 0 70px 24px rgba(255, 255, 255, .3), inset 0 0 70px rgba(255, 255, 255, .2); animation: mfPulse 4.4s ease-in-out infinite reverse; }
+  @keyframes mfPulse { 0%, 100% { opacity: .7; transform: scale(1); } 50% { opacity: 1; transform: scale(1.05); } }
+  .mf-halo { animation-name: mfHalo; } @keyframes mfHalo { 0%, 100% { opacity: .55; } 50% { opacity: .95; } }
+  .mf-eyes { transform-box: fill-box; transform-origin: center; animation: mfEyes 3.4s ease-in-out infinite; }
+  @keyframes mfEyes { 0%, 100% { opacity: .8; } 50% { opacity: 1; } }
+  .mf-gd.flash .mf-eyes { animation: mfEyeFlash 1.6s ease-out 1; }
+  @keyframes mfEyeFlash { 0% { transform: scale(1); opacity: 1; filter: brightness(1); } 25% { transform: scale(1.5); filter: brightness(2.4); } 100% { transform: scale(1); opacity: 1; filter: brightness(1); } }
+
+  .mf-ft { position: absolute; left: 50%; bottom: 14vh; height: 66vh; aspect-ratio: 500 / 560; z-index: 2; opacity: 0; filter: blur(10px); transform: translate(-50%, 5vh) scale(.9);
+           transition: opacity 1.8s ease .2s, transform 2.2s var(--ease), filter 1.6s ease .2s, left 2.2s var(--ease); }
+  #mf.s2 .mf-ft { left: 72%; opacity: 1; filter: none; transform: translate(-50%, 0) scale(1); }
+  .mf-ft svg { width: 100%; height: 100%; display: block; overflow: visible; filter: drop-shadow(0 18px 24px rgba(0, 0, 0, .45)); }
+  .mf-ft.glow svg { animation: mfGlowFt 2.4s ease-out 1; }
+  @keyframes mfGlowFt { 0% { filter: drop-shadow(0 0 0 rgba(190, 225, 255, 0)); } 25% { filter: drop-shadow(0 0 34px rgba(190, 225, 255, 1)) brightness(1.25); } 100% { filter: drop-shadow(0 18px 24px rgba(0, 0, 0, .45)); } }
+  .mf-wv { animation: mfWv 5s linear infinite; } .mf-wv.w2 { animation-duration: 7s; animation-direction: reverse; } .mf-wv.w3 { animation-duration: 9s; }
+  @keyframes mfWv { to { transform: translateX(-44px); } }
+  .mf-jet { stroke-dasharray: 7 9; animation: mfJet 1.1s linear infinite; } .mf-jet.j2 { animation-delay: -.3s; } .mf-jet.j3 { animation-delay: -.6s; } .mf-jet.j4 { animation-delay: -.2s; } .mf-jet.j5 { animation-delay: -.8s; } .mf-jet.j6 { animation-delay: -.5s; }
+  @keyframes mfJet { to { stroke-dashoffset: -32; } }
+  .mf-sp { transform-box: fill-box; transform-origin: center; animation: mfSp 2.4s ease-in-out infinite; } .mf-sp.s2 { animation-delay: -.6s; } .mf-sp.s3 { animation-delay: -1.2s; } .mf-sp.s4 { animation-delay: -1.8s; }
+  @keyframes mfSp { 0%, 100% { opacity: .1; transform: scale(.4); } 50% { opacity: 1; transform: scale(1.5); } }
+  .mf-rip { transform-box: fill-box; transform-origin: center; animation: mfRipple 3.4s ease-out infinite; }
+  @keyframes mfRipple { 0% { opacity: .7; transform: scale(.35); } 100% { opacity: 0; transform: scale(1); } }
+
+  .mf-fx { position: absolute; inset: 0; z-index: 8; pointer-events: none; }
+  .mf-rp { position: absolute; width: 40px; height: 14px; border: 2px solid rgba(255, 255, 255, .95); border-radius: 50%; transform: translate(-50%, -50%) scale(.3); opacity: 0; animation: mfRp 1.7s ease-out forwards; }
+  @keyframes mfRp { 0% { opacity: 1; transform: translate(-50%, -50%) scale(.3); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(9); } }
+  .mf-dr { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: #dff3ff; box-shadow: 0 0 8px rgba(190, 225, 255, .9); }
+
+  /* the dialogue box */
+  .mf-box { position: absolute; z-index: 7; top: 4vh; left: 50%; width: min(90vw, 800px); min-height: 7.2em; padding: 24px 28px 28px; opacity: 0; transform: translate(-50%, -26px); transition: opacity .6s ease, transform .6s var(--ease);
+            font-family: "Press Start 2P", "Courier New", monospace; font-size: clamp(10px, 1.55vw, 16px); line-height: 2; color: #fff; text-shadow: 2px 2px 0 #000; letter-spacing: 0;
+            background: linear-gradient(180deg, rgba(92, 24, 52, .94), rgba(50, 14, 52, .94)); border: 4px solid #f1d98e; border-radius: 3px;
+            box-shadow: 0 0 0 4px #3b2a12, inset 0 0 0 3px #8c6b2c, 0 14px 44px rgba(0, 0, 0, .65), 0 0 40px rgba(255, 226, 150, .18); image-rendering: pixelated; }
+  .mf-box.show { opacity: 1; transform: translate(-50%, 0); }
+  .mf-box .cn { position: absolute; width: 10px; height: 10px; background: #f1d98e; box-shadow: 0 0 0 2px #3b2a12; }
+  .mf-box .cn.a { left: -9px; top: -9px; } .mf-box .cn.b { right: -9px; top: -9px; } .mf-box .cn.c { left: -9px; bottom: -9px; } .mf-box .cn.d { right: -9px; bottom: -9px; }
+  .mf-next { position: absolute; right: 20px; bottom: 10px; font-style: normal; font-size: .9em; color: #fff; opacity: 0; } .mf-box.wait .mf-next { opacity: 1; animation: mfBlink .9s steps(2) infinite; }
+  @keyframes mfBlink { 50% { opacity: 0; } }
+
+  /* the coin */
+  .mf-coin { --cs: clamp(62px, 10.5vh, 104px); position: fixed; left: 0; top: 0; z-index: 9; width: var(--cs); height: calc(var(--cs) * 1.1667); padding: 0; border: 0; background: none; opacity: 0; cursor: grab; touch-action: none;
+             transition: opacity .5s ease, transform .35s var(--ease); filter: drop-shadow(0 8px 10px rgba(0, 0, 0, .6)); will-change: transform; }
+  .mf-coin.show { opacity: 1; } .mf-coin.show:not(.fly):not(.grab) { animation: mfBob 2s ease-in-out infinite; }
+  @keyframes mfBob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+  .mf-coin.fly, .mf-coin.grab { transition: opacity .5s ease; } .mf-coin.grab { cursor: grabbing; }
+  .mf-coin.gone { opacity: 0 !important; transition: opacity .3s ease; }
+  .mf-coin svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .mf-coin:focus-visible { outline: 3px solid #fff; outline-offset: 6px; border-radius: 50%; }
+
+  .mf-actions { position: absolute; z-index: 9; left: 16px; bottom: 16px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .mf-actions button { font: inherit; font-size: 1.15rem; color: #fff; background: rgba(255, 255, 255, .14); border: 2px solid rgba(255, 255, 255, .55); border-radius: 999px; padding: 2px 22px 6px; cursor: pointer; backdrop-filter: blur(6px); transition: background .25s, color .25s; }
+  .mf-actions button:hover { background: #fff; color: #2a2457; } .mf-actions button[hidden] { display: none; }
+  .mf-actions button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  .mf-snd, .mf-x { position: absolute; z-index: 9; top: 14px; display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .14); color: #fff; font: inherit; font-size: 1.7rem; line-height: 1; cursor: pointer; transition: background .25s; }
+  .mf-snd { left: 14px; font-size: 1.3rem; } .mf-x { right: 14px; } .mf-snd.off { opacity: .45; text-decoration: line-through; }
+  .mf-snd:hover, .mf-x:hover { background: rgba(255, 255, 255, .3); } .mf-snd:focus-visible, .mf-x:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
+  @media (max-aspect-ratio: 1/1) {
+    .mf-gd { height: 60vh; } #mf.s2 .mf-gd { left: 50%; bottom: 48vh; height: 28vh; }
+    .mf-ft { left: 50%; bottom: 17vh; height: 38vh; } #mf.s2 .mf-ft { left: 50%; }
+    .mf-box { font-size: clamp(9px, 2.6vw, 13px); padding: 20px 20px 24px; }
+    .mf-actions button { font-size: .95rem; padding: 1px 16px 4px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .mf-rays, .mf-motes i, .mf-aura, .mf-halo { animation: none !important; } .mf-gd, .mf-ft, .mf-box { transition: opacity .3s !important; filter: none !important; } }
+
+  /* ================= goals: twelve stars (roomy board, wrapping labels, phone layout) ================= */
+  .gs-board { width: min(100%, 860px); aspect-ratio: 1000 / 780; margin-bottom: 70px; }
+  .gs-board.gs-v { width: min(100%, 440px); aspect-ratio: 5 / 12 !important; margin-bottom: 36px; }
+  .gs-label { max-width: 7.2em; font-size: clamp(.8rem, 1.7vw, 1rem); line-height: 1.25; }
+  .gs-star[data-w="wide"] .gs-label { max-width: 10.5em; }
+  .gs-v .gs-label { max-width: 9.5em; font-size: clamp(.7rem, 2.3vw, .84rem); }
+  .gs-v .gs-star[data-w="wide"] .gs-label { max-width: 14em; }
+  .gs-star[data-side="right"] .gs-label { left: 82%; top: 50%; transform: translateY(-50%); text-align: left; }
+  .gs-star[data-side="left"] .gs-label { text-align: right; }
+
+  /* a stronger glow, and a flash of light when the wish lands */
+  .mf-aura { background: radial-gradient(closest-side, rgba(255, 255, 255, .9), rgba(205, 188, 255, .42) 40%, transparent 72%); }
+  .mf-halo { box-shadow: 0 0 110px 40px rgba(255, 255, 255, .42), inset 0 0 80px rgba(255, 255, 255, .3); border-color: rgba(255, 255, 255, .55); }
+  .mf-fig svg { filter: drop-shadow(0 0 26px rgba(255, 255, 255, .55)); }
+  .mf-flash { position: absolute; inset: 0; z-index: 10; background: radial-gradient(circle at 70% 60%, #fff, rgba(255, 255, 255, .6) 40%, transparent 75%); opacity: 0; pointer-events: none; }
+  #mf.win .mf-flash { animation: mfFlash 1.8s ease-out 1; } @keyframes mfFlash { 0% { opacity: 0; } 10% { opacity: .9; } 100% { opacity: 0; } }
+  #mf.win .mf-rays { animation-duration: 40s; opacity: 1; filter: brightness(2.2); } #mf.win .mf-aura { transform: scale(1.18); filter: brightness(1.2); }
+  @media (max-aspect-ratio: 1/1) { #mf.s2 .mf-gd { -webkit-mask-image: linear-gradient(to bottom, #000 76%, transparent 100%); mask-image: linear-gradient(to bottom, #000 76%, transparent 100%); } }
+
+  /* the mane breathes: a slow, gentle sway */
+  .mf-hair { transform-box: fill-box; transform-origin: 50% 8%; animation: mfSway 7s ease-in-out infinite; }
+  .mf-hair-f { transform-origin: 50% 20%; animation-duration: 8.5s; animation-direction: reverse; }
+  @keyframes mfSway { 0%, 100% { transform: rotate(-.9deg); } 50% { transform: rotate(.9deg); } }
+  .mf-scene { opacity: .6; }
+  .mf-scene { -webkit-mask-image: radial-gradient(closest-side, #000 45%, transparent 100%); mask-image: radial-gradient(closest-side, #000 45%, transparent 100%); }
 </style>
 </head>
 <body>
@@ -3756,8 +3875,8 @@ const pages = {
 
   '/goals': { title: 'goals', html: () => `
     <h1>My goals in life</h1>
-    <p class="lead">I want to keep learning, keep pushing myself to be better, and give as much love and kindness as I can. One day I hope to be a wise old lady who's a little bit crazy but knows a ton, kind of like Uncle Iroh from Avatar.</p>
-    <p class="lead" style="margin-top:20px">I also want to collect so many memories that my grandkids hear a new bedtime story every time we sit by the fire.</p>
+    <p class="lead">I want to travel as much as I possibly can. Stepping into other places and learning how other people live is one of the coolest, most unique things in the world, and I never want to stop saying yes to it.</p>
+    <p class="lead" style="margin-top:20px">I also want to build a life that feels steady in every way, so I can chase the big adventures and still be grounded enough to enjoy the quiet ones.</p>
     <p class="scroll-cue" aria-hidden="true">keep scrolling <i></i></p>
     <div class="drift" aria-hidden="true"></div>
     <section class="stars-game" id="stars-game"></section>` },
@@ -3917,7 +4036,18 @@ document.addEventListener('error', function (e) {
   const root = document.documentElement;
   const view = document.getElementById('view');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let mf = null;                                   // the wish overlay, when it is open
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  /* if a new photo is not found in photos/, look in the folder it was uploaded inside (photos/photos-to-upload (1)/) */
+  const NEW_PHOTO = /(^|\/)(art-|artist-|austin-skyline|thatch-logo-puzzle)[^\/]*$/, NESTED = 'photos/photos-to-upload%20(1)/';
+  document.addEventListener('error', e => {
+    const im = e.target;
+    if (!im || im.tagName !== 'IMG' || im.dataset.retry) return;
+    const src = im.getAttribute('src') || '';
+    if (!NEW_PHOTO.test(src) || src.indexOf(NESTED) !== -1) return;
+    im.dataset.retry = '1'; im.src = NESTED + src.replace(/^.*\//, '');
+  }, true);
+
   const ss = (a, b, v) => { const t = clamp((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
 
   /* ===== 1. little blue plane cursor (desktop with a mouse only) ===== */
@@ -3969,10 +4099,11 @@ document.addEventListener('error', function (e) {
     <ellipse cx="21.5" cy="19" rx="12.5" ry="3.2" fill="#8a5a3a" stroke="${INKC}" stroke-width="2.4"/>
     <path d="M21.5 38 C14.5 33.5 14 30 14 28.2 C14 26 15.7 24.6 17.6 24.6 C19.4 24.6 20.7 25.6 21.5 27 C22.3 25.6 23.6 24.6 25.4 24.6 C27.3 24.6 29 26 29 28.2 C29 30 28.5 33.5 21.5 38Z" fill="#ff5a7a"/>
     <path class="steam s1" d="M14 13 q-3 -3 0 -6 q3 -3 0 -6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path class="steam s2" d="M21.5 13 q-3 -3 0 -6 q3 -3 0 -6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path class="steam s3" d="M29 13 q-3 -3 0 -6 q3 -3 0 -6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>`;
-  const CUR = { plane: { dir: 1 }, rocket: { dir: 1 }, ball: { roll: 1 }, heart: { lean: 16 }, cone: { lean: 20 }, note: { lean: 12 }, brush: { lean: 10 }, mug: { lean: 14 } };
+  const WISH = `<svg class="pl-s wish" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="15" fill="#fff6c8" opacity=".35"/><path d="M24 3 L28.4 19.6 L45 24 L28.4 28.4 L24 45 L19.6 28.4 L3 24 L19.6 19.6Z" fill="#fff3b0" stroke="#e6b94a" stroke-width="1.6" stroke-linejoin="round"/><circle cx="24" cy="24" r="4.4" fill="#fff"/></svg>`;
+  const CUR = { plane: { dir: 1 }, rocket: { dir: 1 }, ball: { roll: 1 }, heart: { lean: 16 }, cone: { lean: 20 }, note: { lean: 12 }, brush: { lean: 10 }, mug: { lean: 14 }, wish: { lean: 8 } };
   const themeFor = h => {
     const r = (h || '').replace(/^#/, '') || '/';
-    if (r.startsWith('/about')) return 'ball';
+    if (r.startsWith('/about')) return 'cone';
     if (r.startsWith('/goals')) return 'rocket';
     if (r.startsWith('/work')) return 'mug';
     if (r.startsWith('/loves/artists')) return 'note';
@@ -3981,13 +4112,13 @@ document.addEventListener('error', function (e) {
     if (r === '/loves' || r.startsWith('/loves/friends')) return 'heart';
     return 'plane';
   };
-  const setTheme = () => { root.dataset.cur = themeFor(location.hash); };
+  const setTheme = () => { root.dataset.cur = mf ? 'wish' : themeFor(location.hash); };
   setTheme();
 
   if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const plane = document.createElement('div');
     plane.id = 'plane'; plane.setAttribute('aria-hidden', 'true');
-    plane.innerHTML = `<div class="pl-rot">${PLANE}${ROCKET}</div><div class="pl-free">${BALL}${HEART}${CONE}${NOTE}${BRUSH}${MUG}</div>`;
+    plane.innerHTML = `<div class="pl-rot">${PLANE}${ROCKET}</div><div class="pl-free">${BALL}${HEART}${CONE}${NOTE}${BRUSH}${MUG}${WISH}</div>`;
     const rot = plane.querySelector('.pl-rot'), free = plane.querySelector('.pl-free');
     const cv = document.createElement('canvas'); cv.id = 'trail'; cv.setAttribute('aria-hidden', 'true');
     document.body.append(cv, plane);
@@ -4018,6 +4149,7 @@ document.addEventListener('error', function (e) {
       else if (th === 'note') parts.push({ k: 'n', x: bx + (r() - .5) * 10, y: by + (r() - .5) * 10, vx: (r() - .5) * .6, vy: -.35 - r() * .5, s: 13 + r() * 8, c: NOTEC[(r() * 4) | 0], g: NOTES[(r() * 3) | 0], t: now, life: 1050 });
       else if (th === 'cone') parts.push({ k: 's', x: bx + (r() - .5) * 14, y: by + (r() - .5) * 14, vx: (r() - .5) * .8, vy: .2 + r() * .6, a: r() * 6, s: 6 + r() * 3, c: SPR[(r() * 6) | 0], t: now, life: 750 });
       else if (th === 'mug') parts.push({ k: 'm', x: bx + (r() - .5) * 8, y: by + (r() - .5) * 8, vx: (r() - .5) * .3, vy: -.5 - r() * .4, s: 5 + r() * 4, t: now, life: 1000 });
+      else if (th === 'wish') parts.push({ k: 'q', x: bx + (r() - .5) * 12, y: by + (r() - .5) * 12, vx: (r() - .5) * .5, vy: .1 + r() * .5, s: 3 + r() * 4.5, c: r() < .5 ? '#fff3b0' : '#ffffff', t: now, life: 800 });
       else if (th === 'ball') parts.push({ k: 'g', x: bx + (r() - .5) * 12, y: by + 14 + (r() - .5) * 6, vx: (r() - .5) * .8, vy: -.1 - r() * .5, s: 2 + r() * 2, c: r() < .5 ? '#ffffff' : '#9be37a', t: now, life: 520 });
     };
     const drawHeart = (cx, cy, s) => { ctx.beginPath(); ctx.moveTo(cx, cy + s * .9); ctx.bezierCurveTo(cx - s * 1.6, cy - s * .2, cx - s * .8, cy - s * 1.2, cx, cy - s * .35); ctx.bezierCurveTo(cx + s * .8, cy - s * 1.2, cx + s * 1.6, cy - s * .2, cx, cy + s * .9); ctx.fill(); };
@@ -4061,6 +4193,7 @@ document.addEventListener('error', function (e) {
             if (p.k === 'h') { ctx.fillStyle = p.c; drawHeart(p.x, p.y, p.s * (.6 + a * .4)); }
             else if (p.k === 'n') { ctx.fillStyle = p.c; ctx.font = `700 ${p.s}px sans-serif`; ctx.fillText(p.g, p.x, p.y); }
             else if (p.k === 's') { ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a + age / 120); ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -1.4, p.s, 2.8); ctx.restore(); }
+            else if (p.k === 'q') { const s = p.s * (.5 + a * .5); ctx.fillStyle = p.c; ctx.beginPath(); ctx.moveTo(p.x, p.y - s); ctx.lineTo(p.x + s * .3, p.y - s * .3); ctx.lineTo(p.x + s, p.y); ctx.lineTo(p.x + s * .3, p.y + s * .3); ctx.lineTo(p.x, p.y + s); ctx.lineTo(p.x - s * .3, p.y + s * .3); ctx.lineTo(p.x - s, p.y); ctx.lineTo(p.x - s * .3, p.y - s * .3); ctx.closePath(); ctx.fill(); }
             else if (p.k === 'm') { ctx.fillStyle = '#fff'; ctx.globalAlpha = .45 * a; ctx.beginPath(); ctx.arc(p.x, p.y, p.s * (1.6 - a * .6), 0, 6.3); ctx.fill(); }
             else { ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(p.x, p.y, p.s * a + .6, 0, 6.3); ctx.fill(); }
             ctx.globalAlpha = 1; return true;
@@ -4178,42 +4311,47 @@ document.addEventListener('error', function (e) {
     running = false; cosmos.remove(); cosmos = null; root.classList.remove('on-goals', 'space-mode');
   }
 
-  /* ===== 3. connect the stars ===== */
-  const GOALS = [
-    { x: 13, y: 86, side: 'above', text: 'Keep learning' },
-    { x: 24, y: 62, side: 'above', text: 'Push myself' },
-    { x: 37, y: 84, side: 'below', text: 'Give love & kindness' },
-    { x: 45, y: 48, side: 'above', text: 'Lots of knowledge' },
-    { x: 53, y: 70, side: 'below', text: 'True peace' },
-    { x: 72, y: 32, side: 'above', text: 'Make an impact on the world' },
-    { x: 86, y: 66, side: 'below', text: 'Collect memories' },
-    { x: 92, y: 8, side: 'left', text: 'Bedtime stories' }
+  /* ===== 3. connect the stars: twelve goals, then a wish ===== */
+  const GOAL_TEXT = [
+    'Explore the Great Barrier Reef', 'Experience the Northern Lights', 'See Machu Picchu', 'Ski in Europe', 'Ride in a hot air balloon', 'Go on a river-rafting trip',
+    'Go diving', 'Run a 10k race', 'Start a blog or write', 'Volunteer at a hospital, trash pick, or food bank', 'Have $$$$$ in my savings', 'Exercise 3 times a week'
   ];
+  /* wide screens: two flowing rows (left to right, then back right to left); phones: one vertical zigzag */
+  const WIDE_POS = [[8, 28, 'above'], [24, 46, 'above'], [40, 28, 'above'], [56, 46, 'above'], [72, 28, 'above'], [88, 46, 'above'],
+                    [88, 84, 'below'], [72, 66, 'below'], [56, 84, 'below'], [40, 62, 'below', 'wide'], [24, 84, 'below'], [8, 66, 'below']];
+  const goalsFor = vertical => GOAL_TEXT.map((text, i) => vertical
+    ? { x: i % 2 ? 76 : 24, y: +(94 - i * 8).toFixed(1), side: i % 2 ? 'left' : 'right', wide: i === 9 ? 'wide' : '', text }
+    : { x: WIDE_POS[i][0], y: WIDE_POS[i][1], side: WIDE_POS[i][2], wide: WIDE_POS[i][3], text });
   const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.8l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17l-6.1 3.4 1.4-6.8L2.2 8.9l6.9-.8z"/></svg>';
   const NS = 'http://www.w3.org/2000/svg';
+  let gsMode = '';
 
   function buildGame(box) {
+    const vertical = innerWidth <= 900, GOALS = goalsFor(vertical);
+    gsMode = vertical ? 'v' : 'w';
     box.innerHTML = `
       <h2>Connect the stars</h2>
-      <p class="gs-help">Each star is one of my goals. Tap the glowing one, then the next, to draw the constellation.</p>
-      <div class="gs-board">
+      <p class="gs-help">Each star is one of my goals. Tap the glowing one, then the next, to draw the constellation. Connect them all and make a wish.</p>
+      <div class="gs-board${vertical ? ' gs-v' : ''}">
         <svg class="gs-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
-        ${GOALS.map((g, i) => `<button type="button" class="gs-star" data-i="${i}" data-side="${g.side}" style="left:${g.x}%;top:${g.y}%" aria-label="Star ${i + 1} of ${GOALS.length}: ${g.text}">${STAR}<span class="gs-label" aria-hidden="true">${g.text.replace('&', '&amp;')}</span></button>`).join('')}
+        ${GOALS.map((g, i) => `<button type="button" class="gs-star" data-i="${i}" data-side="${g.side}"${g.wide ? ' data-w="wide"' : ''} style="left:${g.x}%;top:${g.y}%" aria-label="Star ${i + 1} of ${GOALS.length}: ${g.text.replace(/"/g, '&quot;')}">${STAR}<span class="gs-label" aria-hidden="true">${g.text.replace(/&/g, '&amp;')}</span></button>`).join('')}
         <i class="gs-comet" aria-hidden="true"></i>
       </div>
       <div class="gs-status" aria-live="polite"></div>`;
     const board = box.querySelector('.gs-board'), lines = box.querySelector('.gs-lines'), status = box.querySelector('.gs-status');
     const stars = [...box.querySelectorAll('.gs-star')], comet = box.querySelector('.gs-comet');
-    let step = 0;
+    let step = 0, wishTimer = 0;
 
     const refresh = () => {
       stars.forEach((s, i) => { s.classList.toggle('lit', i < step); s.classList.toggle('next', i === step); });
       status.textContent = step === 0 ? 'Tap the glowing star to begin.' : step < GOALS.length ? `${step} of ${GOALS.length} connected` : `All ${GOALS.length} connected.`;
       board.classList.toggle('done', step === GOALS.length);
       if (step === GOALS.length) {
-        const b = document.createElement('button'); b.type = 'button'; b.className = 'gs-again'; b.textContent = 'Play again';
-        b.addEventListener('click', reset); status.append(b);
+        const w = document.createElement('button'); w.type = 'button'; w.className = 'gs-again gs-wish'; w.textContent = 'Make the wish'; w.addEventListener('click', () => startManifest());
+        const b = document.createElement('button'); b.type = 'button'; b.className = 'gs-again'; b.textContent = 'Play again'; b.addEventListener('click', reset);
+        status.append(w, b);
         comet.classList.remove('fire'); void comet.offsetWidth; comet.classList.add('fire');
+        wishTimer = setTimeout(() => { if (box.isConnected && step === GOALS.length) startManifest(); }, reduced ? 600 : 1800);   // the goddess appears
       }
     };
     const drawLine = (a, b) => {
@@ -4223,14 +4361,15 @@ document.addEventListener('error', function (e) {
       if (reduced) { l.setAttribute('x2', b.x); l.setAttribute('y2', b.y); return; }
       const t0 = performance.now();
       const tick = t => {
-        const k = clamp((t - t0) / 450, 0, 1), e = 1 - Math.pow(1 - k, 3);
+        const k = clamp((t - t0) / 380, 0, 1), e = 1 - Math.pow(1 - k, 3);
         l.setAttribute('x2', a.x + (b.x - a.x) * e); l.setAttribute('y2', a.y + (b.y - a.y) * e);
         if (k < 1 && l.isConnected) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
     };
-    const reset = () => { step = 0; lines.innerHTML = ''; refresh(); stars[0].focus({ preventScroll: true }); };
+    const reset = () => { clearTimeout(wishTimer); closeManifest(true); step = 0; lines.innerHTML = ''; refresh(); stars[0].focus({ preventScroll: true }); };
     stars.forEach((s, i) => s.addEventListener('click', () => {
+      unlockAudio();                                   // lets the wish scene play its little sounds
       if (i === step) { if (i > 0) drawLine(GOALS[i - 1], GOALS[i]); step++; refresh(); }
       else if (i > step) { s.classList.remove('shake'); void s.offsetWidth; s.classList.add('shake'); status.textContent = 'Try the glowing star.'; }
     }));
@@ -4449,6 +4588,7 @@ document.addEventListener('error', function (e) {
       </div>
       <div class="pz-bar"><div class="foodnav"><button type="button" class="pz-peekbtn">Peek</button><button type="button" class="pz-shuf">Shuffle</button></div><span class="pz-count" aria-hidden="true"></span></div>
       <div class="pz-status" aria-live="polite"></div>`;
+    { const probe = new Image(), flat = (window.__P || {})[PZ_IMG] || PZ_IMG; probe.onerror = () => box.querySelector('.pz-board').style.setProperty('--img', `url('${NESTED + flat.replace(/^.*\//, '')}')`); probe.src = flat; }
     const board = box.querySelector('.pz-board'), tiles = [...box.querySelectorAll('.pz-tile')], status = box.querySelector('.pz-status'), count = box.querySelector('.pz-count');
     const place = () => {
       tiles.forEach((t, p) => { const s = perm.indexOf(p); t.style.setProperty('--r', Math.floor(s / cols)); t.style.setProperty('--c', s % cols); t.classList.toggle('ok', s === p); t.classList.toggle('sel', sel === p); });
@@ -4473,6 +4613,423 @@ document.addEventListener('error', function (e) {
     start();
   }
 
+  /* ---------- the wish scene: artwork ---------- */
+  const MF_ART = (() => {
+    const f = n => +n.toFixed(1);
+    /* hair silhouettes with wavy, billowing edges (k = width, ph = wave phase) */
+    const smoothPath = pts => { let d = `M${f(pts[0][0])} ${f(pts[0][1])}`; for (let i = 1; i < pts.length - 1; i++) { const m = [(pts[i][0] + pts[i + 1][0]) / 2, (pts[i][1] + pts[i + 1][1]) / 2]; d += ` Q${f(pts[i][0])} ${f(pts[i][1])} ${f(m[0])} ${f(m[1])}`; } const l = pts[pts.length - 1]; return d + ` L${f(l[0])} ${f(l[1])}`; };
+    const mane = (k, ph) => {
+      const N = 34, L = [], R = [];
+      for (let i = 0; i <= N; i++) {
+        const t = i / N, y = -24 + t * 660, prof = t < .34 ? Math.sqrt(1 - (1 - t / .34) ** 2) : 1 - (t - .34) * .2;
+        const w = k * (252 * prof + 4), a = (9 + 20 * t) * Math.min(1, t * 5);
+        L.push([200 - (w + Math.sin(t * 16 + ph) * a + Math.sin(t * 7 + ph * 1.7) * 9), y]);
+        R.push([200 + (w + Math.sin(t * 16 + ph + 1.3) * a + Math.sin(t * 7 + ph * 1.2 + .8) * 9), y]);
+      }
+      return smoothPath(L) + ` L${f(R[N][0])} ${f(R[N][1])} ` + smoothPath(R.slice().reverse()).replace(/^M[^Q]*/, '') + ' Z';
+    };
+    const curl = (x, y, s, flip) => `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})"><path d="M0 0 C-34 -12 -52 22 -30 46 C-10 66 26 52 22 22 C18 0 -10 -6 -18 14 C-22 26 -10 36 0 30" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M0 0 C-34 -12 -52 22 -30 46 C-10 66 26 52 22 22 C18 0 -10 -6 -18 14 C-22 26 -10 36 0 30" fill="none" stroke="#cdd8f4" stroke-width="2" stroke-linecap="round"/></g>`;
+
+
+    /* the goddess: silver-white hair, opal jewels, an iridescent one-shoulder gown, glowing white eyes */
+    const goddess = () => `<svg viewBox="0 0 400 560" aria-hidden="true">
+      <defs>
+        <linearGradient id="mgHairBack" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9e0f6"/><stop offset=".5" stop-color="#b4c1e6"/><stop offset="1" stop-color="#9fb0dc"/></linearGradient>
+        <linearGradient id="mgHairFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#f6f8ff"/><stop offset="1" stop-color="#e3eafb"/></linearGradient>
+        <linearGradient id="mgHairTint" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffc3e8" stop-opacity=".0"/><stop offset=".25" stop-color="#ffc3e8" stop-opacity=".32"/><stop offset=".5" stop-color="#a8e4ff" stop-opacity=".34"/><stop offset=".75" stop-color="#cbb6ff" stop-opacity=".3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+        <linearGradient id="mgHair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#e9eefb"/><stop offset="1" stop-color="#c3cfea"/></linearGradient>
+        <linearGradient id="mgSkin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdeae0"/><stop offset="1" stop-color="#f1cdbd"/></linearGradient>
+        <linearGradient id="mgGown" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#f7ecff"/><stop offset=".65" stop-color="#e2f4ff"/><stop offset="1" stop-color="#fff0f4"/></linearGradient>
+        <linearGradient id="mgSheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffb6e1" stop-opacity=".0"/><stop offset=".3" stop-color="#ffb6e1" stop-opacity=".35"/><stop offset=".55" stop-color="#9ee8ff" stop-opacity=".4"/><stop offset=".8" stop-color="#c9b6ff" stop-opacity=".3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+        <linearGradient id="mgGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0b8"/><stop offset=".5" stop-color="#e2b45a"/><stop offset="1" stop-color="#a97a2a"/></linearGradient>
+        <radialGradient id="mgOpal" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#f6e9ff"/><stop offset=".75" stop-color="#bfeaf6"/><stop offset="1" stop-color="#f3b9d8"/></radialGradient>
+        <linearGradient id="mgStreak" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+        <radialGradient id="mgEye"><stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset=".35" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+        <filter id="mgGlow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="mgSoft"><feGaussianBlur stdDeviation="1.4"/></filter>
+      </defs>
+      <!-- a huge, flowing, shimmering mane behind her -->
+      <g class="mf-hair">
+        <path d="${mane(1, 0)}" fill="url(#mgHairBack)"/>
+        <path d="${mane(.9, 1.3)}" fill="url(#mgHair)"/>
+        <path d="${mane(.78, 2.6)}" fill="url(#mgHairFront)"/>
+        <path d="${mane(.9, 1.3)}" fill="url(#mgHairTint)"/>
+        <g fill="none" stroke-linecap="round">
+          <g stroke="#fff" opacity=".9"><path d="M150 60 C80 100 40 200 56 300 C70 380 30 470 52 590" stroke-width="3"/><path d="M164 52 C100 84 66 170 78 262 C88 340 52 430 70 590" stroke-width="2.2"/><path d="M176 46 C124 70 96 140 104 226 C110 300 84 380 96 590" stroke-width="1.8"/><path d="M190 40 C150 56 126 112 130 190 C134 260 116 340 126 590" stroke-width="1.4"/></g>
+          <g stroke="#cfd9f6" opacity=".95"><path d="M136 74 C60 130 20 240 40 340 C54 420 14 510 34 600" stroke-width="2.6"/><path d="M120 96 C40 170 -4 280 20 380 C34 450 -6 540 14 610" stroke-width="2.2"/><path d="M96 120 C20 200 -30 320 -6 420 C8 480 -30 560 -10 620" stroke-width="2"/><path d="M70 160 C-10 240 -50 340 -30 440" stroke-width="1.6"/></g>
+          <g stroke="#ffc6e6" opacity=".55"><path d="M144 66 C74 118 32 222 50 324 C62 400 26 488 44 596" stroke-width="2"/><path d="M110 108 C32 184 -14 296 8 396" stroke-width="1.6"/></g>
+          <g stroke="#b9e6ff" opacity=".6"><path d="M158 56 C90 92 52 184 66 280 C76 356 40 450 60 596" stroke-width="2"/><path d="M84 140 C6 218 -40 330 -18 430" stroke-width="1.6"/></g>
+        </g>
+        <g fill="none" stroke-linecap="round" transform="translate(400 0) scale(-1 1)">
+          <g stroke="#fff" opacity=".9"><path d="M150 60 C80 100 40 200 56 300 C70 380 30 470 52 590" stroke-width="3"/><path d="M164 52 C100 84 66 170 78 262 C88 340 52 430 70 590" stroke-width="2.2"/><path d="M176 46 C124 70 96 140 104 226 C110 300 84 380 96 590" stroke-width="1.8"/><path d="M190 40 C150 56 126 112 130 190 C134 260 116 340 126 590" stroke-width="1.4"/></g>
+          <g stroke="#cfd9f6" opacity=".95"><path d="M136 74 C60 130 20 240 40 340 C54 420 14 510 34 600" stroke-width="2.6"/><path d="M120 96 C40 170 -4 280 20 380 C34 450 -6 540 14 610" stroke-width="2.2"/><path d="M96 120 C20 200 -30 320 -6 420 C8 480 -30 560 -10 620" stroke-width="2"/><path d="M70 160 C-10 240 -50 340 -30 440" stroke-width="1.6"/></g>
+          <g stroke="#ffc6e6" opacity=".55"><path d="M144 66 C74 118 32 222 50 324 C62 400 26 488 44 596" stroke-width="2"/><path d="M110 108 C32 184 -14 296 8 396" stroke-width="1.6"/></g>
+          <g stroke="#b9e6ff" opacity=".6"><path d="M158 56 C90 92 52 184 66 280 C76 356 40 450 60 596" stroke-width="2"/><path d="M84 140 C6 218 -40 330 -18 430" stroke-width="1.6"/></g>
+        </g>
+        
+        <g fill="#fff"><circle class="mf-sp" cx="-40" cy="90" r="3"/><circle class="mf-sp s2" cx="440" cy="130" r="3"/><circle class="mf-sp s3" cx="-70" cy="300" r="2.6"/><circle class="mf-sp s4" cx="470" cy="260" r="2.6"/><circle class="mf-sp" cx="10" cy="470" r="2.4"/><circle class="mf-sp s3" cx="392" cy="500" r="2.4"/><circle class="mf-sp s2" cx="120" cy="10" r="2.2"/><circle class="mf-sp s4" cx="290" cy="6" r="2.2"/></g>
+      </g>
+      <!-- shoulders / bare skin -->
+      <path d="M178 206 C178 238 170 256 128 274 C96 288 76 322 70 372 L70 560 L330 560 L330 372 C324 322 304 288 272 274 C230 256 222 238 222 206Z" fill="url(#mgSkin)"/>
+      <path d="M178 206 C190 228 210 228 222 206 L222 240 C210 252 190 252 178 240Z" fill="#e6b9a7" opacity=".55"/>
+      <!-- bare arm with a gold armlet -->
+      <path d="M92 310 C70 360 66 430 74 540 L124 540 C124 460 130 400 148 352Z" fill="url(#mgSkin)"/>
+      <path d="M72 438 C90 452 112 452 128 440 L130 462 C112 474 90 474 72 460Z" fill="url(#mgGold)"/><circle cx="101" cy="455" r="8" fill="url(#mgOpal)" stroke="#c99a40" stroke-width="2"/>
+      <!-- iridescent gown over one shoulder -->
+      <path d="M124 372 C150 348 190 352 214 372 C238 392 252 332 266 284 C276 262 304 270 316 292 C328 318 332 346 332 372 L332 560 L124 560 C130 480 120 420 124 372Z" fill="url(#mgGown)"/>
+      <path d="M124 372 C150 348 190 352 214 372 C238 392 252 332 266 284 C276 262 304 270 316 292 C328 318 332 346 332 372 L332 560 L124 560 C130 480 120 420 124 372Z" fill="url(#mgSheen)"/>
+      <g fill="none" stroke="#d4def5" stroke-width="1.6" stroke-linecap="round" opacity=".9"><path d="M170 392 C176 450 168 500 150 556"/><path d="M214 400 C226 460 222 510 214 558"/><path d="M262 360 C276 440 280 500 290 558"/><path d="M300 350 C312 430 316 500 322 556"/></g>
+      <circle cx="268" cy="286" r="10" fill="url(#mgGold)"/><circle cx="268" cy="286" r="6.4" fill="url(#mgOpal)"/>
+      <!-- long locks falling over her shoulders -->
+      <g class="mf-hair mf-hair-f">
+        <path d="M150 138 C98 196 120 262 90 330 C70 378 100 430 66 490 C54 516 68 548 52 580 C92 560 116 520 120 470 C124 416 148 378 154 326 C160 266 172 212 172 160Z" fill="url(#mgHair)"/>
+        <path d="M150 138 C98 196 120 262 90 330 C70 378 100 430 66 490 C54 516 68 548 52 580 C92 560 116 520 120 470 C124 416 148 378 154 326 C160 266 172 212 172 160Z" fill="url(#mgHairTint)"/>
+        <path d="M150 168 C118 238 134 318 100 400 M142 200 C112 270 126 340 92 440" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".85"/>
+        <g transform="translate(400 0) scale(-1 1)"><path d="M150 138 C98 196 120 262 90 330 C70 378 100 430 66 490 C54 516 68 548 52 580 C92 560 116 520 120 470 C124 416 148 378 154 326 C160 266 172 212 172 160Z" fill="url(#mgHair)"/>
+        <path d="M150 138 C98 196 120 262 90 330 C70 378 100 430 66 490 C54 516 68 548 52 580 C92 560 116 520 120 470 C124 416 148 378 154 326 C160 266 172 212 172 160Z" fill="url(#mgHairTint)"/>
+        <path d="M150 168 C118 238 134 318 100 400 M142 200 C112 270 126 340 92 440" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".85"/></g>
+      </g>
+      <!-- face -->
+      <path d="M200 82 C164 82 148 118 150 152 C152 190 172 222 200 224 C228 222 248 190 250 152 C252 118 236 82 200 82Z" fill="url(#mgSkin)"/>
+      <ellipse cx="167" cy="180" rx="13" ry="7" fill="#ffb3c2" opacity=".32"/><ellipse cx="233" cy="180" rx="13" ry="7" fill="#ffb3c2" opacity=".32"/>
+      <g fill="none" stroke="#d9cfe8" stroke-width="2.4" stroke-linecap="round"><path d="M159 132 C169 125 184 125 193 131"/><path d="M207 131 C216 125 231 125 241 132"/></g>
+      <path d="M198 160 C196 172 194 178 198 181 C201 182 204 181 206 179" fill="none" stroke="#d9a493" stroke-width="1.6" stroke-linecap="round" opacity=".75"/>
+      <path d="M184 194 C192 190 198 192 200 193 C202 192 208 190 216 194 C210 205 190 205 184 194Z" fill="#e88aa0"/><path d="M190 196 C196 193 204 193 210 196" fill="none" stroke="#fff" stroke-width="1.2" opacity=".55"/>
+      <!-- glowing white eyes -->
+      <g class="mf-eyes">
+        <rect x="104" y="148.2" width="192" height="3.6" rx="1.8" fill="url(#mgStreak)"/>
+        <path d="M176 118 L179 150 L176 182 L173 150Z" fill="#fff" opacity=".85"/><path d="M224 118 L227 150 L224 182 L221 150Z" fill="#fff" opacity=".85"/>
+        <circle cx="176" cy="150" r="30" fill="url(#mgEye)"/><circle cx="224" cy="150" r="30" fill="url(#mgEye)"/>
+        <path d="M158 150 C166 140 186 140 194 150 C186 160 166 160 158 150Z" fill="#fff" filter="url(#mgGlow)"/><path d="M206 150 C214 140 234 140 242 150 C234 160 214 160 206 150Z" fill="#fff" filter="url(#mgGlow)"/>
+      </g>
+      <g fill="none" stroke="#7a6a96" stroke-width="2.4" stroke-linecap="round"><path d="M156 149 C166 138 188 138 196 149"/><path d="M204 149 C214 138 236 138 244 149"/><path d="M158 146 l-5 -5 M163 142 l-3 -6 M241 146 l5 -5 M236 142 l3 -6" stroke-width="1.6"/></g>
+      <!-- hair framing the face -->
+      <path d="M200 62 C156 66 140 112 146 164 C149 194 140 226 120 252 C152 242 166 214 164 180 C162 140 176 104 200 90Z" fill="url(#mgHair)"/>
+      <path d="M200 62 C244 66 260 112 254 164 C251 194 260 226 280 252 C248 242 234 214 236 180 C238 140 224 104 200 90Z" fill="url(#mgHair)"/>
+      <path d="M200 40 C150 40 132 84 138 120 C150 90 172 72 200 72 C228 72 250 90 262 120 C268 84 250 40 200 40Z" fill="url(#mgHair)"/>
+      <g fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".85"><path d="M170 76 C152 100 150 150 148 190"/><path d="M230 76 C248 100 250 150 252 190"/><path d="M186 70 C170 96 164 140 164 176"/><path d="M214 70 C230 96 236 140 236 176"/></g>
+      <!-- tiara -->
+      <path d="M156 98 C168 80 184 72 200 68 C216 72 232 80 244 98" fill="none" stroke="url(#mgGold)" stroke-width="4.5" stroke-linecap="round"/>
+      <circle cx="200" cy="70" r="8" fill="url(#mgGold)"/><circle cx="200" cy="70" r="5.4" fill="url(#mgOpal)"/>
+      <g fill="url(#mgOpal)" stroke="#d9a84a" stroke-width="1.6"><circle cx="178" cy="78" r="4.2"/><circle cx="222" cy="78" r="4.2"/><circle cx="160" cy="92" r="3.6"/><circle cx="240" cy="92" r="3.6"/></g>
+      <!-- earrings + necklace -->
+      <g><circle cx="147" cy="186" r="3.4" fill="url(#mgGold)"/><path d="M147 190 C140 200 140 210 147 215 C154 210 154 200 147 190Z" fill="url(#mgOpal)" stroke="#d9a84a" stroke-width="1.6"/>
+         <circle cx="253" cy="186" r="3.4" fill="url(#mgGold)"/><path d="M253 190 C246 200 246 210 253 215 C260 210 260 200 253 190Z" fill="url(#mgOpal)" stroke="#d9a84a" stroke-width="1.6"/></g>
+      <path d="M168 232 C176 264 224 264 232 232" fill="none" stroke="url(#mgGold)" stroke-width="2.6" stroke-linecap="round"/>
+      <g fill="url(#mgOpal)" stroke="#d9a84a" stroke-width="1.6"><circle cx="182" cy="254" r="5"/><circle cx="218" cy="254" r="5"/><circle cx="200" cy="262" r="6.4"/></g>
+      <path d="M200 270 C192 281 192 293 200 298 C208 293 208 281 200 270Z" fill="url(#mgOpal)" stroke="#d9a84a" stroke-width="1.8"/>
+    </svg>`;
+
+    /* the temple-and-sea ambience behind her */
+    const scene = () => `<svg viewBox="0 0 400 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs><linearGradient id="msSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fb6e8" stop-opacity="0"/><stop offset="1" stop-color="#7f9be0" stop-opacity=".5"/></linearGradient></defs>
+      <path d="M-40 360 C40 340 110 352 170 346 L170 380 L-40 380Z" fill="#8f9cc8" opacity=".35"/><path d="M230 344 C300 330 360 340 440 330 L440 380 L230 380Z" fill="#8f9cc8" opacity=".3"/>
+      <rect x="-40" y="352" width="480" height="240" fill="url(#msSea)"/>
+      <g fill="none" stroke="#e7efff" stroke-linecap="round" opacity=".45"><path d="M10 392 q18 -6 36 0 t36 0 t36 0"/><path d="M270 410 q18 -6 36 0 t36 0 t36 0"/><path d="M130 440 q18 -6 36 0 t36 0"/></g>
+    </svg>`;
+
+    /* the mermaid fountain: carved basin, rock, blue-tailed mermaid, jets of water */
+    const fountain = () => {
+      const yT = x => 448 + 56 * Math.sqrt(Math.max(0, 1 - ((x - 250) / 242) ** 2));
+      const yB = x => 520 + 52 * Math.sqrt(Math.max(0, 1 - ((x - 250) / 230) ** 2));
+      let flutes = '', swag = '';
+      for (let x = 36; x <= 464; x += 22) flutes += `M${x} ${f(yT(x) + 2)} L${x} ${f(yB(x) - 1)} `;
+      for (let x = 36; x < 464; x += 44) swag += `<path d="M${x} ${f(yT(x) + 22)} q22 22 44 0" fill="none" stroke="#a89d8a" stroke-width="2"/><circle cx="${x + 22}" cy="${f(yT(x + 22) + 36)}" r="3" fill="#cfc6b5" stroke="#a89d8a"/>`;
+      let studs = ''; for (let i = 0; i < 22; i++) { const t = Math.PI * (i / 21); const x = 250 - 232 * Math.cos(t), y = 448 + 55 * Math.sin(t); studs += `<circle cx="${f(x)}" cy="${f(y)}" r="2.4" fill="#fff6e8" stroke="#a89d8a" stroke-width="1"/>`; }
+      return `<svg viewBox="0 0 500 560" aria-hidden="true">
+      <defs>
+        <linearGradient id="mfStone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1ebdf"/><stop offset="1" stop-color="#bfb4a1"/></linearGradient>
+        <linearGradient id="mfStoneD" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a99f8c"/><stop offset=".5" stop-color="#d8cfbd"/><stop offset="1" stop-color="#9c927f"/></linearGradient>
+        <linearGradient id="mfRock" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a39a89"/><stop offset=".5" stop-color="#7c7364"/><stop offset="1" stop-color="#5c5447"/></linearGradient>
+        <linearGradient id="mfWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cdeeff"/><stop offset=".5" stop-color="#7cc3ee"/><stop offset="1" stop-color="#3f89cc"/></linearGradient>
+        <linearGradient id="mfTail" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5f9be6"/><stop offset=".45" stop-color="#2f6cc8"/><stop offset="1" stop-color="#1f4a96"/></linearGradient>
+        <linearGradient id="mfFin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3d7ad6"/><stop offset="1" stop-color="#a7cbf5"/></linearGradient>
+        <linearGradient id="mfHair" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d2b374"/><stop offset=".55" stop-color="#b6965a"/><stop offset="1" stop-color="#8f7340"/></linearGradient>
+        <linearGradient id="mfSkin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6dcc6"/><stop offset="1" stop-color="#e2b496"/></linearGradient>
+        <linearGradient id="mfShell" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff6f0"/><stop offset=".6" stop-color="#f4c4cc"/><stop offset="1" stop-color="#e59bb0"/></linearGradient>
+        <linearGradient id="mfGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0b8"/><stop offset="1" stop-color="#b98b34"/></linearGradient>
+        <pattern id="mfScale" width="15" height="13" patternUnits="userSpaceOnUse"><path d="M0 7 Q7.5 -2 15 7 M-7.5 13.5 Q0 4.5 7.5 13.5 M7.5 13.5 Q15 4.5 22.5 13.5" fill="none" stroke="#a9d0ff" stroke-width="1.5" opacity=".75"/><path d="M0 9 Q7.5 0 15 9" fill="none" stroke="#173f86" stroke-width="1" opacity=".4"/></pattern>
+        <clipPath id="mfWaterClip"><ellipse cx="250" cy="448" rx="204" ry="41"/></clipPath>
+        <filter id="mfGlow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <!-- basin: front wall, carved flutes, scallops, studded rim -->
+      <path d="M8 448 A242 56 0 0 0 492 448 L480 520 A230 52 0 0 1 20 520 Z" fill="url(#mfStoneD)"/>
+      <path d="${flutes}" fill="none" stroke="#9c9280" stroke-width="2" opacity=".75"/>
+      ${swag}
+      <path d="M20 520 A230 52 0 0 0 480 520" fill="none" stroke="#8d8372" stroke-width="3"/>
+      <ellipse cx="250" cy="448" rx="242" ry="56" fill="url(#mfStone)"/>
+      <ellipse cx="250" cy="448" rx="242" ry="56" fill="none" stroke="#9c9280" stroke-width="2"/>
+      ${studs}
+      <ellipse cx="250" cy="448" rx="214" ry="46" fill="#b5ab97"/>
+      <ellipse id="mf-water" cx="250" cy="450" rx="204" ry="41" fill="url(#mfWater)"/>
+      <g clip-path="url(#mfWaterClip)" fill="none" stroke="#fff" stroke-linecap="round" opacity=".55">
+        <path class="mf-wv" d="M60 440 q22 -6 44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0"/><path class="mf-wv w2" d="M70 456 q22 -6 44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0"/><path class="mf-wv w3" d="M90 468 q22 -5 44 0 t44 0 t44 0 t44 0 t44 0 t44 0"/>
+      </g>
+      <ellipse class="mf-rip" cx="250" cy="452" rx="150" ry="28" fill="none" stroke="#fff" stroke-width="2" opacity=".0"/>
+      <!-- the rock -->
+      <path d="M156 452 C160 410 180 376 198 346 C212 322 232 304 250 292 C270 304 288 322 302 346 C320 376 340 410 344 452 C310 462 190 462 156 452Z" fill="url(#mfRock)"/>
+      <g fill="none" stroke="#4f4739" stroke-linecap="round" opacity=".7"><path d="M190 420 C200 396 208 380 220 360"/><path d="M232 330 C240 360 236 390 244 430"/><path d="M276 340 C270 372 282 400 276 434"/><path d="M310 410 C300 384 296 366 286 352"/><path d="M170 436 C180 428 190 426 200 430"/><path d="M300 432 C312 426 324 428 332 434"/></g>
+      <g fill="none" stroke="#c8bfae" stroke-linecap="round" opacity=".6"><path d="M204 400 C212 380 222 366 234 350"/><path d="M262 322 C272 336 282 348 290 364"/></g>
+      <g><path d="M184 438 q4 -10 10 -2 q6 -8 8 4 q-6 4 -18 -2Z" fill="#f4c4cc" stroke="#c98a98"/><path d="M318 440 q4 -10 10 -2 q6 -8 8 4 q-6 4 -18 -2Z" fill="#f6d9a8" stroke="#c9a05a"/><path d="M230 442 l5 -12 l5 12 l-10 -8 l10 0Z" fill="#ff9a7a"/></g>
+      <!-- water jets and cascades -->
+      <g fill="none" stroke="#e8f7ff" stroke-linecap="round">
+        <path class="mf-jet" d="M214 372 C176 356 150 392 140 446" stroke-width="3" opacity=".85"/><path class="mf-jet j2" d="M286 372 C324 356 350 392 360 446" stroke-width="3" opacity=".85"/>
+        <path class="mf-jet j3" d="M226 392 C204 396 188 420 180 448" stroke-width="2.4" opacity=".7"/><path class="mf-jet j4" d="M274 392 C296 396 312 420 320 448" stroke-width="2.4" opacity=".7"/>
+        <path class="mf-jet j5" d="M250 330 C238 340 232 380 230 440" stroke-width="2" opacity=".55"/><path class="mf-jet j6" d="M250 330 C262 340 268 380 270 440" stroke-width="2" opacity=".55"/>
+      </g>
+      <!-- the mermaid -->
+      <g id="mf-mermaid">
+        <!-- long dirty-blonde hair behind her -->
+        <path d="M232 80 C206 84 196 130 204 176 C210 214 200 252 214 296 C222 280 224 262 230 248 C236 266 244 280 246 300 C254 270 262 252 270 236 C282 250 292 262 296 286 C306 246 304 200 292 160 C284 124 274 84 252 78Z" fill="url(#mfHair)"/>
+        <g fill="none" stroke="#e6cf94" stroke-linecap="round" opacity=".75"><path d="M222 100 C212 150 218 210 210 280"/><path d="M236 92 C226 150 232 220 228 266"/><path d="M282 112 C292 160 292 220 284 276" /><path d="M270 92 C280 140 282 200 272 250"/></g>
+        <!-- tail: french blue, scaled, S-curve over the rock -->
+        <path id="mf-tail" d="M236 236 C226 270 230 302 252 326 C270 346 268 372 246 392 L266 398 C292 380 296 352 282 330 C270 308 272 270 264 236Z" fill="url(#mfTail)"/>
+        <path d="M236 236 C226 270 230 302 252 326 C270 346 268 372 246 392 L266 398 C292 380 296 352 282 330 C270 308 272 270 264 236Z" fill="url(#mfScale)"/>
+        <path d="M236 236 C226 270 230 302 252 326 C270 346 268 372 246 392" fill="none" stroke="#173f86" stroke-width="1.6" opacity=".6"/>
+        <path d="M246 392 C224 404 204 424 198 452 C224 444 242 440 252 420 C262 444 284 448 306 452 C300 426 284 406 266 398Z" fill="url(#mfFin)"/>
+        <g fill="none" stroke="#e4f0ff" stroke-linecap="round" opacity=".7"><path d="M246 392 C232 414 218 432 206 446"/><path d="M252 404 C250 424 248 436 250 446"/><path d="M262 400 C272 420 288 436 300 446"/></g>
+        <!-- torso, arms -->
+        <path d="M228 128 C222 160 230 200 236 238 L264 238 C270 200 278 160 272 128 C262 122 238 122 228 128Z" fill="url(#mfSkin)"/>
+        <path d="M250 226 q-2 3 0 5" fill="none" stroke="#c99a80" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M229 132 C212 160 212 198 222 228" fill="none" stroke="#e2b496" stroke-width="12" stroke-linecap="round"/><path d="M229 132 C212 160 212 198 222 228" fill="none" stroke="url(#mfSkin)" stroke-width="9" stroke-linecap="round"/>
+        <path d="M271 132 C292 140 298 112 282 92" fill="none" stroke="#e2b496" stroke-width="11" stroke-linecap="round"/><path d="M271 132 C292 140 298 112 282 92" fill="none" stroke="url(#mfSkin)" stroke-width="8" stroke-linecap="round"/>
+        <!-- shell held at her ear -->
+        <path d="M274 84 C268 74 280 66 290 72 C298 78 296 90 288 94 C280 96 274 90 274 84Z" fill="url(#mfShell)" stroke="#c98a98" stroke-width="1.4"/><path d="M280 76 C284 80 286 86 284 90 M286 74 C290 80 292 86 290 92" fill="none" stroke="#c98a98" stroke-width="1"/>
+        <!-- seashell bikini top -->
+        <path d="M232 148 C226 164 238 178 250 170 C250 156 244 146 232 148Z" fill="url(#mfShell)" stroke="#c98a98" stroke-width="1.4"/><path d="M268 148 C274 164 262 178 250 170 C250 156 256 146 268 148Z" fill="url(#mfShell)" stroke="#c98a98" stroke-width="1.4"/>
+        <g fill="none" stroke="#d9a0ae" stroke-width="1" stroke-linecap="round"><path d="M236 152 C236 160 242 166 246 168"/><path d="M240 150 C241 158 245 164 248 167"/><path d="M264 152 C264 160 258 166 254 168"/><path d="M260 150 C259 158 255 164 252 167"/></g>
+        <path d="M233 148 C238 134 262 134 267 148" fill="none" stroke="url(#mfGold)" stroke-width="2" stroke-linecap="round"/><circle cx="250" cy="171" r="2.6" fill="url(#mfGold)"/>
+        <!-- head -->
+        <ellipse cx="250" cy="90" rx="17" ry="21" fill="url(#mfSkin)"/>
+        <path d="M233 84 C233 64 248 58 262 62 C270 66 270 78 268 88 C262 78 246 74 233 84Z" fill="url(#mfHair)"/>
+        <path d="M242 94 q3 2 6 0 M254 94 q3 2 6 0" fill="none" stroke="#7a5a48" stroke-width="1.4" stroke-linecap="round"/><path d="M246 104 q4 3 8 0" fill="none" stroke="#c46a7e" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M244 62 C238 54 240 48 246 50 M254 60 C252 52 256 48 262 52" fill="none" stroke="#e6cf94" stroke-width="1.2" opacity=".7"/>
+      </g>
+      <!-- sparkles on the water -->
+      <g fill="#fff"><circle class="mf-sp" cx="120" cy="446" r="2.4"/><circle class="mf-sp s2" cx="372" cy="452" r="2.2"/><circle class="mf-sp s3" cx="300" cy="470" r="2"/><circle class="mf-sp s4" cx="190" cy="474" r="2"/></g>
+    </svg>`;
+    };
+
+    /* the token: a pewter-rimmed bronze pendant with an engraved pair of mermaids */
+    const coin = () => {
+      let stars = ''; for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2, x = 60 + 43 * Math.cos(a), y = 80 + 43 * Math.sin(a); stars += `<path d="M${f(x)} ${f(y - 3.4)} l1 2.4 2.6 .2 -2 1.7 .7 2.6 -2.3 -1.4 -2.3 1.4 .7 -2.6 -2 -1.7 2.6 -.2z" fill="#d8c496" opacity=".9" transform="rotate(${f(a * 57.3 + 90)} ${f(x)} ${f(y)})"/>`; }
+      return `<svg viewBox="0 0 120 140" aria-hidden="true">
+      <defs><radialGradient id="mcFace" cx="35%" cy="30%" r="85%"><stop offset="0" stop-color="#b79c70"/><stop offset=".6" stop-color="#8b7650"/><stop offset="1" stop-color="#6b5a3e"/></radialGradient>
+        <linearGradient id="mcRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a8780"/><stop offset=".5" stop-color="#2f2d29"/><stop offset="1" stop-color="#6a6862"/></linearGradient></defs>
+      <circle cx="60" cy="15" r="10.5" fill="none" stroke="url(#mcRim)" stroke-width="5"/>
+      <circle cx="60" cy="80" r="58" fill="url(#mcRim)"/><circle cx="60" cy="80" r="53" fill="#c9c6bd" opacity=".55"/>
+      <circle cx="60" cy="80" r="51" fill="url(#mcFace)"/><circle cx="60" cy="80" r="47.5" fill="none" stroke="#5a4a32" stroke-width="1.2" opacity=".7"/>
+      ${stars}
+      <circle cx="60" cy="80" r="36" fill="none" stroke="#5a4a32" stroke-width="1.2" opacity=".7"/>
+      <g fill="none" stroke="#3f3322" stroke-width="1.6" stroke-linecap="round" opacity=".8"><path d="M30 70 q7 -4 14 0 t14 0 t14 0 t14 0"/><path d="M28 78 q7 -4 14 0 t14 0 t14 0 t14 0" opacity=".7"/><path d="M32 86 q7 -4 14 0 t14 0 t14 0"/></g>
+      <g fill="#e0cfa4" stroke="#4a3b26" stroke-width="1.1" stroke-linejoin="round">
+        <circle cx="80" cy="64" r="3.6"/><path d="M78 68 C74 78 70 86 62 92 C56 96 46 94 40 90 C46 92 52 88 56 84 C64 78 70 74 74 66Z"/><path d="M40 90 C34 88 30 92 28 98 C34 96 38 96 44 94Z"/>
+        <circle cx="50" cy="60" r="3.4"/><path d="M52 64 C56 74 60 82 68 88 C74 92 84 90 90 86 C84 88 78 84 74 80 C66 74 60 70 56 62Z"/><path d="M90 86 C96 84 100 88 102 94 C96 92 92 92 86 90Z"/>
+      </g>
+      <path d="M78 62 C70 56 64 56 58 60 M52 58 C58 52 64 52 70 56" fill="none" stroke="#e0cfa4" stroke-width="1.2" opacity=".7"/>
+      <path d="M34 54 C48 40 74 38 90 52" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".28"/></svg>`;
+    };
+
+    return { goddess, scene, fountain, coin };
+  })();
+
+  /* ===== 7. the wish: a goddess, a mermaid fountain, and a coin to flick ===== */
+  let mfGen = 0, mfSound = true, actx = null;           // (mf, the overlay itself, is declared at the top)
+  function unlockAudio() {
+    try { if (!actx) { const AC = window.AudioContext || window.webkitAudioContext; if (AC) actx = new AC(); } if (actx && actx.state === 'suspended') actx.resume(); } catch (_) {}
+  }
+  const tone = (freq, dur, type = 'square', gain = .03, when = 0, slide = 0) => {
+    if (!actx || !mfSound) return;
+    const t = actx.currentTime + when, o = actx.createOscillator(), g = actx.createGain();
+    o.type = type; o.frequency.setValueAtTime(freq, t); if (slide) o.frequency.exponentialRampToValueAtTime(Math.max(30, freq * slide), t + dur);
+    g.gain.setValueAtTime(gain, t); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    o.connect(g).connect(actx.destination); o.start(t); o.stop(t + dur + .03);
+  };
+  const noise = (dur, gain = .1, freq = 800, q = .8, when = 0) => {
+    if (!actx || !mfSound) return;
+    const n = Math.floor(actx.sampleRate * dur), buf = actx.createBuffer(1, n, actx.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    const s = actx.createBufferSource(), flt = actx.createBiquadFilter(), g = actx.createGain(), t = actx.currentTime + when;
+    s.buffer = buf; flt.type = 'bandpass'; flt.frequency.value = freq; flt.Q.value = q; g.gain.setValueAtTime(gain, t);
+    s.connect(flt).connect(g).connect(actx.destination); s.start(t);
+  };
+  const sfx = {
+    blip: () => tone(520 + Math.random() * 90, .03, 'square', .026),
+    whoosh: () => noise(.3, .05, 1500, .6),
+    ting: () => { tone(1568, .2, 'triangle', .05); tone(2093, .26, 'triangle', .035, .05); },
+    plop: () => { noise(.18, .16, 520, 1); tone(240, .14, 'sine', .07, 0, .5); },
+    chime: () => [880, 1109, 1319, 1760, 2217].forEach((f, i) => tone(f, .5, 'sine', .05, i * .1)),
+    miss: () => tone(180, .18, 'sawtooth', .025, 0, .6)
+  };
+
+  const MF_LINES = {
+    ask: 'To manifest this for Han... please throw a penny in the fountain',
+    flick: 'Flick the coin up into the fountain!',
+    short: 'A little farther...',
+    far: 'Whoa, not so hard!',
+    wide: 'Aim for the fountain!',
+    ting: 'Ting! A lucky bounce!',
+    done: 'Your wish has been heard... now go make it happen, Han!'
+  };
+
+  function startManifest() {
+    if (mf) return;
+    unlockAudio();
+    const gen = ++mfGen, alive = () => gen === mfGen && mf, later = (ms, fn) => setTimeout(() => { if (alive()) fn(); }, ms);
+    const motes = Array.from({ length: reduced ? 0 : 34 }, () => `<i style="--x:${(Math.random() * 100).toFixed(1)}%;--dx:${((Math.random() - .5) * 160).toFixed(0)}px;--t:${(9 + Math.random() * 9).toFixed(1)}s;--d:${(-Math.random() * 16).toFixed(1)}s"></i>`).join('');
+    mf = document.createElement('div'); mf.id = 'mf'; mf.setAttribute('role', 'dialog'); mf.setAttribute('aria-modal', 'true'); mf.setAttribute('aria-label', 'Make a wish');
+    mf.innerHTML = `
+      <div class="mf-bg"></div><div class="mf-rays"></div><div class="mf-motes">${motes}</div>
+      <div class="mf-ft">${MF_ART.fountain()}</div>
+      <div class="mf-gd"><div class="mf-scene">${MF_ART.scene()}</div><div class="mf-aura"></div><div class="mf-halo"></div><div class="mf-fig">${MF_ART.goddess()}</div></div>
+      <div class="mf-fx"></div><i class="mf-flash"></i>
+      <div class="mf-box" role="status" aria-live="polite"><i class="cn a"></i><i class="cn b"></i><i class="cn c"></i><i class="cn d"></i><span class="mf-text"></span><i class="mf-next">&#9660;</i></div>
+      <button type="button" class="mf-coin" aria-label="Wish coin. Flick it up into the fountain, or press Enter to toss it.">${MF_ART.coin()}</button>
+      <div class="mf-actions"><button type="button" class="mf-toss" hidden>Toss it for me</button><button type="button" class="mf-again" hidden>Make another wish</button><button type="button" class="mf-back" hidden>Back to the stars</button></div>
+      <button type="button" class="mf-snd" aria-label="Sound on" aria-pressed="true">&#9835;</button><button type="button" class="mf-x" aria-label="Close">&times;</button>`;
+    document.body.append(mf); root.classList.add('mf-open'); setTheme();
+    const $ = s => mf.querySelector(s), text = $('.mf-text'), box = $('.mf-box'), coin = $('.mf-coin'), coinSvg = coin.querySelector('svg'), fx = $('.mf-fx'), ft = $('.mf-ft'), gd = $('.mf-gd');
+    const tossBtn = $('.mf-toss'), againBtn = $('.mf-again'), backBtn = $('.mf-back');
+
+    /* Zelda-style typewriter */
+    let typing = 0;
+    const say = (msg, done, speed = 46) => {
+      const id = ++typing; text.textContent = ''; box.classList.remove('wait'); let i = 0;
+      if (reduced) { text.textContent = msg; box.classList.add('wait'); if (done) done(); return; }
+      const step = () => {
+        if (!alive() || id !== typing) return;
+        text.textContent = msg.slice(0, ++i); const ch = msg[i - 1];
+        if (ch !== ' ' && i % 2) sfx.blip();
+        if (i >= msg.length) { box.classList.add('wait'); if (done) done(); return; }
+        setTimeout(step, /[.,!?]/.test(ch) ? speed * 5 : speed);
+      };
+      step();
+    };
+
+    /* geometry: where the coin lives and where the water is */
+    let homeX = 0, homeY = 0, cx = 0, cy = 0, ready = false, busy = false;
+    const place = (x, y, s = 1) => { cx = x; cy = y; coin.style.transform = `translate(${x - coin.offsetWidth / 2}px, ${y - coin.offsetHeight / 2}px) scale(${s})`; };
+    const layout = () => {
+      const r = ft.getBoundingClientRect(), portrait = innerHeight > innerWidth;
+      homeX = portrait ? innerWidth * .68 : r.left + r.width * .5; homeY = innerHeight - coin.offsetHeight * .62 - 6;
+      if (!busy) place(homeX, homeY);
+    };
+    const water = () => {
+      const r = $('#mf-water').getBoundingClientRect(), t = ft.getBoundingClientRect();
+      return { cx: r.left + r.width / 2, cy: r.top + r.height / 2, rx: r.width / 2, ry: r.height / 2, top: t.top, statue: { l: t.left + t.width * .43, r: t.left + t.width * .58, t: t.top + t.height * .6, b: r.top + r.height * .1 } };   // the rocks just above the water: a mild overshoot bounces in
+    };
+
+    /* splash and ripples */
+    const burst = (x, y, big) => {
+      for (let k = 0; k < (big ? 3 : 1); k++) { const rp = document.createElement('i'); rp.className = 'mf-rp'; rp.style.cssText = `left:${x}px;top:${y}px;animation-delay:${k * .22}s`; fx.append(rp); setTimeout(() => rp.remove(), 2200); }
+      if (reduced) return;
+      for (let k = 0; k < (big ? 22 : 8); k++) {
+        const d = document.createElement('i'); d.className = 'mf-dr'; d.style.cssText = `left:${x}px;top:${y}px`; fx.append(d);
+        const dx = (Math.random() - .5) * (big ? 220 : 90), up = 60 + Math.random() * (big ? 150 : 60);
+        d.animate([{ transform: 'translate(0,0) scale(1)', opacity: 1 }, { transform: `translate(${dx * .5}px,${-up}px) scale(1)`, opacity: 1, offset: .45 }, { transform: `translate(${dx}px,20px) scale(.4)`, opacity: 0 }],
+          { duration: 750 + Math.random() * 350, easing: 'cubic-bezier(.3,.6,.5,1)' }).finished.then(() => d.remove(), () => d.remove());
+      }
+    };
+
+    /* the toss: an arc that shrinks into the screen as the coin flies away */
+    const fly = (S, E, ms, after) => {
+      busy = true; coin.classList.add('fly'); sfx.whoosh();
+      const len = Math.hypot(E.x - S.x, E.y - S.y), C = { x: (S.x + E.x) / 2, y: Math.min(S.y, E.y) - Math.max(60, len * .34) }, t0 = performance.now();
+      const frame = now => {
+        if (!alive()) return;
+        const u = clamp((now - t0) / ms, 0, 1), a = (1 - u) * (1 - u), b = 2 * (1 - u) * u, c = u * u;
+        const x = a * S.x + b * C.x + c * E.x, y = a * S.y + b * C.y + c * E.y, s = 1 - .58 * Math.pow(u, .85);
+        place(x, y, s); coinSvg.style.transform = reduced ? '' : `scaleX(${Math.cos(u * 11 * Math.PI).toFixed(3)})`;
+        if (u < 1) requestAnimationFrame(frame); else { coinSvg.style.transform = ''; after(); }
+      };
+      requestAnimationFrame(frame);
+    };
+    const resetCoin = () => {
+      busy = false; coin.classList.remove('fly', 'gone'); coin.style.transition = 'none'; place(homeX, homeY, .4); void coin.offsetWidth; coin.style.transition = '';
+      coin.classList.add('show'); place(homeX, homeY, 1);
+    };
+
+    const land = E => {
+      const W = water(), dx = (E.x - W.cx) / (W.rx * .85), dy = (E.y - (W.cy + W.ry * .1)) / (W.ry * 1.7);
+      const onStatue = E.x > W.statue.l && E.x < W.statue.r && E.y > W.statue.t && E.y < W.statue.b, hitWater = dx * dx + dy * dy <= 1;
+      if (hitWater || onStatue) {
+        const fin = onStatue ? { x: W.cx + (Math.random() - .5) * W.rx * .4, y: W.cy + W.ry * .1 } : E;
+        const sink = () => {
+          sfx.plop(); burst(fin.x, fin.y, true); mf.classList.remove('win'); void mf.offsetWidth; mf.classList.add('win'); coin.classList.add('gone'); ft.classList.remove('glow'); void ft.offsetWidth; ft.classList.add('glow'); gd.classList.add('flash'); sfx.chime();
+          later(600, () => coin.classList.remove('show'));
+          later(1000, () => say(MF_LINES.done, () => { againBtn.hidden = false; backBtn.hidden = false; backBtn.focus({ preventScroll: true }); }));
+        };
+        tossBtn.hidden = true;
+        if (onStatue) { sfx.ting(); say(MF_LINES.ting, null, 22); fly(E, fin, 420, sink); } else sink();
+      } else {
+        sfx.miss(); burst(E.x, E.y, false); coin.classList.add('gone');
+        say(E.y > W.cy + W.ry * 1.7 ? MF_LINES.short : E.y < W.cy - W.ry * 1.7 ? MF_LINES.far : MF_LINES.wide, null, 24);
+        later(900, resetCoin);
+      }
+    };
+    const toss = (vx, vy, speed) => {
+      const W = water(), D = Math.hypot(W.cx - homeX, W.cy - homeY), len = Math.hypot(vx, vy) || 1, dist = speed * (D / 1.3);
+      const S = { x: cx, y: cy }, E = { x: homeX + vx / len * dist, y: homeY + vy / len * dist };   // lands by flick speed and direction, from where the coin started
+      fly(S, E, 860, () => land(E));
+    };
+    const autoToss = () => {
+      if (!ready || busy) return;
+      const W = water(), jx = (Math.random() - .5) * W.rx * .7, E = { x: W.cx + jx, y: W.cy };
+      fly({ x: cx, y: cy }, E, 860, () => land(E));
+    };
+
+    /* drag and flick, like throwing a ball in a catching game */
+    let drag = null;
+    coin.addEventListener('pointerdown', e => {
+      if (!ready || busy) return;
+      drag = { id: e.pointerId, s: [{ x: e.clientX, y: e.clientY, t: performance.now() }], moved: false };
+      try { coin.setPointerCapture(e.pointerId); } catch (_) {} coin.classList.add('grab'); e.preventDefault();
+    });
+    coin.addEventListener('pointermove', e => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const p = { x: e.clientX, y: e.clientY, t: performance.now() }; drag.s.push(p); if (drag.s.length > 12) drag.s.shift(); drag.moved = true;
+      coin.style.transition = 'none'; place(clamp(p.x, 30, innerWidth - 30), clamp(p.y, 30, innerHeight - 20));
+    });
+    const release = e => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const d = drag; drag = null; coin.classList.remove('grab'); coin.style.transition = '';
+      const now = performance.now(), z = d.s[d.s.length - 1];
+      let i = d.s.length - 1; while (i > 0 && z.t - d.s[i - 1].t < 120) i--;           // the last ~120ms of the drag, measured to its final sample
+      const a = d.s[Math.min(i, Math.max(0, d.s.length - 2))], dt = Math.max(16, z.t - a.t);
+      const stopped = now - z.t > 140;                                                  // held still before letting go: not a flick
+      const vx = (z.x - a.x) / dt, vy = (z.y - a.y) / dt, sp = Math.min(2.6, Math.hypot(vx, vy));
+      if (!stopped && d.moved && vy < -.22 && sp > .34) toss(vx, vy, sp);
+      else { place(homeX, homeY); if (d.moved) say(MF_LINES.flick, null, 24); }
+    };
+    coin.addEventListener('pointerup', release); coin.addEventListener('pointercancel', release);
+    coin.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); autoToss(); } });
+    tossBtn.addEventListener('click', autoToss);
+    againBtn.addEventListener('click', () => { againBtn.hidden = backBtn.hidden = true; gd.classList.remove('flash'); mf.classList.remove('win'); tossBtn.hidden = false; resetCoin(); say(MF_LINES.flick, null, 30); });
+
+    backBtn.addEventListener('click', () => closeManifest()); $('.mf-x').addEventListener('click', () => closeManifest());
+    $('.mf-snd').addEventListener('click', e => { mfSound = !mfSound; const b = e.currentTarget; b.setAttribute('aria-pressed', String(mfSound)); b.setAttribute('aria-label', mfSound ? 'Sound on' : 'Sound off'); b.classList.toggle('off', !mfSound); });
+    mf.addEventListener('keydown', e => { if (e.key === 'Escape') closeManifest(); });
+    addEventListener('resize', layout); mf._layout = layout;
+
+    /* the sequence: darkness, light, the goddess rises, she speaks, the fountain appears behind her */
+    requestAnimationFrame(() => { if (!alive()) return; mf.classList.add('in'); $('.mf-x').focus({ preventScroll: true }); });
+    later(reduced ? 200 : 1500, () => mf.classList.add('g'));
+    later(reduced ? 400 : 4300, () => {
+      box.classList.add('show');
+      say(MF_LINES.ask, () => later(reduced ? 300 : 1100, () => {
+        mf.classList.add('s2'); layout();
+        later(reduced ? 300 : 2300, () => { layout(); ready = true; coin.classList.add('show'); tossBtn.hidden = false; place(homeX, homeY); say(MF_LINES.flick, null, 34); });
+      }));
+    });
+  }
+
+  function closeManifest(instant) {
+    if (!mf) return;
+    mfGen++; const el = mf; mf = null; setTheme(); root.classList.remove('mf-open'); removeEventListener('resize', el._layout);
+    if (instant || reduced) el.remove(); else { el.classList.add('out'); setTimeout(() => el.remove(), 700); }
+    const b = document.querySelector('.gs-wish'); if (b) b.focus({ preventScroll: true });
+  }
+
   /* ===== wire up: react whenever the page is swapped ===== */
   function sync() {
     setTheme();
@@ -4483,8 +5040,10 @@ document.addEventListener('error', function (e) {
     if (box) { if (!box.dataset.ready) { box.dataset.ready = '1'; buildGame(box); } startCosmos(); }
     else stopCosmos();
     if (!view.querySelector('#jam-btn') && jamEl) jamCleanup();   // left the page mid-party
-    if (lb && !view.querySelector('.art-grid')) lbClose(true);   // left the art page with the viewer open
+    if (lb && !view.querySelector('.art-grid')) lbClose(true);
+    if (mf && !view.querySelector('#stars-game')) closeManifest(true);   // left the goals page mid-wish   // left the art page with the viewer open
   }
+  addEventListener('resize', () => { const gb = view.querySelector('#stars-game'); if (gb && gb.dataset.ready && !mf && gsMode !== (innerWidth <= 900 ? 'v' : 'w')) buildGame(gb); });
   addEventListener('resize', () => { const pz = view.querySelector('#logo-puzzle'); if (pz && pz.dataset.ready && pzMode !== (innerWidth <= 640 ? 's' : 'w')) buildPuzzle(pz); });
   let skyTick = 0;
   function skyFade() {
