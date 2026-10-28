@@ -730,11 +730,23 @@
   .card.mo:is(:hover, .touch-on) .moship { animation: mobob 1.3s ease-in-out infinite alternate; }
   .card.mo:is(:hover, .touch-on) .motower { animation: mopulse 1s ease-in-out infinite alternate; }
   .card.mo:is(:hover, .touch-on) .molights { animation: mopulse .8s ease-in-out infinite alternate; }
-  .card.tx .txstar { transform-box: fill-box; transform-origin: center; }
-  .card.tx .txpin, .card.tx .txbb { transform-box: view-box; }
-  .card.tx:is(:hover, .touch-on) .txstar { animation: gempulse 1.2s ease-in-out infinite alternate; }
-  .card.tx:is(:hover, .touch-on) .txpin { animation: pinhop .5s ease-in-out infinite alternate; }
-  .card.tx:is(:hover, .touch-on) .txbb { animation: lemonsway 1.6s ease-in-out infinite alternate; }
+  .card.tx .txhorse, .card.tx .txrider, .card.tx .txfl, .card.tx .txbl, .card.tx .txtail { transform-box: view-box; }
+  .card.tx .txdust circle { transform-box: fill-box; transform-origin: center; }
+  .card.tx .txloop { transform-box: view-box; }
+  .card.tx .txsun { transform-box: fill-box; transform-origin: center; }
+  .card.tx:is(:hover, .touch-on) .txhorse { animation: txbob .3s ease-in-out infinite alternate; }
+  .card.tx:is(:hover, .touch-on) .txrider { animation: txbob .3s ease-in-out infinite alternate-reverse; }
+  .card.tx:is(:hover, .touch-on) .txfl { animation: txleg .3s ease-in-out infinite alternate; }
+  .card.tx:is(:hover, .touch-on) .txbl { animation: txleg .3s ease-in-out infinite alternate-reverse; }
+  .card.tx:is(:hover, .touch-on) .txtail { animation: txleg .35s ease-in-out infinite alternate; }
+  .card.tx:is(:hover, .touch-on) .txloop { animation: txspin .8s linear infinite; }
+  .card.tx:is(:hover, .touch-on) .txsun { animation: gempulse 1.6s ease-in-out infinite alternate; }
+  .card.tx:is(:hover, .touch-on) .txdust circle { animation: txdust .7s ease-out infinite; }
+  .card.tx:is(:hover, .touch-on) .txdust .d2 { animation-delay: -.25s; } .card.tx:is(:hover, .touch-on) .txdust .d3 { animation-delay: -.5s; }
+  @keyframes txbob { from { transform: translateY(0); } to { transform: translateY(-3px); } }
+  @keyframes txleg { from { transform: rotate(-12deg); } to { transform: rotate(12deg); } }
+  @keyframes txspin { to { transform: rotate(360deg); } }
+  @keyframes txdust { from { opacity: .6; transform: translateX(0) scale(.8); } to { opacity: 0; transform: translateX(-16px) scale(1.5); } }
   @keyframes mobob { from { transform: translateY(0) rotate(-.6deg); } to { transform: translateY(-2px) rotate(.6deg); } }
   @keyframes mopulse { from { opacity: .45; } to { opacity: 1; } }
   @keyframes mocoast { 0% { transform: translate(0.0px, 0.0px) rotate(-27deg); } 6% { transform: translate(9.3px, -4.7px) rotate(-41deg); } 12% { transform: translate(17.2px, -15.0px) rotate(-52deg); } 19% { transform: translate(25.6px, -25.3px) rotate(-39deg); } 25% { transform: translate(36.0px, -30.0px) rotate(3deg); } 31% { transform: translate(45.8px, -24.4px) rotate(46deg); } 38% { transform: translate(53.2px, -12.0px) rotate(58deg); } 44% { transform: translate(61.0px, 0.4px) rotate(44deg); } 50% { transform: translate(72.0px, 6.0px) rotate(4deg); } 56% { transform: translate(82.7px, 1.9px) rotate(-36deg); } 62% { transform: translate(89.8px, -7.0px) rotate(-52deg); } 69% { transform: translate(96.5px, -15.9px) rotate(-39deg); } 75% { transform: translate(106.0px, -20.0px) rotate(-3deg); } 81% { transform: translate(115.3px, -16.9px) rotate(34deg); } 88% { transform: translate(120.8px, -10.0px) rotate(57deg); } 94% { transform: translate(124.3px, -3.1px) rotate(54deg); } 100% { transform: translate(128.0px, 0.0px) rotate(40deg); } }
@@ -3676,18 +3688,38 @@ function makeMissouri() {
 }
 function makeTexas() {
   return `
-<svg viewBox="0 0 200 200" role="img" aria-label="The state of Texas in red with a white lone star, a purple pin for Austin and bluebonnets">
-  <defs><linearGradient id="txsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fb2ea"/><stop offset="1" stop-color="#ffe2b8"/></linearGradient></defs>
+<svg viewBox="0 0 200 200" role="img" aria-label="Hannah, a cowgirl with light brown hair and white cowgirl boots, riding a horse and swinging a lasso toward a Texas sunset">
+  <defs>
+    <linearGradient id="txsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8322e"/><stop offset=".45" stop-color="#ff7a3a"/><stop offset=".8" stop-color="#ffc24a"/><stop offset="1" stop-color="#ffe58a"/></linearGradient>
+    <radialGradient id="txsun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fffbe0"/><stop offset=".6" stop-color="#ffe27a"/><stop offset="1" stop-color="#ffb43c"/></radialGradient>
+  </defs>
   <rect width="200" height="200" fill="url(#txsky)"/>
-  <g fill="#fff" opacity=".85"><ellipse cx="38" cy="30" rx="18" ry="6"/><ellipse cx="50" cy="26" rx="12" ry="6"/><ellipse cx="162" cy="44" rx="16" ry="5"/><ellipse cx="172" cy="40" rx="10" ry="5"/></g>
-  <path d="M70 26 L100 26 L100 48 L128 48 L136 54 L152 56 L160 68 L162 84 L158 102 L152 120 L140 136 L126 152 L116 166 L106 162 L96 144 L82 134 L68 126 L56 110 L46 100 L40 92 L70 92 Z" fill="#e0523c" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
-  <path class="txstar" d="M96 66 l4.4 9.6 l10.4 1.2 l-7.8 7 l2.2 10.2 l-9.2 -5.2 l-9.2 5.2 l2.2 -10.2 l-7.8 -7 l10.4 -1.2 Z" fill="#fff"/>
-  <g class="txpin"><path d="M112 98 C106 98 102 103 102 108 C102 116 112 124 112 124 C112 124 122 116 122 108 C122 103 118 98 112 98 Z" fill="#8458B3" stroke="#fff" stroke-width="1.6"/><circle cx="112" cy="108" r="3.6" fill="#E5EAF5"/></g>
-  <path d="M0 200 L0 170 Q50 158 100 168 T200 164 L200 200 Z" fill="#6aa04a"/><path d="M0 184 Q60 174 110 182 T200 180 L200 200 L0 200 Z" fill="#558a3c"/>
-  <g class="txbb" style="transform-origin:34px 188px" stroke-linecap="round"><path d="M34 188 L34 170" stroke="#3f7a35" stroke-width="2"/><g fill="#4a6fe0"><circle cx="34" cy="166" r="3.4"/><circle cx="30" cy="171" r="3"/><circle cx="38" cy="171" r="3"/><circle cx="34" cy="174" r="2.8"/></g><circle cx="34" cy="166" r="1.2" fill="#fff"/></g>
-  <g class="txbb" style="transform-origin:62px 190px" stroke-linecap="round"><path d="M62 190 L62 174" stroke="#3f7a35" stroke-width="2"/><g fill="#5b7df0"><circle cx="62" cy="170" r="3.2"/><circle cx="58" cy="175" r="2.8"/><circle cx="66" cy="175" r="2.8"/></g><circle cx="62" cy="170" r="1.1" fill="#fff"/></g>
-  <g class="txbb" style="transform-origin:150px 190px" stroke-linecap="round"><path d="M150 190 L150 170" stroke="#3f7a35" stroke-width="2"/><g fill="#4a6fe0"><circle cx="150" cy="166" r="3.4"/><circle cx="146" cy="171" r="3"/><circle cx="154" cy="171" r="3"/><circle cx="150" cy="174" r="2.8"/></g><circle cx="150" cy="166" r="1.2" fill="#fff"/></g>
-  <g class="txbb" style="transform-origin:174px 190px" stroke-linecap="round"><path d="M174 190 L174 174" stroke="#3f7a35" stroke-width="2"/><g fill="#5b7df0"><circle cx="174" cy="170" r="3.2"/><circle cx="170" cy="175" r="2.8"/><circle cx="178" cy="175" r="2.8"/></g><circle cx="174" cy="170" r="1.1" fill="#fff"/></g>
+  <g class="txsun"><circle cx="150" cy="126" r="52" fill="#ffd25a" opacity=".28"/><circle cx="150" cy="126" r="30" fill="url(#txsun)"/></g>
+  <path d="M0 152 L0 134 L16 134 L20 124 L44 124 L48 134 L62 134 L66 144 L90 144 L94 136 L112 136 L116 146 L200 146 L200 152 Z" fill="#8f2f2c" opacity=".75"/>
+  <path d="M168 150 L174 130 L196 130 L200 136 L200 150 Z" fill="#7a2428" opacity=".8"/>
+  <g fill="#5a1d28"><rect x="22" y="128" width="5" height="26" rx="2.5"/><path d="M22 138 q-8 0 -8 -9 q0 -3 3 -3 q2 0 2 3 q0 5 3 5 Z"/><path d="M27 134 q8 0 8 -8 q0 -3 -3 -3 q-2 0 -2 3 q0 4 -3 4 Z"/></g>
+  <path d="M0 200 L0 150 Q100 142 200 150 L200 200 Z" fill="#4a1c26"/><path d="M0 150 Q100 142 200 150" fill="none" stroke="#a8473a" stroke-width="1.6" opacity=".8"/>
+  <g class="txdust" fill="#f3c99a"><circle class="d1" cx="46" cy="162" r="5" opacity=".6"/><circle class="d2" cx="36" cy="166" r="4" opacity=".5"/><circle class="d3" cx="26" cy="163" r="3" opacity=".4"/></g>
+  <g class="txhorse">
+    <g class="txtail" style="transform-origin:66px 132px"><path d="M66 130 C54 126 46 134 34 130 C42 140 52 142 40 148 C54 150 62 142 68 138 Z" fill="#4a2616"/></g>
+    <g class="txbl" style="transform-origin:76px 146px" stroke="#a85c32" stroke-width="6" stroke-linecap="round" fill="none"><path d="M76 146 L60 158 L50 154"/><path d="M82 148 L72 162 L64 166"/><circle cx="50" cy="154" r="3" fill="#2a1410" stroke="none"/><circle cx="64" cy="166" r="3" fill="#2a1410" stroke="none"/></g>
+    <path d="M64 138 C64 126 76 122 92 123 L116 124 C124 124 128 128 128 136 C128 148 118 152 104 152 L82 152 C70 152 64 148 64 138 Z" fill="#b5683a"/>
+    <path d="M114 128 L132 104 L144 108 L130 138 Z" fill="#b5683a"/>
+    <path d="M134 102 Q150 96 158 112 L154 119 Q144 116 138 112 Z" fill="#b5683a"/><path d="M135 103 L134 94 L140 100 Z" fill="#8f4c28"/><circle cx="147" cy="107" r="1.4" fill="#2a1410"/><circle cx="156" cy="115" r="1.3" fill="#8f4c28"/>
+    <path d="M133 102 C124 104 118 114 112 128 C118 124 122 120 124 118 C124 124 120 128 118 134 C128 128 132 116 140 106 Z" fill="#4a2616"/>
+    <g class="txfl" style="transform-origin:116px 148px" stroke="#a85c32" stroke-width="6" stroke-linecap="round" fill="none"><path d="M116 148 L134 156 L146 150"/><path d="M110 150 L124 162 L134 160"/><circle cx="146" cy="150" r="3" fill="#2a1410" stroke="none"/><circle cx="134" cy="160" r="3" fill="#2a1410" stroke="none"/></g>
+    <rect x="84" y="119" width="22" height="7" rx="3" fill="#c9803a"/><path d="M104 122 L124 118" stroke="#2a1410" stroke-width="1.2"/>
+    <g class="txrider">
+      <path d="M92 122 L110 130" stroke="#4a6fa5" stroke-width="8" stroke-linecap="round"/><path d="M110 130 L109 143" stroke="#4a6fa5" stroke-width="7" stroke-linecap="round"/>
+      <path d="M104.5 141 L113.5 141 L113.5 149 Q118 150 118 153 L104.5 153 Z" fill="#fff" stroke="#e1d6c4" stroke-width=".8"/><rect x="104.5" y="141" width="9" height="3.4" fill="#8a5a34"/><rect x="104.5" y="150" width="6" height="3" fill="#8a5a34"/>
+      <path d="M90 122 L92 102 Q98 98 104 102 L102 122 Z" fill="#fdfbf5" stroke="#e8dfd0" stroke-width=".8"/>
+      <path d="M100 106 L126 114" stroke="#f1c7a0" stroke-width="4" stroke-linecap="round"/>
+      <path d="M102 104 L113 97 L118 84" stroke="#f1c7a0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M94 86 Q80 82 68 92 Q80 90 84 96 Q76 98 70 106 Q84 100 92 98 Z" fill="#b08a58"/>
+      <circle cx="98" cy="92" r="7.2" fill="#f1c7a0"/><path d="M91 91 Q92 82 100 83 Q106 84 106 90 Q100 86 94 92 Z" fill="#b08a58"/><circle cx="102" cy="92" r="1" fill="#3a2a22"/><path d="M101 96 q2.4 1.6 4 0" stroke="#c0675a" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+      <g class="txlasso"><path d="M118 84 L116 70" stroke="#e8d3a0" stroke-width="1.6" fill="none" stroke-linecap="round"/><g class="txloop" style="transform-origin:116px 62px"><ellipse cx="116" cy="62" rx="20" ry="8" fill="none" stroke="#f3e2b0" stroke-width="1.8"/><ellipse cx="116" cy="62" rx="12" ry="5" fill="none" stroke="#f3e2b0" stroke-width="1.2" opacity=".7"/></g></g>
+    </g>
+  </g>
 </svg>`;
 }
 function makeBoston() {
@@ -4228,8 +4260,8 @@ const pages = {
     <h1>Things I love</h1>
     <div class="hub">
       <a href="#/loves/travel">Travel <small>${places.length} places</small></a>
-      <a href="#/loves/food">Food &amp; drinks <small>the good stuff</small></a>
       <a href="#/loves/friends">Friends &amp; family <small>my people</small></a>
+      <a href="#/loves/food">Food &amp; drinks <small>the good stuff</small></a>
       <a href="#/loves/movies">Film <small>${MOVIES.length} movies &amp; ${TV_SHOWS.length} TV shows</small></a>
       <a href="#/loves/artists">Music <small>${ARTISTS_TOP.length + ARTISTS_MORE.length} on repeat</small></a>
       <a href="#/loves/art">Art <small>${ART_PAINTINGS.length + ART_STATUES.length + 1} favorites</small></a>
