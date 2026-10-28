@@ -5319,24 +5319,40 @@ document.addEventListener('error', function (e) {
     </svg>`;
     };
 
-    /* the token: a pewter-rimmed bronze pendant with an engraved pair of mermaids */
-    const coin = () => {
-      let stars = ''; for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2, x = 60 + 43 * Math.cos(a), y = 80 + 43 * Math.sin(a); stars += `<path d="M${f(x)} ${f(y - 3.4)} l1 2.4 2.6 .2 -2 1.7 .7 2.6 -2.3 -1.4 -2.3 1.4 .7 -2.6 -2 -1.7 2.6 -.2z" fill="#d8c496" opacity=".9" transform="rotate(${f(a * 57.3 + 90)} ${f(x)} ${f(y)})"/>`; }
+    /* the tokens: two gold pendants, one engraved with a mermaid and one with a seashell */
+    const coin = kind => {
+      let stars = ''; for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2, x = 60 + 43 * Math.cos(a), y = 80 + 43 * Math.sin(a); stars += `<path d="M${f(x)} ${f(y - 3.4)} l1 2.4 2.6 .2 -2 1.7 .7 2.6 -2.3 -1.4 -2.3 1.4 .7 -2.6 -2 -1.7 2.6 -.2z" fill="#8a5c08" opacity=".7" transform="rotate(${f(a * 57.3 + 90)} ${f(x)} ${f(y)})"/>`; }
+      const mermaid = `<g fill="#b07a12" stroke="#6b4506" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M56 51 C46 54 44 68 49 80 C52 72 54 66 58 60Z"/><circle cx="61" cy="53" r="5.2"/>
+          <path d="M58 59 C56 68 57 75 60 82 L67 80 C68 72 67 65 64 59Z"/>
+          <path d="M60 82 C53 91 58 99 66 101 C72 103 74 108 70 112 C66 109 60 108 58 104 C54 98 54 90 60 82Z" stroke="none"/>
+          <path d="M60 82 C52 92 57 100 65 102 C71 104 72 109 68 112"  fill="none" stroke-width="5.5" stroke="#b07a12"/><path d="M60 82 C52 92 57 100 65 102 C71 104 72 109 68 112" fill="none"/>
+          <path d="M68 112 C60 111 54 114 51 118 C58 118 64 116 68 113 C72 116 78 118 85 116 C82 112 76 110 68 112Z"/>
+          <path d="M65 62 C70 60 74 56 76 51" fill="none"/>
+        </g>
+        <g fill="none" stroke="#ffe7a0" stroke-width="1" stroke-linecap="round" opacity=".7"><path d="M60 88 q3 3 6 0 M60 94 q3 3 6 0 M62 100 q3 2 5 0"/></g>`;
+      let shell = ''; {
+        const H = { x: 60, y: 108 }, R = 41, n = 7, pt = (a, r) => [60 + r * Math.cos(a * Math.PI / 180), H.y - r * Math.sin(a * Math.PI / 180)];
+        let d = `M${H.x} ${H.y} L${f(pt(38, R)[0])} ${f(pt(38, R)[1])}`, ridges = '';
+        for (let i = 0; i < n; i++) {
+          const a0 = 38 + i * 104 / n, a1 = 38 + (i + 1) * 104 / n, c = pt((a0 + a1) / 2, R * 1.2), e = pt(a1, R);
+          d += ` Q${f(c[0])} ${f(c[1])} ${f(e[0])} ${f(e[1])}`;
+          if (i < n - 1) ridges += `<path d="M${H.x} ${H.y} L${f(e[0])} ${f(e[1])}"/>`;
+        }
+        d += ' Z';
+        shell = `<g stroke="#6b4506" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"><path d="${d}" fill="#b07a12"/><g fill="none" stroke="#6b4506" stroke-width="1" opacity=".8">${ridges}</g>
+          <path d="M51 108 C52 104 68 104 69 108 L66 114 L54 114Z" fill="#b07a12"/></g>`;
+      }
       return `<svg viewBox="0 0 120 140" aria-hidden="true">
-      <defs><radialGradient id="mcFace" cx="35%" cy="30%" r="85%"><stop offset="0" stop-color="#b79c70"/><stop offset=".6" stop-color="#8b7650"/><stop offset="1" stop-color="#6b5a3e"/></radialGradient>
-        <linearGradient id="mcRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a8780"/><stop offset=".5" stop-color="#2f2d29"/><stop offset="1" stop-color="#6a6862"/></linearGradient></defs>
+      <defs><radialGradient id="mcFace" cx="35%" cy="30%" r="85%"><stop offset="0" stop-color="#fff2b4"/><stop offset=".55" stop-color="#f2c557"/><stop offset="1" stop-color="#bd8a1c"/></radialGradient>
+        <linearGradient id="mcRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff4c8"/><stop offset=".5" stop-color="#cc961f"/><stop offset="1" stop-color="#8a5c08"/></linearGradient></defs>
       <circle cx="60" cy="15" r="10.5" fill="none" stroke="url(#mcRim)" stroke-width="5"/>
-      <circle cx="60" cy="80" r="58" fill="url(#mcRim)"/><circle cx="60" cy="80" r="53" fill="#c9c6bd" opacity=".55"/>
-      <circle cx="60" cy="80" r="51" fill="url(#mcFace)"/><circle cx="60" cy="80" r="47.5" fill="none" stroke="#5a4a32" stroke-width="1.2" opacity=".7"/>
+      <circle cx="60" cy="80" r="58" fill="url(#mcRim)"/><circle cx="60" cy="80" r="53" fill="#ffeaa6" opacity=".5"/>
+      <circle cx="60" cy="80" r="51" fill="url(#mcFace)"/><circle cx="60" cy="80" r="47.5" fill="none" stroke="#8a5c08" stroke-width="1.2" opacity=".7"/>
       ${stars}
-      <circle cx="60" cy="80" r="36" fill="none" stroke="#5a4a32" stroke-width="1.2" opacity=".7"/>
-      <g fill="none" stroke="#3f3322" stroke-width="1.6" stroke-linecap="round" opacity=".8"><path d="M30 70 q7 -4 14 0 t14 0 t14 0 t14 0"/><path d="M28 78 q7 -4 14 0 t14 0 t14 0 t14 0" opacity=".7"/><path d="M32 86 q7 -4 14 0 t14 0 t14 0"/></g>
-      <g fill="#e0cfa4" stroke="#4a3b26" stroke-width="1.1" stroke-linejoin="round">
-        <circle cx="80" cy="64" r="3.6"/><path d="M78 68 C74 78 70 86 62 92 C56 96 46 94 40 90 C46 92 52 88 56 84 C64 78 70 74 74 66Z"/><path d="M40 90 C34 88 30 92 28 98 C34 96 38 96 44 94Z"/>
-        <circle cx="50" cy="60" r="3.4"/><path d="M52 64 C56 74 60 82 68 88 C74 92 84 90 90 86 C84 88 78 84 74 80 C66 74 60 70 56 62Z"/><path d="M90 86 C96 84 100 88 102 94 C96 92 92 92 86 90Z"/>
-      </g>
-      <path d="M78 62 C70 56 64 56 58 60 M52 58 C58 52 64 52 70 56" fill="none" stroke="#e0cfa4" stroke-width="1.2" opacity=".7"/>
-      <path d="M34 54 C48 40 74 38 90 52" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".28"/></svg>`;
+      <circle cx="60" cy="80" r="36" fill="none" stroke="#8a5c08" stroke-width="1.2" opacity=".7"/>
+      ${kind === 'shell' ? shell : mermaid}
+      <path d="M34 54 C48 40 74 38 90 52" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".4"/></svg>`;
     };
 
     return { goddess, scene, fountain, coin };
@@ -5372,14 +5388,16 @@ document.addEventListener('error', function (e) {
   };
 
   const MF_LINES = {
-    ask: 'To manifest this for you, Wish Maker... please throw a penny in the fountain',
+    ask: 'Mortal one... if you wish for Hannah to achieve all of her goals, cast this coin of the mermaid into my sacred fountain.',
     flick: 'Flick the coin up into the fountain!',
     short: 'A little farther...',
     far: 'Whoa, not so hard!',
     wide: 'Aim for the fountain!',
     ting: 'Ting! A lucky bounce!',
-    done: 'Your wish has been heard... now go make it happen, Wish Maker!'
+    second: 'So it is written... Now think of a wish of your own, a goal you hold dear, and cast the coin of the shell.',
+    done: 'Both wishes have been heard, and both shall come true... now go make them happen!'
   };
+
 
   function startManifest() {
     if (mf) return;
@@ -5393,12 +5411,14 @@ document.addEventListener('error', function (e) {
       <div class="mf-gd"><div class="mf-scene">${MF_ART.scene()}</div><div class="mf-aura"></div><div class="mf-halo"></div><div class="mf-fig">${MF_ART.goddess()}</div></div>
       <div class="mf-fx"></div><i class="mf-flash"></i>
       <div class="mf-box" role="status" aria-live="polite"><i class="cn a"></i><i class="cn b"></i><i class="cn c"></i><i class="cn d"></i><span class="mf-text"></span><i class="mf-next">&#9660;</i></div>
-      <button type="button" class="mf-coin" aria-label="Wish coin. Flick it up into the fountain, or press Enter to toss it.">${MF_ART.coin()}</button>
+      <button type="button" class="mf-coin" aria-label="Mermaid coin. Flick it up into the fountain, or press Enter to toss it.">${MF_ART.coin('mermaid')}</button>
       <div class="mf-actions"><button type="button" class="mf-toss" hidden>Toss it for me</button><button type="button" class="mf-again" hidden>Make another wish</button><button type="button" class="mf-back" hidden>Back to the stars</button></div>
       <button type="button" class="mf-snd" aria-label="Sound on" aria-pressed="true">&#9835;</button><button type="button" class="mf-x" aria-label="Close">&times;</button>`;
     document.body.append(mf); root.classList.add('mf-open'); setTheme();
-    const $ = s => mf.querySelector(s), text = $('.mf-text'), box = $('.mf-box'), coin = $('.mf-coin'), coinSvg = coin.querySelector('svg'), fx = $('.mf-fx'), ft = $('.mf-ft'), gd = $('.mf-gd');
+    const $ = s => mf.querySelector(s), text = $('.mf-text'), box = $('.mf-box'), coin = $('.mf-coin'), fx = $('.mf-fx'), ft = $('.mf-ft'), gd = $('.mf-gd');
     const tossBtn = $('.mf-toss'), againBtn = $('.mf-again'), backBtn = $('.mf-back');
+    let coinSvg = coin.querySelector('svg'), stage = 0;   // stage 0: the mermaid coin (Hannah's goals), stage 1: the shell coin (your own wish)
+    const setCoin = kind => { coin.innerHTML = MF_ART.coin(kind); coinSvg = coin.querySelector('svg'); coin.setAttribute('aria-label', (kind === 'shell' ? 'Shell coin' : 'Mermaid coin') + '. Flick it up into the fountain, or press Enter to toss it.'); };
 
     /* Zelda-style typewriter */
     let typing = 0;
@@ -5466,7 +5486,8 @@ document.addEventListener('error', function (e) {
         const sink = () => {
           sfx.plop(); burst(fin.x, fin.y, true); mf.classList.remove('win'); void mf.offsetWidth; mf.classList.add('win'); coin.classList.add('gone'); ft.classList.remove('glow'); void ft.offsetWidth; ft.classList.add('glow'); gd.classList.add('flash'); sfx.chime();
           later(600, () => coin.classList.remove('show'));
-          later(1000, () => say(MF_LINES.done, () => { againBtn.hidden = false; backBtn.hidden = false; backBtn.focus({ preventScroll: true }); }));
+          if (stage === 0) later(1000, () => say(MF_LINES.second, () => later(reduced ? 300 : 1200, () => { stage = 1; setCoin('shell'); resetCoin(); tossBtn.hidden = false; say(MF_LINES.flick, null, 30); autoSoon(); })));
+          else later(1000, () => say(MF_LINES.done, () => { againBtn.hidden = false; backBtn.hidden = false; backBtn.focus({ preventScroll: true }); }));
         };
         tossBtn.hidden = true;
         if (onStatue) { sfx.ting(); say(MF_LINES.ting, null, 22); fly(E, fin, 420, sink); } else sink();
@@ -5481,7 +5502,7 @@ document.addEventListener('error', function (e) {
       const S = { x: cx, y: cy }, E = { x: homeX + vx / len * dist, y: homeY + vy / len * dist };   // lands by flick speed and direction, from where the coin started
       fly(S, E, 860, () => land(E));
     };
-    const autoSoon = () => later(reduced ? 500 : 2200, () => { if (!busy && !drag) autoToss(); });   // she tosses it for you, no press needed
+    const autoSoon = () => later(reduced ? 500 : stage ? 9000 : 2200, () => { if (!busy && !drag) autoToss(); });   // she tosses it for you, no press needed
     const autoToss = () => {
       if (!ready || busy) return;
       const W = water(), jx = (Math.random() - .5) * W.rx * .7, E = { x: W.cx + jx, y: W.cy };
@@ -5514,7 +5535,7 @@ document.addEventListener('error', function (e) {
     coin.addEventListener('pointerup', release); coin.addEventListener('pointercancel', release);
     coin.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); autoToss(); } });
     tossBtn.addEventListener('click', autoToss);
-    againBtn.addEventListener('click', () => { againBtn.hidden = backBtn.hidden = true; gd.classList.remove('flash'); mf.classList.remove('win'); tossBtn.hidden = false; resetCoin(); say(MF_LINES.flick, null, 30); autoSoon(); });
+    againBtn.addEventListener('click', () => { againBtn.hidden = backBtn.hidden = true; gd.classList.remove('flash'); mf.classList.remove('win'); tossBtn.hidden = false; stage = 0; setCoin('mermaid'); resetCoin(); say(MF_LINES.flick, null, 30); autoSoon(); });
 
     backBtn.addEventListener('click', () => closeManifest()); $('.mf-x').addEventListener('click', () => closeManifest());
     $('.mf-snd').addEventListener('click', e => { mfSound = !mfSound; const b = e.currentTarget; b.setAttribute('aria-pressed', String(mfSound)); b.setAttribute('aria-label', mfSound ? 'Sound on' : 'Sound off'); b.classList.toggle('off', !mfSound); });
