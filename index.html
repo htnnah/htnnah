@@ -1397,7 +1397,13 @@
   .movie-grid + .fin-sec { margin-top: 60px; }
   .tv-sec { margin-top: 30px; }
   .tv-sec.top5 { margin-top: 18px; margin-bottom: 40px; }
-  .fin-top { margin: 26px 0 0; text-align: center; }
+  .cast-poster { width: min(100%, 460px); margin: 34px auto 0; padding: 22px 26px 18px; text-align: center; color: #fff3d6; background: linear-gradient(160deg, #2a1d52, #5a3a8c 60%, #3a2870); border: 3px solid #f3d27a; border-radius: 6px; outline: 2px solid rgba(243, 210, 122, .55); outline-offset: -11px; box-shadow: 0 16px 34px rgba(58, 40, 112, .35); transform: rotate(-1.4deg); user-select: none; cursor: default; }
+  .cast-poster .cp-top { display: block; font-size: .85rem; letter-spacing: .32em; text-transform: uppercase; color: #f3d27a; }
+  .cast-poster .cp-big { display: block; margin: 8px 0 8px; font-family: var(--script); font-weight: 400; font-size: clamp(2.1rem, 6vw, 3rem); line-height: 1.05; color: #fff; text-shadow: 0 0 18px rgba(243, 210, 122, .45); }
+  .cast-poster .cp-sub { display: block; font-size: 1.1rem; letter-spacing: .12em; text-transform: uppercase; color: #f3d27a; }
+  .cast-poster .cp-sub i { font-style: normal; display: inline-block; margin-left: 4px; animation: cpBob 1.3s ease-in-out infinite; }
+  @keyframes cpBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+  @media (prefers-reduced-motion: reduce) { .cast-poster .cp-sub i { animation: none; } }
   .tv-sec h2 { font-family: var(--script); font-weight: 400; font-size: clamp(2.2rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 4px; color: var(--ink); }
   .tv-grid .movie-item figcaption { display: none; }
   @media (prefers-reduced-motion: reduce) {
@@ -4029,11 +4035,15 @@ const moviesHtml = () => `
       <h2>All Movies</h2>
       <div class="art-grid movie-grid">${MOVIES.map(movieItem).join('')}</div>
     </section>
-    <p class="fin-top"><button type="button" class="fin-play">Want to star in a film?</button></p>
+    <div class="cast-poster" role="note">
+      <span class="cp-top">&#9733; casting call &#9733;</span>
+      <strong class="cp-big">We are looking for a star!</strong>
+      <span class="cp-sub">Apply here <i aria-hidden="true">&darr;</i></span>
+    </div>
     <section class="fin-sec" aria-label="The finale">
       <svg class="fin-proj" viewBox="0 0 220 120" aria-hidden="true"><circle cx="58" cy="30" r="24" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="108" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="5"/><g fill="currentColor"><circle cx="58" cy="30" r="4"/><circle cx="108" cy="24" r="4"/></g><rect x="26" y="52" width="108" height="46" rx="10" fill="none" stroke="currentColor" stroke-width="5"/><rect x="134" y="62" width="24" height="26" rx="5" fill="currentColor"/><path d="M158 66 L214 40 V110 L158 84Z" fill="currentColor" opacity=".25"/><path d="M46 98 L36 116 M114 98 L124 116" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
       <p class="fin-txt">The lights are going down....</p>
-      <button type="button" class="fin-play">Roll the film</button>
+      <button type="button" class="fin-play">Let&rsquo;s roll the film</button>
     </section>
     <section class="tv-sec" aria-label="TV shows">
       <h2>All TV Shows</h2>
