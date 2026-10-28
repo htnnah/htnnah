@@ -1396,6 +1396,7 @@
   .fn-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
   .movie-grid + .fin-sec { margin-top: 60px; }
   .tv-sec { margin-top: 30px; }
+  .tv-sec.top5 { margin-top: 18px; margin-bottom: 40px; }
   .fin-top { margin: 26px 0 0; text-align: center; }
   .tv-sec h2 { font-family: var(--script); font-weight: 400; font-size: clamp(2.2rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 4px; color: var(--ink); }
   .tv-grid .movie-item figcaption { display: none; }
@@ -3976,7 +3977,7 @@ const movieItem = m => `<figure class="art-item movie-item${m.wide ? ' movie-wid
 /* ---------- tv shows ---------- */
 const TV_SHOWS = [
   { img: 'photos/tv-american-dad.jpg', title: 'American Dad!', year: '2005' },
-  { img: 'photos/tv-gossip-girl.jpg', title: 'Gossip Girl', year: '2007', top: 3 },
+  { img: 'photos/tv-gossip-girl.jpg', title: 'Gossip Girl', year: '2007', top: 4 },
   { img: 'photos/tv-black-mirror.jpg', title: 'Black Mirror', year: '2011' },
   { img: 'photos/tv-ted-lasso.jpg', title: 'Ted Lasso', year: '2020' },
   { img: 'photos/tv-icarly.jpg', title: 'iCarly', year: '2007' },
@@ -3986,13 +3987,13 @@ const TV_SHOWS = [
   { img: 'photos/tv-phineas-and-ferb.jpg', title: 'Phineas and Ferb', year: '2007' },
   { img: 'photos/tv-breaking-bad.jpg', title: 'Breaking Bad', year: '2008' },
   { img: 'photos/tv-the-100.jpg', title: 'The 100', year: '2014' },
-  { img: 'photos/tv-game-of-thrones.jpg', title: 'Game of Thrones', year: '2011' },
+  { img: 'photos/tv-game-of-thrones.jpg', title: 'Game of Thrones', year: '2011', top: 3 },
   { img: 'photos/tv-how-i-met-your-mother.jpg', title: 'How I Met Your Mother', year: '2005', top: 1 },
   { img: 'photos/tv-amanda-show.jpg', title: 'The Amanda Show', year: '1999' },
   { img: 'photos/tv-drake-and-josh.jpg', title: 'Drake &amp; Josh', year: '2004' },
   { img: 'photos/tv-brooklyn-nine-nine.jpg', title: 'Brooklyn Nine-Nine', year: '2013' },
   { img: 'photos/tv-legend-of-korra.jpg', title: 'The Legend of Korra', year: '2012' },
-  { img: 'photos/tv-la-casa-de-papel.jpg', title: 'La Casa de Papel', year: '2017' },
+  { img: 'photos/tv-la-casa-de-papel.jpg', title: 'La Casa de Papel', year: '2017', top: 5 },
   { img: 'photos/tv-alice-in-borderland.jpg', title: 'Alice in Borderland', year: '2020' },
   { img: 'photos/tv-death-note.jpg', title: 'Death Note', year: '2006', top: 2 },
   { img: 'photos/tv-rick-and-morty.jpg', title: 'Rick and Morty', year: '2013' },
@@ -4016,7 +4017,18 @@ const moviesHtml = () => `
     <h1>Film</h1>
     <p class="lead">The ones I could watch again and again.</p>
     ${saberHtml()}
-    <div class="art-grid movie-grid">${MOVIES.map(movieItem).join('')}</div>
+    <section class="tv-sec top5" aria-label="Top 5 movies">
+      <h2>Top 5 Movies</h2>
+      <div class="art-grid movie-grid">${MOVIES.filter(m => m.top).sort((a, b) => a.top - b.top).map(movieItem).join('')}</div>
+    </section>
+    <section class="tv-sec top5" aria-label="Top 5 TV shows">
+      <h2>Top 5 TV Shows</h2>
+      <div class="art-grid movie-grid tv-grid">${TV_SHOWS.filter(m => m.top).sort((a, b) => a.top - b.top).map(movieItem).join('')}</div>
+    </section>
+    <section class="tv-sec" aria-label="All movies">
+      <h2>All Movies</h2>
+      <div class="art-grid movie-grid">${MOVIES.map(movieItem).join('')}</div>
+    </section>
     <p class="fin-top"><button type="button" class="fin-play">Want to star in a film?</button></p>
     <section class="fin-sec" aria-label="The finale">
       <svg class="fin-proj" viewBox="0 0 220 120" aria-hidden="true"><circle cx="58" cy="30" r="24" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="108" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="5"/><g fill="currentColor"><circle cx="58" cy="30" r="4"/><circle cx="108" cy="24" r="4"/></g><rect x="26" y="52" width="108" height="46" rx="10" fill="none" stroke="currentColor" stroke-width="5"/><rect x="134" y="62" width="24" height="26" rx="5" fill="currentColor"/><path d="M158 66 L214 40 V110 L158 84Z" fill="currentColor" opacity=".25"/><path d="M46 98 L36 116 M114 98 L124 116" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
@@ -4024,7 +4036,7 @@ const moviesHtml = () => `
       <button type="button" class="fin-play">Roll the film</button>
     </section>
     <section class="tv-sec" aria-label="TV shows">
-      <h2>TV Shows</h2>
+      <h2>All TV Shows</h2>
       <p class="lead">Some of the new, weird, and classics.</p>
       <div class="art-grid movie-grid tv-grid">${TV_SHOWS.map(movieItem).join('')}</div>
     </section>`;
