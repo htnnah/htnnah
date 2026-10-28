@@ -3953,35 +3953,35 @@ const artHtml = () => `
 
 /* ---------- movies: favorite posters ---------- */
 const MOVIES = [
-  { img: 'photos/movie-soul-surfer.jpg', title: 'Soul Surfer', year: '2011', top: 1 },
-  { img: 'photos/movie-revenge-of-the-sith.jpg', title: 'Star Wars: Episode III – Revenge of the Sith', year: '2005', top: 2 },
   { img: 'photos/movie-empire-strikes-back.jpg', title: 'Star Wars: Episode V – The Empire Strikes Back', year: '1980' },
   { img: 'photos/movie-fellowship.jpg', title: 'The Lord of the Rings: The Fellowship of the Ring', year: '2001' },
-  { img: 'photos/movie-two-towers.jpg', title: 'The Lord of the Rings: The Two Towers', year: '2002' },
-  { img: 'photos/movie-return-of-the-king.jpg', title: 'The Lord of the Rings: The Return of the King', year: '2003' },
   { img: 'photos/movie-aladdin.jpg', title: 'Aladdin', year: '1992' },
+  { img: 'photos/movie-interstellar.jpg', title: 'Interstellar', year: '2014' },
+  { img: 'photos/movie-two-towers.jpg', title: 'The Lord of the Rings: The Two Towers', year: '2002' },
+  { img: 'photos/movie-parasite.jpg', title: 'Parasite', year: '2019' },
+  { img: 'photos/movie-terminator-2.jpg', title: 'Terminator 2: Judgment Day', year: '1991' },
+  { img: 'photos/movie-soul-surfer.jpg', title: 'Soul Surfer', year: '2011', top: 1 },
+  { img: 'photos/movie-lion-king.jpg', title: 'The Lion King', year: '1994' },
+  { img: 'photos/movie-return-of-the-king.jpg', title: 'The Lord of the Rings: The Return of the King', year: '2003' },
+  { img: 'photos/movie-revenge-of-the-sith.jpg', title: 'Star Wars: Episode III – Revenge of the Sith', year: '2005', top: 2 },
+  { img: 'photos/movie-whiplash.jpg', title: 'Whiplash', year: '2014' },
   { img: 'photos/movie-forrest-gump.jpg', title: 'Forrest Gump', year: '1994' },
   { img: 'photos/movie-inception.jpg', title: 'Inception', year: '2010', top: 5 },
-  { img: 'photos/movie-interstellar.jpg', title: 'Interstellar', year: '2014' },
-  { img: 'photos/movie-terminator-2.jpg', title: 'Terminator 2: Judgment Day', year: '1991' },
-  { img: 'photos/movie-parasite.jpg', title: 'Parasite', year: '2019' },
-  { img: 'photos/movie-lion-king.jpg', title: 'The Lion King', year: '1994' },
-  { img: 'photos/movie-whiplash.jpg', title: 'Whiplash', year: '2014' },
   { img: 'photos/movie-kung-pow.jpg', title: 'Kung Pow! Enter the Fist', year: '2002' },
   { img: 'photos/movie-spider-man.jpg', title: 'Every Spider-Man', year: '2002–2017', wide: true },
   { img: 'photos/movie-coco.jpg', title: 'Coco', year: '2017' },
-  { img: 'photos/movie-joker.jpg', title: 'Joker', year: '2019' },
+  { img: 'photos/movie-slumdog-millionaire.jpg', title: 'Slumdog Millionaire', year: '2008', top: 3 },
   { img: 'photos/movie-black-swan.jpg', title: 'Black Swan', year: '2010' },
   { img: 'photos/movie-wolf-of-wall-street.jpg', title: 'The Wolf of Wall Street', year: '2013' },
   { img: 'photos/movie-shutter-island.jpg', title: 'Shutter Island', year: '2010' },
   { img: 'photos/movie-catch-me-if-you-can.jpg', title: 'Catch Me If You Can', year: '2002' },
-  { img: 'photos/movie-eight-below.jpg', title: 'Eight Below', year: '2006' },
-  { img: 'photos/movie-charlie-chocolate-factory.jpg', title: 'Charlie and the Chocolate Factory', year: '2005' },
   { img: 'photos/movie-bridge-to-terabithia.jpg', title: 'Bridge to Terabithia', year: '2007', top: 4 },
-  { img: 'photos/movie-slumdog-millionaire.jpg', title: 'Slumdog Millionaire', year: '2008', top: 3 },
+  { img: 'photos/movie-charlie-chocolate-factory.jpg', title: 'Charlie and the Chocolate Factory', year: '2005' },
+  { img: 'photos/movie-eight-below.jpg', title: 'Eight Below', year: '2006' },
+  { img: 'photos/movie-joker.jpg', title: 'Joker', year: '2019' },
   { img: 'photos/movie-hunger-games.jpg', title: 'The Hunger Games', year: '2012–2015', wide: true, big: true }
 ];
-const movieItem = m => `<figure class="art-item movie-item${m.wide ? ' movie-wide' : ''}${m.big ? ' movie-big' : ''}${m.sq ? ' movie-sq' : ''}"><button type="button" class="art-open" aria-label="View larger: ${m.title.replace(/"/g, '&quot;')}"><img src="${artSrc(m.img)}" alt="${m.title.replace(/"/g, '&quot;')} poster" loading="lazy" decoding="async"${m.pos ? ` style="object-position:${m.pos}"` : ''}>${m.top ? `<span class="movie-top">#${m.top}</span>` : ''}</button><figcaption><strong>${m.title}</strong><span class="ar-loc">${m.year}</span></figcaption></figure>`;
+const movieItem = (m, showTop) => `<figure class="art-item movie-item${m.wide ? ' movie-wide' : ''}${m.big ? ' movie-big' : ''}${m.sq ? ' movie-sq' : ''}"><button type="button" class="art-open" aria-label="View larger: ${m.title.replace(/"/g, '&quot;')}"><img src="${artSrc(m.img)}" alt="${m.title.replace(/"/g, '&quot;')} poster" loading="lazy" decoding="async"${m.pos ? ` style="object-position:${m.pos}"` : ''}>${showTop && m.top ? `<span class="movie-top">#${m.top}</span>` : ''}</button><figcaption><strong>${m.title}</strong><span class="ar-loc">${m.year}</span></figcaption></figure>`;
 /* ---------- tv shows ---------- */
 const TV_SHOWS = [
   { img: 'photos/tv-american-dad.jpg', title: 'American Dad!', year: '2005' },
@@ -3996,29 +3996,29 @@ const TV_SHOWS = [
   { img: 'photos/tv-breaking-bad.jpg', title: 'Breaking Bad', year: '2008' },
   { img: 'photos/tv-the-100.jpg', title: 'The 100', year: '2014' },
   { img: 'photos/tv-game-of-thrones.jpg', title: 'Game of Thrones', year: '2011', top: 3 },
-  { img: 'photos/tv-how-i-met-your-mother.jpg', title: 'How I Met Your Mother', year: '2005', top: 1 },
+  { img: 'photos/tv-spongebob.jpg', title: 'SpongeBob SquarePants', year: '1999' },
   { img: 'photos/tv-amanda-show.jpg', title: 'The Amanda Show', year: '1999' },
   { img: 'photos/tv-drake-and-josh.jpg', title: 'Drake &amp; Josh', year: '2004' },
   { img: 'photos/tv-brooklyn-nine-nine.jpg', title: 'Brooklyn Nine-Nine', year: '2013' },
   { img: 'photos/tv-legend-of-korra.jpg', title: 'The Legend of Korra', year: '2012' },
-  { img: 'photos/tv-la-casa-de-papel.jpg', title: 'La Casa de Papel', year: '2017', top: 5 },
+  { img: 'photos/tv-hannah-montana.jpg', title: 'Hannah Montana', year: '2006' },
   { img: 'photos/tv-alice-in-borderland.jpg', title: 'Alice in Borderland', year: '2020' },
   { img: 'photos/tv-death-note.jpg', title: 'Death Note', year: '2006', top: 2 },
   { img: 'photos/tv-rick-and-morty.jpg', title: 'Rick and Morty', year: '2013' },
   { img: 'photos/tv-the-office.jpg', title: 'The Office', year: '2005' },
   { img: 'photos/tv-the-boys.jpg', title: 'The Boys', year: '2019' },
   { img: 'photos/tv-avatar-seven-havens.jpg', title: 'Avatar: Seven Havens', year: '2026' },
-  { img: 'photos/tv-hannah-montana.jpg', title: 'Hannah Montana', year: '2006' },
+  { img: 'photos/tv-la-casa-de-papel.jpg', title: 'La Casa de Papel', year: '2017', top: 5 },
   { img: 'photos/tv-scooby-doo.jpg', title: 'Scooby-Doo, Where Are You!', year: '1969' },
   { img: 'photos/tv-avatar-the-last-airbender.jpg', title: 'Avatar: The Last Airbender', year: '2005' },
   { img: 'photos/tv-fairly-oddparents.jpg', title: 'The Fairly OddParents', year: '2001' },
-  { img: 'photos/tv-spongebob.jpg', title: 'SpongeBob SquarePants', year: '1999' }
+  { img: 'photos/tv-how-i-met-your-mother.jpg', title: 'How I Met Your Mother', year: '2005', top: 1 }
 ];
 const tvHtml = () => `
     ${back('#/loves', 'loves')}
     <h1>TV Shows</h1>
     <p class="lead">Some of the new, weird, and classics.</p>
-    <div class="art-grid movie-grid">${TV_SHOWS.map(movieItem).join('')}</div>`;
+    <div class="art-grid movie-grid">${TV_SHOWS.map(m => movieItem(m)).join('')}</div>`;
 
 const moviesHtml = () => `
     ${back('#/loves', 'loves')}
@@ -4027,15 +4027,11 @@ const moviesHtml = () => `
     ${saberHtml()}
     <section class="tv-sec top5" aria-label="Top 5 movies">
       <h2>Top 5 Movies</h2>
-      <div class="art-grid movie-grid">${MOVIES.filter(m => m.top).sort((a, b) => a.top - b.top).map(movieItem).join('')}</div>
-    </section>
-    <section class="tv-sec top5" aria-label="Top 5 TV shows">
-      <h2>Top 5 TV Shows</h2>
-      <div class="art-grid movie-grid tv-grid">${TV_SHOWS.filter(m => m.top).sort((a, b) => a.top - b.top).map(movieItem).join('')}</div>
+      <div class="art-grid movie-grid">${MOVIES.filter(m => m.top).sort((a, b) => a.top - b.top).map(m => movieItem(m, true)).join('')}</div>
     </section>
     <section class="tv-sec" aria-label="All movies">
       <h2>All Movies</h2>
-      <div class="art-grid movie-grid">${MOVIES.map(movieItem).join('')}</div>
+      <div class="art-grid movie-grid">${MOVIES.map(m => movieItem(m)).join('')}</div>
     </section>
     <div class="cast-poster" role="note">
       <span class="cp-top">&#9733; casting call &#9733;</span>
@@ -4047,10 +4043,14 @@ const moviesHtml = () => `
       <p class="fin-txt">The lights are going down....</p>
       <button type="button" class="fin-play">Let&rsquo;s roll the film</button>
     </section>
+    <section class="tv-sec top5" aria-label="Top 5 TV shows">
+      <h2>Top 5 TV Shows</h2>
+      <div class="art-grid movie-grid tv-grid">${TV_SHOWS.filter(m => m.top).sort((a, b) => a.top - b.top).map(m => movieItem(m, true)).join('')}</div>
+    </section>
     <section class="tv-sec" aria-label="TV shows">
       <h2>All TV Shows</h2>
       <p class="lead">Some of the new, weird, and classics.</p>
-      <div class="art-grid movie-grid tv-grid">${TV_SHOWS.map(movieItem).join('')}</div>
+      <div class="art-grid movie-grid tv-grid">${TV_SHOWS.map(m => movieItem(m)).join('')}</div>
     </section>`;
 
 /* ---------- pages ---------- */
