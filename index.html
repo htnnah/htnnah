@@ -1455,6 +1455,10 @@
   .fn-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
   .movie-grid + .fin-sec { margin-top: 60px; }
   .tv-sec { margin-top: 30px; }
+  .trav-top h2, .trav-top + .tv-sec h2 { text-align: center; }
+  .trav-top .cards { margin-top: 24px; }
+  .trav-top + .tv-sec { margin-top: 90px; }
+  .trav-top + .tv-sec .cards { margin-top: 24px; }
   .tv-sec.top5 { margin-top: 18px; margin-bottom: 40px; }
   .cast-poster { width: min(100%, 460px); margin: 34px auto 0; padding: 22px 26px 28px; text-align: center; color: #fff3d6; background: linear-gradient(160deg, #2a1d52, #5a3a8c 60%, #3a2870); border: 3px solid #f3d27a; border-radius: 6px; outline: 2px solid rgba(243, 210, 122, .55); outline-offset: -11px; box-shadow: 0 16px 34px rgba(58, 40, 112, .35); transform: rotate(-1.4deg); }
   .cast-poster .cp-top { display: block; font-size: .85rem; letter-spacing: .32em; text-transform: uppercase; color: #f3d27a; }
@@ -3987,7 +3991,8 @@ const foodCardsHtml = list => list.map(p => `
         <div class="flip"><div class="face front">${p.art}</div>${foodBackFor(p)}</div>
         <span class="label">${p.name}</span>
       </div>`).join('');
-const cardsHtml = () => places.map(p => `
+const topSlugs = ['guatemala', 'hungary', 'portugal'];   // Hannah's top 3 favorites, shown first on the Travel page
+const cardsHtml = (list = places) => list.map(p => `
       <a class="card ${p.cls}" data-flip="${p.delay}" href="${p.href || '#/loves/travel/' + p.slug}" aria-label="${p.aria}">
         <div class="flip"><div class="face front">${p.art}</div>${p.back ? `<div class="face back art">${p.back}${p.desc ? `<div class="cap">${p.desc}</div>` : ''}</div>` : p.photos ? photoBack(p.photos, p.desc) : backFaceFor(p)}</div>
         <span class="label">${p.name}</span>
@@ -4314,7 +4319,14 @@ const pages = {
     ${back('#/loves', 'loves')}
     <h1>Travel</h1>
     <p class="lead">Favorite memories, in no particular order.</p>
-    <div class="cards">${cardsHtml()}</div>` },
+    <section class="tv-sec trav-top" aria-label="Top 3 favorite places">
+      <h2>Top 3 Favorites</h2>
+      <div class="cards">${cardsHtml(topSlugs.map(sl => places.find(p => p.slug === sl)).filter(Boolean))}</div>
+    </section>
+    <section class="tv-sec" aria-label="More places">
+      <h2>More Places</h2>
+      <div class="cards">${cardsHtml(places.filter(p => !topSlugs.includes(p.slug)))}</div>
+    </section>` },
 
   '/loves/travel/portugal':  { title: 'portugal',  html: () => detail('Backpacking in Portugal', 'Placeholder: the story, the route, the best moment.') },
   '/loves/travel/greece':    { title: 'greece',    html: () => detail('Meeting my boyfriend in Greece', 'Placeholder: the story of how you met.') },
