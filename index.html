@@ -1634,6 +1634,52 @@
   .mfx.cloud { height: auto; }
   #mood-bg .mfx { position: absolute; }
   .mfx.static { left: var(--x) !important; top: var(--y) !important; }
+
+  /* ---------- don't click ---------- */
+  .dont-click { font: inherit; font-size: 1.05rem; font-weight: 700; cursor: pointer; margin-top: 22px; padding: 4px 22px 7px; line-height: 1.2; color: #c92a45;
+        background: rgba(255, 255, 255, .78); border: 2px dashed #e0405a; border-radius: 999px; animation: dcWiggle 5s ease-in-out infinite; }
+  .dont-click:hover { background: #fff; animation: none; transform: scale(1.06); }
+  .dont-click:focus-visible { outline: 3px solid #c92a45; outline-offset: 4px; }
+  @keyframes dcWiggle { 0%, 86%, 100% { transform: rotate(0); } 90% { transform: rotate(-4deg); } 94% { transform: rotate(4deg); } 97% { transform: rotate(-2deg); } }
+  html.dc-open { overflow: hidden; }
+  html.dc-open :is(#mood-ui, #mood-reset, #mood-fx) { display: none; }
+  html.dc-glitch :is(#view, nav) { animation: dcShake .36s steps(2, end) infinite; filter: drop-shadow(5px 0 0 rgba(255, 0, 70, .6)) drop-shadow(-5px 0 0 rgba(0, 210, 255, .6)); }
+  @keyframes dcShake { 0% { transform: translate(0, 0); } 20% { transform: translate(-7px, 3px) skewX(2deg); } 40% { transform: translate(6px, -4px); } 60% { transform: translate(-3px, -2px) skewX(-2deg); } 80% { transform: translate(4px, 4px); } 100% { transform: translate(0, 0); } }
+  #dc { position: fixed; inset: 0; z-index: 14; display: grid; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; overflow: hidden; }
+  #dc .dc-tear { position: fixed; left: 0; right: 0; background: rgba(255, 255, 255, .13); mix-blend-mode: difference; pointer-events: none; animation: dcTear .5s steps(3, end) infinite; }
+  @keyframes dcTear { 0% { transform: translateX(-30px); } 50% { transform: translateX(40px); } 100% { transform: translateX(-10px); } }
+  #dc .dc-slide { grid-area: 1 / 1; display: grid; place-items: center; padding: 28px; text-align: center; }
+  #dc .dc-crash { background: #0a0a12; color: #f2f2f7; }
+  #dc .dc-crash h2 { font-size: clamp(1.6rem, 5vw, 3rem); margin: 0 0 16px; }
+  #dc .dc-crash p { font-size: clamp(.95rem, 2.4vw, 1.3rem); line-height: 1.6; margin: 6px 0; opacity: .9; }
+  #dc .dc-term { background: #040a05; color: #4dff7a; place-items: stretch; text-align: left; align-content: end; }
+  #dc .dc-log { max-width: 920px; width: 100%; margin: 0 auto; max-height: calc(100vh - 80px); overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end;
+        font-size: clamp(12px, 1.7vw, 16px); line-height: 1.55; white-space: pre-wrap; word-break: break-word; text-shadow: 0 0 6px rgba(77, 255, 122, .55); padding-bottom: 54px; }
+  #dc .dc-log .w { color: #ffd84d; text-shadow: 0 0 6px rgba(255, 216, 77, .5); } #dc .dc-log .e { color: #ff6b81; text-shadow: 0 0 6px rgba(255, 107, 129, .5); } #dc .dc-log .d { opacity: .5; }
+  #dc .dc-win { background: linear-gradient(135deg, #ff8fd0, #ffd36e 45%, #7fe8ff); color: #3a1d5c; font-family: var(--font); position: relative; overflow: hidden; }
+  #dc .dc-win h2 { font-size: clamp(3.4rem, 17vw, 12rem); line-height: .95; margin: 0; font-weight: 800; animation: dcPop .7s cubic-bezier(.2, 1.6, .4, 1) both; text-shadow: 0 6px 0 rgba(255, 255, 255, .6); }
+  #dc .dc-win .joke { font-size: clamp(1.1rem, 3.2vw, 2rem); font-weight: 700; margin: 26px auto 8px; max-width: 24ch; animation: dcPop .6s .5s cubic-bezier(.2, 1.4, .4, 1) both; }
+  #dc .dc-win .fine { font-size: clamp(.85rem, 1.8vw, 1.1rem); opacity: .75; margin: 6px 0 22px; animation: dcPop .5s 1.1s both; }
+  #dc .dc-win .row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; animation: dcPop .5s 1.3s both; }
+  #dc .dc-win button { font: inherit; font-size: 1.1rem; font-weight: 700; color: #3a1d5c; background: #fff; border: 2px solid #3a1d5c; border-radius: 999px; padding: 6px 24px 9px; cursor: pointer; }
+  #dc .dc-win button:hover { background: #3a1d5c; color: #fff; }
+  @keyframes dcPop { from { transform: scale(.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  #dc .dc-cut { grid-area: 1 / 1; position: relative; overflow: hidden; background: #000; }
+  #dc .dc-cut canvas { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; opacity: .88; }
+  #dc .dc-cut .tb { position: absolute; white-space: nowrap; font-family: var(--font); font-weight: 700; color: #fff; line-height: 1.25; }
+  #dc .dc-cut .tb.y { background: #ffd84d; color: #111; padding: 0 6px; } #dc .dc-cut .tb.b { background: #3b4cff; color: #fff; padding: 0 6px; }
+  #dc .dc-cut .big { position: absolute; left: 4vw; top: 6vh; font-family: var(--font); font-weight: 800; font-size: clamp(2.6rem, 11vw, 8rem); line-height: .95; color: #fff; padding: 1.2vw 2vw; border: .9vw solid #fff; }
+  #dc .dc-cut .line { position: absolute; left: 0; right: 0; top: 52vh; height: 2px; background: #fff; }
+  #dc .dc-cut .tick { position: absolute; top: 52vh; width: 2px; height: 14px; background: #fff; }
+  #dc .dc-cut .win { position: absolute; left: 50%; top: 56%; width: min(46vw, 460px); transform: translateX(-50%); background: #0b0b14; border: 2px solid #ccc; color: #8fe6a4; font: 12px/1.5 ui-monospace, Menlo, Consolas, monospace; padding: 8px 10px; text-align: left; white-space: pre; }
+  #dc .dc-stop { position: fixed; z-index: 3; left: 50%; bottom: 14px; transform: translateX(-50%); font: inherit; font-size: 13px; color: #cfd2dc; background: rgba(0, 0, 0, .55);
+        border: 1px solid rgba(255, 255, 255, .35); border-radius: 999px; padding: 5px 16px 7px; cursor: pointer; }
+  #dc .dc-stop:hover { color: #fff; border-color: #fff; }
+  #dc .dc-stop:focus-visible, #dc .dc-win button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  #dc .dc-bit { position: absolute; top: -20px; left: var(--x); width: var(--s); height: calc(var(--s) * .6); background: var(--c); animation: dcFall var(--dur) linear var(--dl) forwards; }
+  @keyframes dcFall { to { transform: translate3d(var(--dx), 110vh, 0) rotate(var(--rot)); } }
+  @media (prefers-reduced-motion: reduce) { .dont-click { animation: none; } html.dc-glitch :is(#view, nav) { animation: none; filter: none; } #dc .dc-tear, #dc .dc-bit { display: none; } }
 </style>
 </head>
 <body>
@@ -4405,6 +4451,7 @@ const pages = {
       <h1 aria-label="Hannah Young"><span><i>Hannah</i></span><span><i>Young</i></span></h1>
       <p class="tag">Austin, Texas</p>
       <div><a class="enter" href="#/about">come in</a></div>
+      <div><button class="dont-click" type="button">don't click</button></div>
     </section>` },
 
   '/about': { title: 'about', html: () => `
@@ -6436,6 +6483,149 @@ document.addEventListener('error', function (e) {
   const syncRoute = () => root.classList.toggle('mood-nofx', location.hash.startsWith('#/goals'));
   new MutationObserver(syncRoute).observe(view, { childList: true });
   addEventListener('hashchange', syncRoute); addEventListener('popstate', syncRoute); syncRoute();
+})();
+</script>
+<script>
+/* ---------- "don't click" gag: fake glitch, fake crash, fake code, giant joke. Nothing is real and nothing is collected. ---------- */
+(() => {
+  const root = document.documentElement;
+  const rm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const pick = a => a[Math.floor(Math.random() * a.length)];
+  let token = 0, ov = null, opener = null, timer = null;
+
+  /* ---- Hannah can edit these lines ---- */
+  const CRASH = ['uh oh.', 'hannah-young.exe has stopped working', 'ERROR: TOO_CURIOUS_FOR_YOUR_OWN_GOOD'];
+  const LINES = [
+    ['', '$ sudo access --deep-code --pretend'],
+    ['', '[ ok ] waking up the hamsters that power this website'],
+    ['', '[ ok ] loading 4,000,000 lines of totally real code'],
+    ['w', '[warn] found 1 mysterious sock in the mainframe'],
+    ['', '> scanning visitor...'],
+    ['', '  name ............... Curious Human (probably)'],
+    ['', '  button_obedience ... 0%'],
+    ['', '  curiosity_level .... OVER 9000'],
+    ['', '  location ........... the internet, presumably'],
+    ['', '  snacks_nearby ...... hopefully'],
+    ['d', '(none of this is real data. nothing is collected. promise.)'],
+    ['', '[ ok ] reversing the polarity of the pixels'],
+    ['', '[ ok ] teaching the cursor to feel feelings'],
+    ['e', '[err ] 404: your sense of caution not found'],
+    ['', '> compiling confetti...'],
+    ['BAR', 'downloading more RAM'],
+    ['', '[ ok ] bribing the firewall with cookies'],
+    ['w', '[warn] the cookies were the fake kind'],
+    ['', '> deleting everything...'],
+    ['', '  ...just kidding. deleting nothing.'],
+    ['e', '> initiating giant surprise in 3... 2... 1...']
+  ];
+  const JOKES = ['Why did the website go to the party? It heard there would be lots of links.', 'I would tell you a joke about my code, but it has too many bugs and not enough punchlines.', 'Why was the button so confident? It always gets clicked eventually.'];
+
+  const hex = () => '0x' + Array.from({ length: 4 }, () => Math.floor(rnd(0, 65535)).toString(16).padStart(4, '0').toUpperCase()).join(' ');
+  const sleep = ms => new Promise(r => { timer = setTimeout(r, ms); });
+
+
+  /* drawn look-alikes of broken screens (all made in code, no outside pictures) */
+  function cut(kind) {
+    const el = document.createElement('div'); el.className = 'dc-cut';
+    const cv = document.createElement('canvas'); const W = 160, H = 90; cv.width = W; cv.height = H; el.appendChild(cv); const g = cv.getContext('2d');
+    if (kind === 'noise') {
+      const hues = [275, 120, 55, 170, 310, 220, 0];
+      let y = 0; while (y < H) { const h = Math.floor(rnd(2, 9)), base = pick(hues); let x = 0;
+        while (x < W) { const w = Math.floor(rnd(2, 26)); g.fillStyle = Math.random() < .12 ? `hsl(0 0% ${rnd(45, 70)}%)` : `hsl(${base + rnd(-25, 25)} 55% ${rnd(38, 62)}%)`; g.fillRect(x, y, w, h); x += w; }
+        y += h; }
+      g.fillStyle = '#fff'; for (let i = 0; i < 420; i++) g.fillRect(Math.floor(rnd(0, W)), Math.floor(rnd(0, H)), 1, 1);
+    } else if (kind === 'bars') {
+      const top = ['#b8b8b8', '#b8b800', '#00b8b8', '#00b800', '#b800b8', '#b83030', '#2a2ab8'], low = ['#2a2ab8', '#111', '#b800b8', '#111', '#00b8b8', '#111', '#b8b8b8'];
+      top.forEach((c, i) => { g.fillStyle = c; g.fillRect(Math.round(i * W / 7), 0, Math.ceil(W / 7), Math.round(H * .68)); });
+      low.forEach((c, i) => { g.fillStyle = c; g.fillRect(Math.round(i * W / 7), Math.round(H * .68), Math.ceil(W / 7), Math.round(H * .08)); });
+      g.fillStyle = '#10103a'; g.fillRect(0, Math.round(H * .76), W, H); g.fillStyle = '#fff'; g.fillRect(Math.round(W * .62), Math.round(H * .78), Math.round(W * .2), Math.round(H * .2));
+      const w = document.createElement('div'); w.className = 'win'; w.textContent = 'hannah.exe  [not responding]\n> color_scheme: TOO_MANY\n> signal: lost (found it, lost it)\n> test_pattern: please stand by'; el.appendChild(w);
+    } else {
+      const add = (cls, txt, x, y, fs) => { const d = document.createElement('div'); d.className = 'tb ' + cls; d.textContent = txt; d.style.cssText = `left:${x}vw;top:${y}vh;font-size:${fs}px`; el.appendChild(d); };
+      const big = document.createElement('div'); big.className = 'big'; big.innerHTML = 'HANNAH<br>EXE'; el.appendChild(big);
+      const ln = document.createElement('div'); ln.className = 'line'; el.appendChild(ln);
+      for (let i = 0; i < 40; i++) { const t = document.createElement('div'); t.className = 'tick'; t.style.left = (i * 2.6) + 'vw'; el.appendChild(t); }
+      const bits = ['2031 | lunch: still deciding', '2035 | snacks', '2040 | nap time', '404 | caution not found', 'the hamsters are tired', 'too late to unclick', 'loading... loading...', '2038 | confetti', 'do not click (too late)', 'error: vibes overflow', 'rebooting the sock', 'mainframe is sleepy', '2033 | still clicking', 'curiosity: 9000', 'please hold'];
+      for (let i = 0; i < 26; i++) { const r = Math.random(); add(r < .22 ? 'y' : r < .4 ? 'b' : '', pick(bits), rnd(2, 78), rnd(2, 92), Math.round(rnd(11, 26))); }
+    }
+    return el;
+  }
+
+  function close() {
+    token++; clearTimeout(timer);
+    root.classList.remove('dc-open', 'dc-glitch');
+    document.querySelectorAll('nav, main').forEach(n => { n.inert = false; });
+    if (ov) { ov.remove(); ov = null; }
+    if (opener && document.contains(opener)) opener.focus();
+  }
+
+  async function run() {
+    const t = ++token, still = rm();
+    const ok = () => t === token;
+    document.querySelectorAll('nav, main').forEach(n => { n.inert = true; });
+    root.classList.add('dc-open');
+    if (ov) ov.remove();
+    ov = document.createElement('div'); ov.id = 'dc'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', 'A silly fake glitch. Press Escape to stop.');
+    const stop = document.createElement('button'); stop.className = 'dc-stop'; stop.type = 'button'; stop.textContent = "I'm scared, make it stop"; stop.addEventListener('click', close);
+    ov.appendChild(stop); document.body.appendChild(ov); stop.focus();
+
+    /* 1. glitch the real page (shaking and color-split, no flashing) */
+    if (!still) {
+      root.classList.add('dc-glitch');
+      for (let i = 0; i < 6; i++) { const b = document.createElement('div'); b.className = 'dc-tear'; b.style.top = rnd(0, 95) + 'vh'; b.style.height = rnd(14, 60) + 'px'; b.style.animationDelay = (-rnd(0, .5)) + 's'; ov.appendChild(b); }
+      /* shake, then three quick cuts to drawn "broken screen" looks (each lasts about half a second, so never more than ~2 changes a second) */
+      for (const [kind, gap] of [['noise', 1200], ['bars', 550], ['text', 550]]) {
+        await sleep(gap); if (!ok()) return;
+        const c = cut(kind); ov.insertBefore(c, stop);
+        await sleep(480); if (!ok()) return;
+        c.remove();
+      }
+      await sleep(450); if (!ok()) return;
+      root.classList.remove('dc-glitch'); ov.querySelectorAll('.dc-tear').forEach(b => b.remove());
+    }
+
+    /* 2. fake crash */
+    const crash = document.createElement('div'); crash.className = 'dc-slide dc-crash';
+    crash.innerHTML = `<div><h2>${CRASH[0]}</h2><p>${CRASH[1]}</p><p>${CRASH[2]}</p></div>`;
+    ov.insertBefore(crash, stop);
+    await sleep(still ? 3000 : 2600); if (!ok()) return;
+    crash.remove();
+
+    /* 3. fake deep code */
+    const term = document.createElement('div'); term.className = 'dc-slide dc-term';
+    const log = document.createElement('div'); log.className = 'dc-log'; term.appendChild(log); ov.insertBefore(term, stop);
+    const push = (cls, txt) => { const d = document.createElement('div'); if (cls && cls !== 'BAR') d.className = cls; d.textContent = txt; log.appendChild(d); while (log.childElementCount > 60) log.firstChild.remove(); return d; };
+    for (const [cls, txt] of LINES) {
+      if (!ok()) return;
+      if (cls === 'BAR') {
+        const d = push('', ''); const bar = p => { const n = Math.round(p / 100 * 24); d.textContent = `> ${txt}  [${'#'.repeat(n)}${'.'.repeat(24 - n)}] ${p}%`; };
+        if (still) { bar(100); d.textContent += '  (it was fake)'; continue; }
+        let p = 0; while (p < 99) { p = Math.min(99, p + Math.floor(rnd(4, 17))); bar(p); await sleep(90); if (!ok()) return; }
+        await sleep(1300); if (!ok()) return; bar(100); d.textContent += '  (it was fake)'; continue;
+      }
+      push(cls, txt);
+      if (still) continue;
+      if (Math.random() < .55) { for (let i = 0; i < 2; i++) { push('d', hex() + '  ' + hex()); await sleep(45); } }
+      await sleep(rnd(150, 330)); if (!ok()) return;
+    }
+    await sleep(still ? 2500 : 900); if (!ok()) return;
+    term.remove();
+
+    /* 4. giant joke */
+    const win = document.createElement('div'); win.className = 'dc-slide dc-win';
+    win.innerHTML = `<div><h2>GOTCHA!</h2><p class="joke">${pick(JOKES)}</p><p class="fine">nothing broke. your computer is totally fine.</p><div class="row"><button type="button" class="dc-back">take me back</button><button type="button" class="dc-again">do it again</button></div></div>`;
+    ov.insertBefore(win, stop); stop.hidden = true;
+    win.querySelector('.dc-back').addEventListener('click', close);
+    win.querySelector('.dc-again').addEventListener('click', run);
+    win.querySelector('.dc-back').focus();
+    if (!still) for (let i = 0; i < 110; i++) { const b = document.createElement('i'); b.className = 'dc-bit';
+      b.style.cssText = `--x:${rnd(0, 100)}vw;--s:${rnd(8, 16)}px;--c:${pick(['#ff4fa8', '#fff', '#ffe14d', '#4fdcff', '#8458B3', '#7dff8a'])};--dur:${rnd(2.6, 5)}s;--dl:${rnd(0, 1.6)}s;--dx:${rnd(-18, 18)}vw;--rot:${rnd(-540, 540)}deg`; win.appendChild(b); }
+  }
+
+  document.addEventListener('click', e => { const b = e.target.closest('.dont-click'); if (!b) return; opener = b; run(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && ov) close(); });
+  addEventListener('hashchange', () => ov && close());
 })();
 </script>
 </body>
