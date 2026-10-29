@@ -269,7 +269,8 @@
   @keyframes ripout { 0% { transform: scale(.3); opacity: .9; } 100% { transform: scale(2.2); opacity: 0; } }
   @keyframes cloudslide { from { transform: translateX(-8px); } to { transform: translateX(16px); } }
 
-  .work-logo { display: block; width: min(210px, 62%); height: auto; margin: 4px 0 22px; }
+  .work-logo { display: block; width: min(300px, 80%); height: auto; margin: 4px 0 22px; }
+  .work-logo-link { display: block; width: fit-content; max-width: 100%; }
   /* virginia */
   .card.va .vsun, .card.va .vfly { transform-box: fill-box; transform-origin: center; }
   .card.va:is(:hover, .touch-on) .vsun, .card.va:is(:focus-visible, .touch-on) .vsun { animation: vsunpulse 2.4s ease-in-out infinite alternate; }
@@ -4318,7 +4319,7 @@ const pages = {
   '/loves/travel': { title: 'travel', html: () => `
     ${back('#/loves', 'loves')}
     <h1>Travel</h1>
-    <p class="lead">Favorite memories, in no particular order.</p>
+    <p class="lead">Feel free to click on any place to see more.</p>
     <section class="tv-sec trav-top" aria-label="Top 3 favorite places">
       <h2>Top 3 Favorites</h2>
       <div class="cards">${cardsHtml(topSlugs.map(sl => places.find(p => p.slug === sl)).filter(Boolean))}</div>
@@ -4368,7 +4369,7 @@ const pages = {
 
   '/work': { title: 'work', html: () => `
     <h1>Work</h1>
-    <img class="work-logo" src="${(window.__P||{})['photos/thatch-logo.png'] || 'photos/thatch-logo.png'}" alt="Thatch">
+    <a class="work-logo-link" href="https://thatch.com/" target="_blank" rel="noopener" aria-label="Thatch (opens thatch.com in a new tab)"><img class="work-logo" src="${(window.__P||{})['photos/thatch-logo.png'] || 'photos/thatch-logo.png'}" alt="Thatch"></a>
     <p class="lead">I work at Thatch Health in Austin, Texas. I love that I get to be a part of building a healthcare system people love.</p>
 
     <section class="job-matters">
@@ -4590,11 +4591,8 @@ document.addEventListener('error', function (e) {
     <path d="M9.4 22 L17 22 L15.6 46 L13 46Z M24.5 22 L31.5 22 L29.7 46 L22.5 46Z" fill="#e63946"/>
     <circle cx="20" cy="32.5" r="1.7" fill="#7a1636"/><circle cx="28" cy="32.5" r="1.7" fill="#7a1636"/><path d="M21.5 36.5 q2.5 2.6 5 0" fill="none" stroke="#7a1636" stroke-width="1.6" stroke-linecap="round"/></svg>`;
   const WISH = `<svg class="pl-s wish" viewBox="0 0 56 56" aria-hidden="true">
-    <path d="M24 33 C19 38 21 47 29 52 L45 53 C51 47 51 38 45 32 C41 28 33 28 29 30Z" fill="#ffd9b8" stroke="${INKC}" stroke-width="2.2" stroke-linejoin="round"/>
-    <path d="M36 33 C33 26 27 23 21 22" fill="none" stroke="${INKC}" stroke-width="9" stroke-linecap="round"/><path d="M36 33 C33 26 27 23 21 22" fill="none" stroke="#ffd9b8" stroke-width="5.2" stroke-linecap="round"/>
-    <path d="M25 41 C17 40 13 32 15 24" fill="none" stroke="${INKC}" stroke-width="9" stroke-linecap="round"/><path d="M25 41 C17 40 13 32 15 24" fill="none" stroke="#ffd9b8" stroke-width="5.2" stroke-linecap="round"/>
-    <g class="hcoin"><circle cx="18" cy="14" r="9" fill="#ffd66b" stroke="#a9760a" stroke-width="2.2"/><circle cx="18" cy="14" r="5.6" fill="none" stroke="#e0a82e" stroke-width="1.5"/><path d="M18 9.6 L19.3 12.7 L22.6 13 L20.1 15.2 L20.9 18.4 L18 16.7 L15.1 18.4 L15.9 15.2 L13.4 13 L16.7 12.7Z" fill="#fff3b0"/></g>
-    <path d="M18 23 C17 26 16 27 15 28" fill="none" stroke="${INKC}" stroke-width="0"/></svg>`;
+    <path d="M38 38 C33 33 28 29 23 24" fill="none" stroke="${INKC}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 38 C33 33 28 29 23 24" fill="none" stroke="#ffd9b8" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 40 C28 34 33 31 40 32 C47 33 52 38 52 44 C52 50 47 55 40 55 L36 55 C31 55 28 51 28 47Z" fill="#ffd9b8" stroke="${INKC}" stroke-width="2.2" stroke-linejoin="round"/><path d="M31 48 C23 48 17 42 15 33 C14 29 14 27 14 25" fill="none" stroke="${INKC}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M31 48 C23 48 17 42 15 33 C14 29 14 27 14 25" fill="none" stroke="#ffd9b8" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"/><g fill="none" stroke="${INKC}" stroke-width="1.8" stroke-linecap="round"><path d="M37 39 C41 40 45 40 49 39"/><path d="M36 45 C41 46 46 46 50 45"/><path d="M36 51 C40 52 44 52 47 51"/></g><g class="hcoin"><circle cx="18" cy="14" r="9" fill="#ffd66b" stroke="#a9760a" stroke-width="2.2"/><circle cx="18" cy="14" r="5.6" fill="none" stroke="#e0a82e" stroke-width="1.5"/><path d="M18 9.6 L19.3 12.7 L22.6 13 L20.1 15.2 L20.9 18.4 L18 16.7 L15.1 18.4 L15.9 15.2 L13.4 13 L16.7 12.7Z" fill="#fff3b0"/></g>
+  </svg>`;
   const SABER = `<svg class="pl-s saber" viewBox="0 0 64 64" aria-hidden="true"><g class="blade"><line x1="21" y1="43" x2="58" y2="6" style="stroke:var(--blade)" stroke-width="9" stroke-linecap="round" opacity=".5"/><line x1="21" y1="43" x2="58" y2="6" style="stroke:var(--blade)" stroke-width="5.5" stroke-linecap="round"/><line x1="22" y1="42" x2="57" y2="7" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></g><line x1="22" y1="42" x2="6" y2="58" stroke="#3a3f58" stroke-width="8" stroke-linecap="round"/><line x1="22" y1="42" x2="7" y2="57" stroke="#cfd3e6" stroke-width="5" stroke-linecap="round"/><line x1="19" y1="45" x2="22" y2="42" stroke="#8d94b6" stroke-width="9" stroke-linecap="round"/><line x1="15" y1="49" x2="11" y2="53" stroke="#6b7088" stroke-width="5.4" opacity=".85"/><circle cx="14" cy="47" r="1.7" fill="#ff5a5a"/></svg>`;
   const CUR = { popcorn: { lean: 14 }, saber: { lean: 26 }, plane: { dir: 1 }, rocket: { dir: 1 }, ball: { roll: 1 }, heart: { lean: 16 }, cone: { lean: 20 }, note: { lean: 12 }, brush: { lean: 10 }, mug: { lean: 14 }, wish: { lean: 8 } };
   const themeFor = h => {
@@ -4789,7 +4787,7 @@ document.addEventListener('error', function (e) {
       const e = clamp((scrollY - start) / Math.max(1, end - start), 0, 1);
       const v = {
         bg: ss(0, .3, e), stars: ss(.12, .4, e), sea: ss(.18, .42, e) * (1 - ss(.74, .92, e)),
-        cloud: ss(.3, .58, e), earth: ss(.34, .62, e), sun: ss(.56, .74, e), lower: ss(.8, 1, e)
+        cloud: ss(.14, .4, e), earth: ss(.16, .42, e), sun: ss(.56, .74, e), lower: ss(.8, 1, e)
       };
       for (const k in v) { const s = v[k].toFixed(3); if (last[k] !== s) { cosmos.style.setProperty('--' + k, s); last[k] = s; } }
       root.classList.toggle('space-mode', v.bg > .55);
@@ -5427,7 +5425,10 @@ document.addEventListener('error', function (e) {
   };
 
   const MF_LINES = {
-    ask: 'To manifest this for you, Wish Maker... please throw a penny in the fountain',
+    ask: 'This first penny is for Hannah\'s wish, Wish Maker... watch it fly into the fountain',
+    herToss: 'Here goes Hannah\'s manifestation!',
+    herDone: 'Hannah\'s wish has been heard!',
+    yours: 'Now it\'s your turn, Wish Maker... make your own wish, then flick the coin up into the fountain yourself!',
     flick: 'Flick the coin up into the fountain!',
     short: 'A little farther...',
     far: 'Whoa, not so hard!',
@@ -5471,7 +5472,7 @@ document.addEventListener('error', function (e) {
     };
 
     /* geometry: where the coin lives and where the water is */
-    let homeX = 0, homeY = 0, cx = 0, cy = 0, ready = false, busy = false;
+    let homeX = 0, homeY = 0, cx = 0, cy = 0, ready = false, busy = false, phase = 'her';   // 'her': Hannah's wish, tossed automatically. 'you': the visitor tosses their own
     const place = (x, y, s = 1) => { cx = x; cy = y; coin.style.transform = `translate(${x - coin.offsetWidth / 2}px, ${y - coin.offsetHeight / 2}px) scale(${s})`; };
     const layout = () => {
       const r = ft.getBoundingClientRect(), portrait = innerHeight > innerWidth;
@@ -5521,7 +5522,13 @@ document.addEventListener('error', function (e) {
         const sink = () => {
           sfx.plop(); burst(fin.x, fin.y, true); mf.classList.remove('win'); void mf.offsetWidth; mf.classList.add('win'); coin.classList.add('gone'); ft.classList.remove('glow'); void ft.offsetWidth; ft.classList.add('glow'); gd.classList.add('flash'); sfx.chime();
           later(600, () => coin.classList.remove('show'));
-          later(1000, () => say(MF_LINES.done, () => { againBtn.hidden = false; backBtn.hidden = false; backBtn.focus({ preventScroll: true }); }));
+          if (phase === 'her') {
+            later(1000, () => say(MF_LINES.herDone, () => later(reduced ? 400 : 1500, () => {
+              phase = 'you'; gd.classList.remove('flash'); mf.classList.remove('win'); resetCoin(); say(MF_LINES.yours, null, 34);
+            })));
+          } else {
+            later(1000, () => say(MF_LINES.done, () => { againBtn.hidden = false; backBtn.hidden = false; backBtn.focus({ preventScroll: true }); }));
+          }
         };
         tossBtn.hidden = true;
         if (onStatue) { sfx.ting(); say(MF_LINES.ting, null, 22); fly(E, fin, 420, sink); } else sink();
@@ -5536,7 +5543,6 @@ document.addEventListener('error', function (e) {
       const S = { x: cx, y: cy }, E = { x: homeX + vx / len * dist, y: homeY + vy / len * dist };   // lands by flick speed and direction, from where the coin started
       fly(S, E, 860, () => land(E));
     };
-    const autoSoon = () => later(reduced ? 500 : 2200, () => { if (!busy && !drag) autoToss(); });   // she tosses it for you, no press needed
     const autoToss = () => {
       if (!ready || busy) return;
       const W = water(), jx = (Math.random() - .5) * W.rx * .7, E = { x: W.cx + jx, y: W.cy };
@@ -5546,7 +5552,7 @@ document.addEventListener('error', function (e) {
     /* drag and flick, like throwing a ball in a catching game */
     let drag = null;
     coin.addEventListener('pointerdown', e => {
-      if (!ready || busy) return;
+      if (!ready || busy || phase !== 'you') return;   // Hannah's coin is tossed for her; the visitor tosses their own
       drag = { id: e.pointerId, s: [{ x: e.clientX, y: e.clientY, t: performance.now() }], moved: false };
       try { coin.setPointerCapture(e.pointerId); } catch (_) {} coin.classList.add('grab'); e.preventDefault();
     });
@@ -5567,9 +5573,9 @@ document.addEventListener('error', function (e) {
       else { place(homeX, homeY); if (d.moved) say(MF_LINES.flick, null, 24); }
     };
     coin.addEventListener('pointerup', release); coin.addEventListener('pointercancel', release);
-    coin.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); autoToss(); } });
-    tossBtn.addEventListener('click', autoToss);
-    againBtn.addEventListener('click', () => { againBtn.hidden = backBtn.hidden = true; gd.classList.remove('flash'); mf.classList.remove('win'); tossBtn.hidden = false; resetCoin(); say(MF_LINES.flick, null, 30); autoSoon(); });
+    coin.addEventListener('keydown', e => { if (phase === 'you' && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); autoToss(); } });
+    tossBtn.addEventListener('click', () => { if (phase === 'you') autoToss(); });
+    againBtn.addEventListener('click', () => { againBtn.hidden = backBtn.hidden = true; gd.classList.remove('flash'); mf.classList.remove('win'); resetCoin(); say(MF_LINES.flick, null, 30); });
 
     backBtn.addEventListener('click', () => closeManifest()); $('.mf-x').addEventListener('click', () => closeManifest());
     $('.mf-snd').addEventListener('click', e => { mfSound = !mfSound; const b = e.currentTarget; b.setAttribute('aria-pressed', String(mfSound)); b.setAttribute('aria-label', mfSound ? 'Sound on' : 'Sound off'); b.classList.toggle('off', !mfSound); });
@@ -5583,7 +5589,7 @@ document.addEventListener('error', function (e) {
       box.classList.add('show');
       say(MF_LINES.ask, () => later(reduced ? 300 : 1100, () => {
         mf.classList.add('s2'); layout();
-        later(reduced ? 300 : 2300, () => { layout(); ready = true; coin.classList.add('show'); tossBtn.hidden = false; place(homeX, homeY); say(MF_LINES.flick, null, 34); autoSoon(); });
+        later(reduced ? 300 : 2300, () => { layout(); ready = true; coin.classList.add('show'); place(homeX, homeY); say(MF_LINES.herToss, () => later(reduced ? 300 : 1000, () => { if (!busy && !drag) autoToss(); }), 34); });
       }));
     });
   }
