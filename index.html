@@ -1720,9 +1720,9 @@
   html[data-mood="arcade"] .mood-hint { font-size: .62rem; padding: 12px 14px 13px; margin-top: 6px; }
 
   /* ===== Y2K: a different background (and readable neon text) for each page; the front page keeps the collage ===== */
-  html[data-mood="y2k"][data-route="about"] #mood-bg { background-image: url("photos/mood-y2k-pink.jpg"); }
+  html[data-mood="y2k"][data-route="about"] #mood-bg { background-image: url("photos/mood-y2k-leopard.jpg"); }
   html[data-mood="y2k"][data-route="loves"] #mood-bg { background-image: url("photos/mood-y2k-zebra.jpg"); }
-  html[data-mood="y2k"][data-route="goals"] #mood-bg { background-image: url("photos/mood-y2k-cream.jpg"); }
+  html[data-mood="y2k"][data-route="goals"] #mood-bg { background-image: url("photos/mood-y2k-chrome.jpg"); }
   html[data-mood="y2k"][data-route="work"] #mood-bg { background-image: url("photos/mood-y2k-hearts.jpg"); }
   html[data-mood="y2k"][data-route="loves"] #view :is(h1, h2, p, li, .lead, .tag, figcaption, .cap, dd, dt):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open) *) {
         background: none; box-shadow: none; padding: 0; color: #00eaff; -webkit-text-stroke: 0; text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, -2px 0 0 #000, 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, 0 0 14px #00eaff; font-weight: 800; }
@@ -1856,6 +1856,10 @@
   @media (max-width: 640px) { .aq-tank { aspect-ratio: 4 / 3; border-width: 4px; border-radius: 20px; } .aq-feed, .aq-reset { font-size: 1.1rem; padding: 7px 22px 9px; } }
   @media (prefers-reduced-motion: reduce) { .aq-killer, .aq-dr, .aq-tank.strain, .aq-tank.creak { animation: none !important; } }
 
+  /* Y2K goals sits on the dark chrome picture, so its text is bright neon yellow with a black outline (the star game keeps its own look) */
+  html[data-mood="y2k"][data-route="goals"] #view :is(h1, h2, p, li, .lead, .tag, figcaption, .cap, dd, dt):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open, .stars-game) *) {
+        background: none; box-shadow: none; padding: 0; color: #faff3a; -webkit-text-stroke: 0; text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, -2px 0 0 #000, 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, 0 0 14px #faff3a; font-weight: 800; }
+  html[data-mood="y2k"][data-route="about"] #view :is(h1, h2):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open, .stars-game) *) { display: block; width: fit-content; max-width: 100%; background: rgba(255, 236, 247, .94); border-radius: 18px; padding: .05em .45em .15em; color: #3d0a5c; -webkit-text-stroke: 0; text-shadow: 3px 3px 0 #ff9ad6; box-shadow: 0 4px 16px rgba(61, 10, 92, .3); }
   /* ===== dark academia ===== */
   html[data-mood="academia"] #mood-bg { background-image: linear-gradient(rgba(20, 12, 8, .68), rgba(20, 12, 8, .84)), url("photos/mood-books.jpg"); background-position: center 30%; }
   .mx-castle { position: absolute; left: 0; right: 0; bottom: 0; height: min(46vh, 380px); opacity: .9; }
