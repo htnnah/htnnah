@@ -1703,6 +1703,21 @@
   html[data-mood="y2k"] #view :is(p, li, .lead, .tag, figcaption, .cap, dd, dt):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open) *) {
         display: block; width: fit-content; max-width: 100%; background: rgba(255, 236, 247, .88); border-radius: 16px; padding: .4em .8em .5em; box-shadow: 0 4px 16px rgba(255, 20, 147, .2); text-shadow: none; color: #3d0a5c; }
   html[data-mood="y2k"] #view :is(li):not(:is(.fact, .hub, .polaroid, .card, .face, button, .job-cs, .songs) *) { margin-block: .35em; }
+
+  /* ---------- one-line pressable name + mood hint ---------- */
+  .home h1 { font-size: clamp(2.4rem, 8.4vw, 7rem); margin-bottom: 12px; }
+  .name-btn { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: center; -webkit-text-stroke: inherit; text-shadow: inherit; display: inline-block; transition: transform .25s var(--ease); }
+  .name-btn:hover { transform: scale(1.03) rotate(-.6deg); } .name-btn:active { transform: scale(.97); }
+  .name-btn:focus-visible { outline: 3px solid var(--purple); outline-offset: 8px; border-radius: 18px; }
+  .name-btn.pop { animation: namePop .55s ease; } @keyframes namePop { 35% { transform: scale(1.08) rotate(-2deg); } 70% { transform: scale(.98) rotate(1deg); } }
+  .mood-hint { font: inherit; font-size: 1.2rem; color: var(--ink); background: none; border: 0; padding: 4px 10px; cursor: pointer; opacity: .9; margin-bottom: 6px; }
+  .mood-hint b { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; color: var(--purple); }
+  .mood-hint:hover { opacity: 1; } .mood-hint:focus-visible { outline: 3px solid var(--purple); outline-offset: 4px; border-radius: 12px; }
+  html[data-mood="arcade"] .home h1 { font-size: clamp(1.1rem, 4.2vw, 3rem); } html[data-mood="disco"] .home h1 { font-size: clamp(1.6rem, 5.2vw, 4rem); }
+  html[data-mood="western"] .home h1, html[data-mood="vintage"] .home h1 { font-size: clamp(1.8rem, 6vw, 4.6rem); } html[data-mood="y2k"] .home h1 { font-size: clamp(2rem, 7vw, 6rem); }
+  html[data-mood="western"][data-route="home"] .home .mood-hint { color: #fff0d2; text-shadow: 0 2px 12px rgba(0, 0, 0, .8); } html[data-mood="western"][data-route="home"] .home .mood-hint b { color: #fff0d2; }
+  html[data-mood="y2k"] .mood-hint { background: rgba(255, 236, 247, .9); border-radius: 16px; box-shadow: 0 4px 16px rgba(255, 20, 147, .2); padding: 6px 16px 8px; color: #3d0a5c; font-weight: 700; }
+  html[data-mood="arcade"] .mood-hint { font-size: .62rem; padding: 12px 14px 13px; margin-top: 6px; }
   /* ===== dark academia ===== */
   html[data-mood="academia"] #mood-bg { background-image: linear-gradient(rgba(20, 12, 8, .68), rgba(20, 12, 8, .84)), url("photos/mood-books.jpg"); background-position: center 30%; }
   .mx-castle { position: absolute; left: 0; right: 0; bottom: 0; height: min(46vh, 380px); opacity: .9; }
@@ -1764,7 +1779,7 @@
   html[data-mood="arcade"][data-route="goals"] #mood-bg { background-image: linear-gradient(rgba(10, 5, 40, .32), rgba(10, 5, 40, .32)), url("photos/mood-synth4.jpg"); }
   html[data-mood="arcade"][data-route="work"] #mood-bg { background-image: linear-gradient(rgba(10, 5, 40, .32), rgba(10, 5, 40, .32)), url("photos/mood-synth5.jpg"); }
   html[data-mood="arcade"] #mood-bg::after { display: none; }
-  html[data-mood="arcade"] nav .brand, html[data-mood="arcade"] nav ul a, html[data-mood="arcade"] .enter, html[data-mood="arcade"] .backlink, html[data-mood="arcade"] .hub a, html[data-mood="arcade"] #view button, html[data-mood="arcade"] #mood-btn, html[data-mood="arcade"] #mood-reset {
+  html[data-mood="arcade"] nav .brand, html[data-mood="arcade"] nav ul a, html[data-mood="arcade"] .enter, html[data-mood="arcade"] .backlink, html[data-mood="arcade"] .hub a, html[data-mood="arcade"] #view button:not(.name-btn), html[data-mood="arcade"] #mood-btn, html[data-mood="arcade"] #mood-reset {
         font-family: "Press Start 2P", monospace; text-transform: uppercase; letter-spacing: 0; color: #fff; border: 3px solid #000; border-radius: 6px; text-shadow: 2px 2px 0 rgba(0, 0, 0, .55);
         background: linear-gradient(#ff7be5, #d63aa8); box-shadow: inset 0 3px 0 rgba(255, 255, 255, .45), 0 6px 0 #7a1b66, 0 9px 0 #000; transition: transform .08s, box-shadow .08s; cursor: pointer; }
   html[data-mood="arcade"] nav ul { background: none; box-shadow: none; padding: 0; gap: 12px; -webkit-backdrop-filter: none; backdrop-filter: none; }
@@ -1775,8 +1790,8 @@
   html[data-mood="arcade"] .hub a small { font-size: .55rem; opacity: .85; }
   html[data-mood="arcade"] .enter { font-size: 1rem; padding: 16px 28px; background: linear-gradient(#7dff8a, #1fbf3a); box-shadow: inset 0 3px 0 rgba(255, 255, 255, .5), 0 7px 0 #0d6b1e, 0 10px 0 #000; animation: mxBlink 1.1s steps(2) infinite; }
   html[data-mood="arcade"] .backlink { font-size: .7rem; padding: 10px 14px 11px; background: linear-gradient(#ff8a8a, #e02d2d); box-shadow: inset 0 3px 0 rgba(255, 255, 255, .45), 0 6px 0 #7d1010, 0 9px 0 #000; }
-  html[data-mood="arcade"] :is(nav ul a, .enter, .backlink, .hub a, #view button, #mood-btn, #mood-reset):hover { transform: translateY(-2px); }
-  html[data-mood="arcade"] :is(nav ul a, nav .brand, .enter, .backlink, .hub a, #view button, #mood-btn, #mood-reset):active { transform: translateY(6px); box-shadow: inset 0 3px 0 rgba(255, 255, 255, .3), 0 0 0 #000, 0 3px 0 #000; }
+  html[data-mood="arcade"] :is(nav ul a, .enter, .backlink, .hub a, #view button:not(.name-btn), #mood-btn, #mood-reset):hover { transform: translateY(-2px); }
+  html[data-mood="arcade"] :is(nav ul a, nav .brand, .enter, .backlink, .hub a, #view button:not(.name-btn), #mood-btn, #mood-reset):active { transform: translateY(6px); box-shadow: inset 0 3px 0 rgba(255, 255, 255, .3), 0 0 0 #000, 0 3px 0 #000; }
   html[data-mood="arcade"] #mood-btn, html[data-mood="arcade"] #mood-reset { font-size: .62rem; padding: 10px 14px 11px; background: linear-gradient(#ffe45c, #ff9e1f); color: #fff; }
   html[data-mood="arcade"] .home h1 { text-shadow: 4px 4px 0 #000, 0 0 18px rgba(255, 79, 216, .7); }
   html[data-mood="arcade"] :is(h1, h2) { text-shadow: 3px 3px 0 #000; }
@@ -4606,7 +4621,8 @@ const friendsPhotos = ['photos/friends42.jpg', 'photos/friends43.jpg', 'photos/f
 const pages = {
   '/': { title: 'hannah young', html: () => `
     <section class="home">
-      <h1 aria-label="Hannah Young"><span><i>Hannah</i></span><span><i>Young</i></span></h1>
+      <h1><button type="button" class="name-btn" id="name-btn" aria-label="Hannah Young. Press my name to change the mood."><span><i>Hannah Young</i></span></button></h1>
+      <button type="button" class="mood-hint" id="mood-hint">feeling moody? <b>click here</b></button>
       <div><a class="enter" href="#/about">come in</a></div>
     </section>` },
 
@@ -6991,5 +7007,23 @@ document.addEventListener('error', function (e) {
   new MutationObserver(onMood).observe(root, { attributes: true, attributeFilter: ['data-mood'] }); onMood();
 })();
 </script>
-</body>
+<script>
+/* pressing the name (or the line under it) switches to a random mood */
+(() => {
+  const root = document.documentElement, view = document.getElementById('view');
+  const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const label = k => { const c = document.querySelector('.mood-chip[data-k="' + k + '"]'); return c ? c.textContent.trim() : k; };
+  const sync = () => { const h = document.getElementById('mood-hint'); if (!h) return; const k = root.dataset.mood;
+    h.innerHTML = k ? 'now feeling ' + label(k) + '. <b>click for another</b>' : 'feeling moody? <b>click here</b>'; };
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.name-btn, .mood-hint'); if (!b) return;
+    const chips = [...document.querySelectorAll('.mood-chip')], cur = root.dataset.mood || '';
+    const pool = chips.filter(c => c.dataset.k !== cur); if (!pool.length) return;
+    pool[Math.floor(Math.random() * pool.length)].click();
+    const n = document.getElementById('name-btn'); if (n && !reduce()) { n.classList.remove('pop'); void n.offsetWidth; n.classList.add('pop'); }
+  });
+  new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-mood'] });
+  new MutationObserver(sync).observe(view, { childList: true }); sync();
+})();
+</script></body>
 </html>
