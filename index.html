@@ -1222,7 +1222,7 @@
   .mf-motes i { position: absolute; left: var(--x); bottom: -12px; width: 4px; height: 4px; border-radius: 50%; background: #fff; opacity: 0; box-shadow: 0 0 9px 2px rgba(255, 255, 255, .75); animation: mfMote var(--t) linear infinite; animation-delay: var(--d); }
   @keyframes mfMote { 0% { transform: translate(0, 0); opacity: 0; } 12% { opacity: .9; } 100% { transform: translate(var(--dx), -112vh); opacity: 0; } }
 
-  .mf-gd { position: absolute; left: 50%; bottom: 0; height: 82vh; aspect-ratio: 400 / 560; z-index: 3; opacity: 0; filter: blur(14px); transform: translate(-50%, 10vh);
+  .mf-gd { position: absolute; left: 50%; bottom: 0; height: 64vh; aspect-ratio: 400 / 560; z-index: 3; opacity: 0; filter: blur(14px); transform: translate(-50%, 10vh);
            transition: opacity 2.6s ease, transform 2.8s cubic-bezier(.2, .7, .2, 1), filter 2.4s ease, left 2s var(--ease), bottom 2s var(--ease), height 2s var(--ease); }
   #mf.g .mf-gd { opacity: 1; filter: none; transform: translate(-50%, 0); }
   #mf.s2 .mf-gd { left: 28%; }
@@ -1286,7 +1286,7 @@
   .mf-snd:hover, .mf-x:hover { background: rgba(255, 255, 255, .3); } .mf-snd:focus-visible, .mf-x:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
 
   @media (max-aspect-ratio: 1/1) {
-    .mf-gd { height: 60vh; } #mf.s2 .mf-gd { left: 50%; bottom: 48vh; height: 28vh; }
+    .mf-gd { height: 48vh; } #mf.s2 .mf-gd { left: 50%; bottom: 48vh; height: 22vh; }
     .mf-ft { left: 50%; bottom: 17vh; height: 38vh; } #mf.s2 .mf-ft { left: 50%; }
     .mf-box { font-size: clamp(9px, 2.6vw, 13px); padding: 20px 20px 24px; }
     .mf-actions button { font-size: .95rem; padding: 1px 16px 4px; }
@@ -1321,12 +1321,12 @@
   /* the goddess fades back a little more once the fountain appears, and both are bigger (no mask here: it clips her glow into a hard box) */
   #mf.s2 .mf-gd { opacity: .66; z-index: 1; -webkit-mask-image: none; mask-image: none; }
   @media (min-aspect-ratio: 1/1) {
-    .mf-gd { height: 90vh; }
+    .mf-gd { height: 70vh; }
     .mf-ft { height: min(74vh, 52vw); bottom: 9vh; }
     #mf.s2 .mf-ft { left: 73%; }
   }
   @media (max-aspect-ratio: 1/1) {
-    #mf.s2 .mf-gd { left: 50%; bottom: 47vh; height: 38vh; opacity: .55; }
+    #mf.s2 .mf-gd { left: 50%; bottom: 47vh; height: 30vh; opacity: .55; }
     .mf-ft { bottom: 12vh; height: min(50vh, 108vw); } #mf.s2 .mf-ft { left: 50%; }
   }
 
@@ -7056,7 +7056,7 @@ document.addEventListener('error', function (e) {
   };
 
   const MF_LINES = {
-    ask: 'Hey, it\'s your pop goddess, b****. It would be toxic for you not to manifest things for Hannah... watch her coin fly into the fountain',
+    ask: 'It\'s Britney, b****. It would be toxic for you not to manifest things for Hannah... watch her coin fly into the fountain',
     herToss: 'Here goes Hannah\'s manifestation!',
     herDone: 'Hannah\'s wish has been heard!',
     yours: 'Now it\'s your turn, superstar... make your own wish, then flick the coin up into the fountain yourself!',
