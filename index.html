@@ -1711,11 +1711,11 @@
   .name-btn:focus-visible { outline: 3px solid var(--purple); outline-offset: 8px; border-radius: 18px; }
   .name-btn.pop { animation: namePop .55s ease; } @keyframes namePop { 35% { transform: scale(1.08) rotate(-2deg); } 70% { transform: scale(.98) rotate(1deg); } }
   .mood-hint { font: inherit; font-size: 1.2rem; color: var(--ink); background: none; border: 0; padding: 4px 10px; cursor: pointer; opacity: .9; margin-bottom: 6px; }
-  .mood-hint b { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; color: var(--purple); }
+  .mood-hint b { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; color: inherit; font-weight: 800; }
   .mood-hint:hover { opacity: 1; } .mood-hint:focus-visible { outline: 3px solid var(--purple); outline-offset: 4px; border-radius: 12px; }
   html[data-mood="arcade"] .home h1 { font-size: clamp(1.1rem, 4.2vw, 3rem); } html[data-mood="disco"] .home h1 { font-size: clamp(1.6rem, 5.2vw, 4rem); }
   html[data-mood="western"] .home h1, html[data-mood="vintage"] .home h1 { font-size: clamp(1.8rem, 6vw, 4.6rem); } html[data-mood="y2k"] .home h1 { font-size: clamp(2rem, 7vw, 6rem); }
-  html[data-mood="western"][data-route="home"] .home .mood-hint { color: #fff0d2; text-shadow: 0 2px 12px rgba(0, 0, 0, .8); } html[data-mood="western"][data-route="home"] .home .mood-hint b { color: #fff0d2; }
+  html[data-mood="western"][data-route="home"] .home .mood-hint { color: #fff0d2; text-shadow: 0 2px 12px rgba(0, 0, 0, .8); } 
   html[data-mood="y2k"] .mood-hint { background: rgba(255, 236, 247, .9); border-radius: 16px; box-shadow: 0 4px 16px rgba(255, 20, 147, .2); padding: 6px 16px 8px; color: #3d0a5c; font-weight: 700; }
   html[data-mood="arcade"] .mood-hint { font-size: .62rem; padding: 12px 14px 13px; margin-top: 6px; }
 
@@ -1736,6 +1736,28 @@
   html[data-mood="y2k"][data-route="loves"][data-sub="friends"] #view :is(p, li, .lead, .tag, figcaption, .cap, dd, dt):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open) *) { color: #3d0a5c; background: rgba(255, 236, 247, .88); padding: .4em .8em .5em; box-shadow: 0 4px 16px rgba(255, 20, 147, .2); -webkit-text-stroke: 0; text-shadow: none; font-weight: 600; }
   html[data-mood="y2k"][data-route="loves"] #view .card .label { color: #00eaff; font-weight: 800; text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, -2px 0 0 #000, 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, 0 0 12px #00eaff; }
   html[data-mood="y2k"][data-route="loves"][data-sub="friends"] #view .card .label { color: #3d0a5c; text-shadow: 0 0 6px #fff, 0 0 12px #fff; }
+
+  .mood-random { grid-column: 1 / -1; font: inherit; font-size: 1rem; font-weight: 800; cursor: pointer; color: #fff; background: var(--purple); border: 2px solid var(--purple); border-radius: 14px; padding: 8px 12px 10px; text-shadow: 0 1px 2px rgba(0, 0, 0, .4); }
+  .mood-random:hover { transform: translateY(-2px); } .mood-random:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  html[data-mood="academia"] .mood-random, html[data-mood="oldmoney"] .mood-random, html[data-mood="disco"] .mood-random { color: #1a1208; text-shadow: none; }
+  html[data-mood="arcade"] .mood-random { font-family: "Press Start 2P", monospace; font-size: .62rem; text-transform: uppercase; background: linear-gradient(#7dff8a, #1fbf3a); border: 3px solid #000; box-shadow: 0 5px 0 #0d6b1e, 0 8px 0 #000; text-shadow: 2px 2px 0 rgba(0, 0, 0, .5); }
+
+  /* readability fixes found by a contrast check */
+  html[data-mood="academia"] .polaroid *, html[data-mood="oldmoney"] .polaroid *, html[data-mood="arcade"] .polaroid *, html[data-mood="disco"] .polaroid * { color: #494D5F; text-shadow: none; }
+  html[data-mood="academia"] .art-tag, html[data-mood="oldmoney"] .art-tag, html[data-mood="arcade"] .art-tag, html[data-mood="disco"] .art-tag { color: #1a1208; text-shadow: none; }
+  html[data-mood] .art-aka { color: var(--ink); opacity: .9; font-style: italic; }
+  html[data-mood="y2k"][data-route="loves"] #view .art-aka { color: #00eaff; opacity: 1; text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, -2px 0 0 #000, 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, 0 0 12px #00eaff; font-weight: 800; }
+  /* solid backing behind text that sits on a picture or pattern (just as wide as the text) */
+  html[data-mood="tropical"] { --tbg: rgba(255, 251, 240, .96); --tink: #17453b; }
+  html[data-mood="dreamy"] { --tbg: rgba(255, 255, 255, .94); --tink: #3d4577; }
+  html[data-mood="academia"] { --tbg: rgba(40, 29, 21, .94); --tink: #eadfc8; }
+  html[data-mood="oldmoney"] { --tbg: rgba(16, 30, 46, .94); --tink: #f3ecd9; }
+  html[data-mood="arcade"] { --tbg: rgba(16, 10, 50, .93); --tink: #e8f3ff; }
+  html[data-mood="western"] { --tbg: rgba(255, 247, 250, .97); --tink: #1c3f80; }
+  html[data-mood="disco"] { --tbg: rgba(36, 10, 60, .94); --tink: #fff0ff; }
+  html:is([data-mood="tropical"], [data-mood="dreamy"], [data-mood="academia"], [data-mood="oldmoney"], [data-mood="arcade"], [data-mood="western"], [data-mood="disco"]) #view :is(p, li, .lead, .tag, figcaption, .cap, dd, dt, h1, h2):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open, .stars-game, .home) *) {
+        display: block; width: fit-content; max-width: 100%; background: var(--tbg); color: var(--tink); border-radius: 14px; padding: .3em .75em .4em; text-shadow: none; -webkit-text-stroke: 0; box-shadow: 0 3px 12px rgba(0, 0, 0, .12); }
+  html[data-mood] .skyline { display: none; }
   /* ===== dark academia ===== */
   html[data-mood="academia"] #mood-bg { background-image: linear-gradient(rgba(20, 12, 8, .68), rgba(20, 12, 8, .84)), url("photos/mood-books.jpg"); background-position: center 30%; }
   .mx-castle { position: absolute; left: 0; right: 0; bottom: 0; height: min(46vh, 380px); opacity: .9; }
@@ -1850,6 +1872,22 @@
   #mx-hat .eyeL.wink { animation: mxWink .9s ease-in-out; transform-box: fill-box; transform-origin: center; } @keyframes mxWink { 20%, 70% { transform: scaleY(.08); } }
   @media (max-width: 720px) { #mx-hat .box { grid-template-columns: 1fr; } #mx-hat .stage { position: relative; min-height: 250px; } }
 
+
+  /* hat maker: bigger picture, bigger buttons */
+  #mx-hat .box { width: min(1060px, 100%); grid-template-columns: minmax(340px, 1.25fr) minmax(300px, 1fr); gap: 14px 22px; padding: 22px 26px; }
+  #mx-hat h2 { font-size: 2rem; }
+  #mx-hat .stage { min-height: min(560px, 80vh); }
+  #mx-hat .svgwrap { width: 100%; max-width: 620px; } #mx-hat .stage svg { width: 100%; height: auto; overflow: hidden; }
+  #mx-hat .ctl { gap: 12px; } #mx-hat .row b { font-size: 1.05rem; }
+  #mx-hat .opts { gap: 8px; }
+  #mx-hat .sw { width: 40px; height: 40px; } #mx-hat .sw[aria-pressed="true"] { box-shadow: 0 0 0 4px #ff3d8b; transform: scale(1.1); }
+  #mx-hat .ch { font-size: 1.05rem; padding: 6px 18px 8px; }
+  #mx-hat input[type=text] { font-size: 1.5rem; width: 4.6em; padding: 4px 8px; }
+  #mx-hat .row.act { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #mx-hat .go { font-size: 1.4rem; padding: 8px 26px 11px; }
+  #mx-hat .rnd { font: inherit; font-size: 1.15rem; font-weight: 800; color: #fff; background: #1f68d1; border: 3px solid #123f95; border-radius: 12px; padding: 6px 20px 9px; cursor: pointer; box-shadow: 0 5px 0 #123f95; } #mx-hat .rnd:active { transform: translateY(4px); box-shadow: none; } #mx-hat .rnd:focus-visible { outline: 3px solid #ff3d8b; outline-offset: 2px; }
+  #mx-hat .again { font-size: 1.1rem; }
+  @media (max-width: 720px) { #mx-hat .stage { min-height: 320px; } }
   /* ===== disco ===== */
   html[data-mood="disco"] #mood-bg { background-image: linear-gradient(rgba(30, 6, 56, .6), rgba(30, 6, 56, .66)), url("photos/mood-vinyl.jpg"); }
   html[data-mood="disco"][data-route="home"] #mood-bg { background-image: linear-gradient(rgba(30, 6, 56, .5), rgba(30, 6, 56, .6)), url("photos/mood-discoballs.jpg"); }
@@ -4639,7 +4677,7 @@ const friendsPhotos = ['photos/friends42.jpg', 'photos/friends43.jpg', 'photos/f
 const pages = {
   '/': { title: 'hannah young', html: () => `
     <section class="home">
-      <h1><button type="button" class="name-btn" id="name-btn" aria-label="Hannah Young. Press my name to change the mood."><span><i>Hannah Young</i></span></button></h1>
+      <h1><button type="button" class="name-btn" id="name-btn" aria-label="Hannah Young. Press to pick a mood."><span><i>Hannah Young</i></span></button></h1>
       <button type="button" class="mood-hint" id="mood-hint">feeling moody? <b>click here</b></button>
       <div><a class="enter" href="#/about">come in</a></div>
     </section>` },
@@ -6927,80 +6965,87 @@ document.addEventListener('error', function (e) {
   hatChip.addEventListener('click', () => openHat(hatChip));
   const H = { hat: '#d8b27a', band: '#d6471e', feather: 'none', ribbon: 'none', neck: 'none', braid: 'none', skin: '#e8b98f', hair: '#7a4a22', style: 'cowgirl', init: '' };
   const shade = (hex, f) => { const n = parseInt(hex.slice(1), 16); const c = v => Math.max(0, Math.min(255, Math.round(v * f))); return '#' + [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(v => c(v).toString(16).padStart(2, '0')).join(''); };
+  const HATS = ['#d8b27a', '#fffaf0', '#2b2b2b', '#ff8fb8', '#3bbfc4', '#7a4a2a', '#8e6bd8'], BANDS = ['#d6471e', '#1f68d1', '#ff3d8b', '#f2c230', '#ffffff', '#2b2b2b'];
+  const SKINS = [['#f6d7bd', 'lightest'], ['#e8b98f', 'light'], ['#c98e63', 'medium'], ['#8d5a3b', 'deep'], ['#5a3722', 'deepest']], HAIRS = [['#3b2416', 'dark brown'], ['#7a4a22', 'brown'], ['#d9a441', 'blonde'], ['#c8321e', 'red'], ['#1d1d1d', 'black'], ['#ff7ab8', 'pink']];
+  /* a big head-and-hat portrait. Everything (bows, beads, charms, feathers) sits on the hat. */
   function hatSVG(s) {
-    const hc = s.hat, hd = shade(hc, .82), hair = s.hair, ink = '#3a2616';
-    const longHair = s.style === 'cowgirl';
-    const feather = { white: ['#ffffff', '#d9d9e6'], red: ['#e53935', '#8e1d1b'], blue: ['#2d7cf0', '#1b4aa0'], pink: ['#ff7ab8', '#c93a82'], peacock: ['#1fb5a8', '#0b6a8a'] }[s.feather];
-    const featherSVG = feather ? `<g transform="translate(196 104) rotate(32)"><path d="M0 0C-10-26-6-54 4-78C16-54 14-26 0 0Z" fill="${feather[0]}" stroke="${feather[1]}" stroke-width="2"/><path d="M1 0C2-26 3-52 4-76" stroke="${feather[1]}" stroke-width="2" fill="none"/>${s.feather === 'peacock' ? '<ellipse cx="4" cy="-52" rx="6" ry="9" fill="#ffd23f" stroke="#0b6a8a"/><ellipse cx="4" cy="-52" rx="2.600" ry="4" fill="#1d4ea1"/>' : ''}</g>` : '';
-    const bowSVG = s.ribbon === 'bow' ? `<g transform="translate(104 108)"><path d="M0 0C-16-14-26-4-22 8C-16 14-6 8 0 0ZM0 0C16-14 26-4 22 8C16 14 6 8 0 0Z" fill="${s.band}" stroke="${shade(s.band, .6)}" stroke-width="2"/><circle r="5" fill="${shade(s.band, .75)}"/></g>` : s.ribbon === 'streamers' ? `<g transform="translate(104 108)"><path d="M0 0C-4 20-14 34-24 44L-14 46L-8 54C-4 34 0 18 4 4Z" fill="${s.band}" stroke="${shade(s.band, .6)}" stroke-width="2"/><path d="M0 0C6 22 12 34 22 46L12 48L8 56C2 36-2 18-4 4Z" fill="${shade(s.band, 1.2)}" stroke="${shade(s.band, .6)}" stroke-width="2"/><circle r="5" fill="${shade(s.band, .75)}"/></g>` : '';
-    const necklace = { pearls: [...Array(9)].map((_, i) => { const t = i / 8, x = 118 + 64 * t, y = 226 + 30 * Math.sin(Math.PI * t); return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.600" fill="#fffaf0" stroke="#cfc4a8"/>`; }).join(''),
-      turquoise: [...Array(9)].map((_, i) => { const t = i / 8, x = 118 + 64 * t, y = 226 + 30 * Math.sin(Math.PI * t); return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.800" fill="${i % 2 ? '#2ec4c4' : '#ff8fb8'}" stroke="#1b6f7a"/>`; }).join(''),
-      bolo: '<path d="M122 226Q150 262 178 226" fill="none" stroke="#3a2616" stroke-width="3"/><circle cx="150" cy="248" r="8" fill="#2ec4c4" stroke="#8a93a5" stroke-width="3"/><path d="M150 256v26M150 256l-6 22M150 256l6 22" stroke="#3a2616" stroke-width="3" stroke-linecap="round"/>',
-      star: '<path d="M122 226Q150 258 178 226" fill="none" stroke="#c9a14a" stroke-width="3"/><path d="M150 250l4 9 10 1-7.500 6.500 2.500 10-9-5.500-9 5.500 2.500-10L136 260l10-1z" fill="#ffd35c" stroke="#b8860b" stroke-width="1.600"/>' }[s.neck] || '';
-    const braidOne = (x, flip) => `<g transform="translate(${x} 214) scale(${flip} 1)"><path d="M0 0C-6 20 4 34 0 56" fill="none" stroke="${hair}" stroke-width="16" stroke-linecap="round"/><path d="M-6 14l12 4M-6 28l12 4M-6 42l12 4" stroke="${shade(hair, .6)}" stroke-width="2.200"/>${s.braid === 'bows' ? `<path d="M0 58C-10 50-14 58-10 64C-4 66-2 62 0 58ZM0 58C10 50 14 58 10 64C4 66 2 62 0 58Z" fill="#ff3d8b" stroke="#a8205f" stroke-width="1.500"/>` : `<rect x="-6" y="55" width="12" height="6" rx="3" fill="#d6471e"/>`}</g>`;
-    const braids = s.braid === 'none' ? '' : (s.braid === 'one' ? braidOne(102, -1) : braidOne(102, -1) + braidOne(198, 1));
-    return `<svg viewBox="-20 0 360 300" role="img" aria-label="Your decorated hat and cowfolk">
-      ${longHair ? `<path d="M96 160C86 230 96 262 116 270H184C204 262 214 230 204 160Z" fill="${hair}"/>` : ''}
+    const hc = s.hat, hd = shade(hc, .82), hb = shade(hc, .55), hair = s.hair, ink = '#3a2616', long = s.style === 'cowgirl';
+    const f = { white: ['#ffffff', '#cfcfe0'], red: ['#e53935', '#8e1d1b'], blue: ['#2d7cf0', '#1b4aa0'], pink: ['#ff7ab8', '#c93a82'], peacock: ['#1fb5a8', '#0b6a8a'] }[s.feather];
+    const feather = f ? `<g transform="translate(266 146) rotate(30)"><path d="M0 0C-14-34-8-72 6-104C22-72 18-34 0 0Z" fill="${f[0]}" stroke="${f[1]}" stroke-width="2.600"/><path d="M1 0C3-34 4-70 6-102" stroke="${f[1]}" stroke-width="2.600" fill="none"/>${s.feather === 'peacock' ? '<ellipse cx="6" cy="-70" rx="8" ry="12" fill="#ffd23f" stroke="#0b6a8a" stroke-width="1.600"/><ellipse cx="6" cy="-70" rx="3.400" ry="5.200" fill="#1d4ea1"/>' : ''}</g>` : '';
+    const ribbon = s.ribbon === 'bow' ? `<g transform="translate(120 142)"><path d="M0 0C-22-20-36-6-30 12C-22 20-8 12 0 0ZM0 0C22-20 36-6 30 12C22 20 8 12 0 0Z" fill="${s.band}" stroke="${shade(s.band, .6)}" stroke-width="2.600"/><circle r="7" fill="${shade(s.band, .75)}"/></g>`
+      : s.ribbon === 'streamers' ? `<g transform="translate(120 142)"><path d="M0 0C-5 26-18 44-32 58L-18 60L-10 70C-4 44 0 24 6 6Z" fill="${s.band}" stroke="${shade(s.band, .6)}" stroke-width="2.600"/><path d="M0 0C8 28 16 44 30 60L16 62L10 72C2 46-3 24-6 6Z" fill="${shade(s.band, 1.2)}" stroke="${shade(s.band, .6)}" stroke-width="2.600"/><circle r="7" fill="${shade(s.band, .75)}"/></g>` : '';
+    const beads = col => [...Array(15)].map((_, i) => { const t = i / 14, x = 106 + 188 * t, y = 156 + 26 * Math.sin(Math.PI * t); return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6.400" fill="${col(i)}" stroke="rgba(0,0,0,.28)" stroke-width="1.200"/>`; }).join('');
+    const chain = { pearls: beads(() => '#fffaf0'), turquoise: beads(i => i % 2 ? '#2ec4c4' : '#ff8fb8'),
+      bolo: '<path d="M106 156Q200 190 294 156" fill="none" stroke="#3a2616" stroke-width="4"/><circle cx="200" cy="176" r="13" fill="#2ec4c4" stroke="#aab2c2" stroke-width="4"/><path d="M200 188v38M200 188l-10 34M200 188l10 34" stroke="#3a2616" stroke-width="4" stroke-linecap="round"/>',
+      star: '<path d="M106 156Q200 190 294 156" fill="none" stroke="#c9a14a" stroke-width="4"/><path d="M200 178l6 13 14 2-10.500 9 3 14-12.500-7.500-12.500 7.500 3-14-10.500-9 14-2z" fill="#ffd35c" stroke="#b8860b" stroke-width="2"/>' }[s.neck] || '';
+    const braid = (x, flip) => `<g transform="translate(${x} 270) scale(${flip} 1)"><path d="M0 0C-10 34 8 62 0 104" fill="none" stroke="${hair}" stroke-width="24" stroke-linecap="round"/><path d="M-8 18l16 5M-8 38l16 5M-8 58l16 5M-8 78l16 5" stroke="${shade(hair, .6)}" stroke-width="2.600"/>${s.braid === 'bows' ? '<path d="M0 108C-12 98-18 108-13 116C-5 119-2 113 0 108ZM0 108C12 98 18 108 13 116C5 119 2 113 0 108Z" fill="#ff3d8b" stroke="#a8205f" stroke-width="2"/>' : '<rect x="-8" y="104" width="16" height="8" rx="4" fill="#d6471e"/>'}</g>`;
+    const braids = s.braid === 'none' ? '' : (s.braid === 'one' ? braid(138, -1) : braid(138, -1) + braid(262, 1));
+    return `<svg viewBox="0 0 400 400" role="img" aria-label="Your decorated hat">
+      ${long ? `<path d="M138 214C116 290 122 336 150 360H250C278 336 284 290 262 214Z" fill="${hair}"/>` : ''}
       ${braids}
-      <path d="M92 262Q150 238 208 262V300H92Z" fill="#fff3d9" stroke="${ink}" stroke-width="2.500"/><path d="M122 250l28 18 28-18" fill="none" stroke="${ink}" stroke-width="2.500"/>
-      <rect x="136" y="214" width="28" height="30" rx="10" fill="${s.skin}" stroke="${ink}" stroke-width="2.500"/>
-      <ellipse cx="150" cy="176" rx="50" ry="54" fill="${s.skin}" stroke="${ink}" stroke-width="2.500"/>
-      <path d="M100 160Q100 120 150 120Q200 120 200 160Q186 138 150 138Q114 138 100 160Z" fill="${hair}"/>
-      <g class="eyes"><ellipse class="eyeL" cx="130" cy="176" rx="5" ry="6.500" fill="#2a1a10"/><ellipse class="eyeR" cx="170" cy="176" rx="5" ry="6.500" fill="#2a1a10"/><circle cx="131.500" cy="174" r="1.600" fill="#fff"/><circle cx="171.500" cy="174" r="1.600" fill="#fff"/></g>
-      <circle cx="118" cy="194" r="7" fill="#ff8fa8" opacity=".5"/><circle cx="182" cy="194" r="7" fill="#ff8fa8" opacity=".5"/>
-      <path d="M134 202Q150 216 166 202" fill="none" stroke="#7a2a2a" stroke-width="3" stroke-linecap="round"/>
-      ${s.style === 'cowboy' ? `<path d="M136 197Q150 190 164 197" fill="none" stroke="${shade(hair, .8)}" stroke-width="5" stroke-linecap="round"/>` : ''}
-      ${necklace}
-      <path d="M40 126Q58 154 150 158Q242 154 260 126Q238 104 150 104Q62 104 40 126Z" fill="${hc}" stroke="${shade(hc, .55)}" stroke-width="3"/>
-      <path d="M92 120Q90 56 150 50Q210 56 208 120Q150 136 92 120Z" fill="${hc}" stroke="${shade(hc, .55)}" stroke-width="3"/>
-      <path d="M118 62Q150 78 182 62" fill="none" stroke="${hd}" stroke-width="3"/><path d="M92 116Q150 134 208 116L208 102Q150 120 92 102Z" fill="${s.band}" stroke="${shade(s.band, .6)}" stroke-width="2"/>
-      ${bowSVG}${featherSVG}
-      <g class="brandmark" transform="translate(150 80)"><circle r="18" fill="none" stroke="#4a2410" stroke-width="3"/><path d="M-20 24Q0 34 20 24" fill="none" stroke="#4a2410" stroke-width="3" stroke-linecap="round"/><text y="7" text-anchor="middle" font-family="Rye, Georgia, serif" font-size="${s.init.length > 2 ? 15 : 19}" font-weight="700" fill="#4a2410">${s.init || 'HY'}</text></g>
-      <g class="cowwrap" style="transform:translate(520px,90px)"><path d="M-30 26L-122-30" stroke="#fff" stroke-width="12" stroke-linecap="round"/><path d="M-30 26L-122-30" stroke="#222" stroke-width="2.500" stroke-linecap="round" opacity=".5"/><circle cx="-125" cy="-32" r="9" fill="#2a2a2a"/><rect x="-146" y="-44" width="30" height="30" rx="4" class="hot" transform="rotate(-30 -131 -29)" stroke="#7a2410" stroke-width="2"/><text x="-131" y="-22" text-anchor="middle" font-family="Rye, Georgia, serif" font-size="13" font-weight="700" fill="#4a2410" transform="rotate(-30 -131 -29)">${s.init || 'HY'}</text>
-        <g><circle r="40" fill="#fff" stroke="#222" stroke-width="2.500"/><path d="M-40 -6Q-20-14-16-34Q-40-34-40-6Z" fill="#222"/><ellipse cx="22" cy="-18" rx="12" ry="10" fill="#222"/><path d="M-26-36l-10-16M26-36l10-16" stroke="#e8d8a8" stroke-width="6" stroke-linecap="round"/><ellipse cx="-34" cy="-24" rx="9" ry="6" fill="#fff" stroke="#222" stroke-width="2"/><ellipse cx="0" cy="18" rx="24" ry="16" fill="#ffb6c8" stroke="#222" stroke-width="2.200"/><circle cx="-8" cy="18" r="3.500" fill="#222"/><circle cx="8" cy="18" r="3.500" fill="#222"/><ellipse class="cwL" cx="-14" cy="-8" rx="5" ry="6.500" fill="#222"/><ellipse class="cwR" cx="14" cy="-8" rx="5" ry="6.500" fill="#222"/></g></g>
-      <g class="steam" opacity="0"><circle cx="150" cy="60" r="7" fill="#fff"/><circle cx="162" cy="48" r="9" fill="#fff"/><circle cx="142" cy="42" r="6" fill="#fff"/></g>
+      <ellipse cx="138" cy="258" rx="10" ry="15" fill="${s.skin}" stroke="${ink}" stroke-width="3"/><ellipse cx="262" cy="258" rx="10" ry="15" fill="${s.skin}" stroke="${ink}" stroke-width="3"/>
+      <ellipse cx="200" cy="254" rx="64" ry="74" fill="${s.skin}" stroke="${ink}" stroke-width="3.200"/>
+      <path d="M136 226Q150 202 200 206Q250 202 264 226Q240 214 200 218Q160 214 136 226Z" fill="${hair}"/>
+      ${s.style === 'cowboy' ? `<path d="M138 232Q140 252 148 272M262 232Q260 252 252 272" fill="none" stroke="${hair}" stroke-width="8" stroke-linecap="round"/>` : ''}
+      <g class="eyes"><ellipse class="eyeL" cx="170" cy="252" rx="7.500" ry="9.500" fill="#2a1a10"/><ellipse class="eyeR" cx="230" cy="252" rx="7.500" ry="9.500" fill="#2a1a10"/><circle cx="172.500" cy="248.500" r="2.600" fill="#fff"/><circle cx="232.500" cy="248.500" r="2.600" fill="#fff"/></g>
+      <path d="M154 232Q170 224 186 232M214 232Q230 224 246 232" fill="none" stroke="${shade(hair, .8)}" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="146" cy="282" r="11" fill="#ff8fa8" opacity=".5"/><circle cx="254" cy="282" r="11" fill="#ff8fa8" opacity=".5"/><path d="M196 262Q200 272 204 264" fill="none" stroke="${shade(s.skin, .7)}" stroke-width="3" stroke-linecap="round"/>
+      <path d="M170 292Q200 316 230 292" fill="none" stroke="#7a2a2a" stroke-width="4.500" stroke-linecap="round"/>
+      ${s.style === 'cowboy' ? `<path d="M172 288Q200 276 228 288" fill="none" stroke="${shade(hair, .8)}" stroke-width="8" stroke-linecap="round"/>` : ''}
+      <path d="M30 164Q56 206 200 214Q344 206 370 164Q336 128 200 126Q64 128 30 164Z" fill="${hc}" stroke="${hb}" stroke-width="3.600"/>
+      <path d="M104 154Q98 54 200 40Q302 54 296 154Q200 178 104 154Z" fill="${hc}" stroke="${hb}" stroke-width="3.600"/>
+      <path d="M140 62Q200 86 260 62" fill="none" stroke="${hd}" stroke-width="4"/>
+      <path d="M104 150Q200 174 296 150L297 130Q200 154 103 130Z" fill="${s.band}" stroke="${shade(s.band, .6)}" stroke-width="2.600"/>
+      ${chain}${ribbon}${feather}
+      <g class="brandmark" transform="translate(200 94)"><circle r="22" fill="none" stroke="#4a2410" stroke-width="3.600"/><path d="M-24 30Q0 42 24 30" fill="none" stroke="#4a2410" stroke-width="3.600" stroke-linecap="round"/><text y="8" text-anchor="middle" font-family="Rye, Georgia, serif" font-size="${s.init.length > 2 ? 17 : 22}" font-weight="700" fill="#4a2410">${s.init || 'HY'}</text></g>
+      <g class="cowwrap" style="transform:translate(560px,132px)"><path d="M-30 26L-122-30" stroke="#fff" stroke-width="14" stroke-linecap="round"/><path d="M-30 26L-122-30" stroke="#222" stroke-width="2.600" stroke-linecap="round" opacity=".5"/><circle cx="-125" cy="-32" r="10" fill="#2a2a2a"/><rect x="-148" y="-46" width="32" height="32" rx="4" class="hot" transform="rotate(-30 -132 -30)" stroke="#7a2410" stroke-width="2"/><text x="-132" y="-21" text-anchor="middle" font-family="Rye, Georgia, serif" font-size="14" font-weight="700" fill="#4a2410" transform="rotate(-30 -132 -30)">${s.init || 'HY'}</text>
+        <g><circle r="42" fill="#fff" stroke="#222" stroke-width="2.800"/><path d="M-42 -6Q-22-14-18-36Q-42-36-42-6Z" fill="#222"/><ellipse cx="24" cy="-18" rx="13" ry="11" fill="#222"/><path d="M-28-38l-11-17M28-38l11-17" stroke="#e8d8a8" stroke-width="7" stroke-linecap="round"/><ellipse cx="-36" cy="-26" rx="10" ry="7" fill="#fff" stroke="#222" stroke-width="2"/><ellipse cx="0" cy="19" rx="26" ry="17" fill="#ffb6c8" stroke="#222" stroke-width="2.400"/><circle cx="-9" cy="19" r="3.800" fill="#222"/><circle cx="9" cy="19" r="3.800" fill="#222"/><ellipse class="cwL" cx="-15" cy="-8" rx="5.500" ry="7" fill="#222"/><ellipse class="cwR" cx="15" cy="-8" rx="5.500" ry="7" fill="#222"/></g></g>
+      <g class="steam" opacity="0"><circle cx="200" cy="66" r="8" fill="#fff"/><circle cx="214" cy="52" r="10" fill="#fff"/><circle cx="188" cy="46" r="7" fill="#fff"/></g>
     </svg>`;
   }
   function openHat(from) {
     lastFocus = from || document.activeElement; closeModal('mx-hat'); lastFocus = from || lastFocus;
-    const HATS = ['#d8b27a', '#fffaf0', '#2b2b2b', '#ff8fb8', '#3bbfc4', '#7a4a2a', '#8e6bd8'], BANDS = ['#d6471e', '#1f68d1', '#ff3d8b', '#f2c230', '#ffffff', '#2b2b2b'], SKINS = ['#f6d7bd', '#e8b98f', '#c98e63', '#8d5a3b', '#5a3722'], HAIRS = ['#3b2416', '#7a4a22', '#d9a441', '#c8321e', '#1d1d1d', '#ff7ab8'];
-    const m = document.createElement('div'); m.id = 'mx-hat'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-label', 'Decorate a cowgirl or cowboy hat');
-    const sw = (grp, list) => list.map(c => `<button type="button" class="sw" data-g="${grp}" data-v="${c}" style="background:${c}" aria-label="${grp} ${c}" aria-pressed="false"></button>`).join('');
+    const m = document.createElement('div'); m.id = 'mx-hat'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-label', 'Create your hat');
+    const sw = (grp, list) => list.map(c => { const v = Array.isArray(c) ? c[0] : c, n = Array.isArray(c) ? c[1] : c; return `<button type="button" class="sw" data-g="${grp}" data-v="${v}" style="background:${v}" aria-label="${grp} ${n}" title="${n}" aria-pressed="false"></button>`; }).join('');
     const ch = (grp, list) => list.map(([v, l]) => `<button type="button" class="ch" data-g="${grp}" data-v="${v}" aria-pressed="false">${l}</button>`).join('');
-    m.innerHTML = `<div class="box"><button class="mx-x x" type="button" aria-label="Close">×</button><h2>Decorate your hat</h2>
+    m.innerHTML = `<div class="box"><button class="mx-x x" type="button" aria-label="Close">×</button><h2>Create your hat</h2>
       <div class="stage"><div class="bubble" aria-live="polite">Yeehaw!</div><div class="svgwrap"></div></div>
       <div class="ctl">
-        <div class="row"><b>Cowfolk</b><div class="opts">${ch('style', [['cowgirl', 'cowgirl'], ['cowboy', 'cowboy']])}</div></div>
+        <div class="row"><b>Cowgirl or cowboy</b><div class="opts">${ch('style', [['cowgirl', 'cowgirl'], ['cowboy', 'cowboy']])}</div></div>
+        <div class="row"><b>Skin tone</b><div class="opts">${sw('skin', SKINS)}</div></div>
+        <div class="row"><b>Hair color</b><div class="opts">${sw('hair', HAIRS)}</div></div>
         <div class="row"><b>Hat color</b><div class="opts">${sw('hat', HATS)}</div></div>
         <div class="row"><b>Band color</b><div class="opts">${sw('band', BANDS)}</div></div>
         <div class="row"><b>Feather</b><div class="opts">${ch('feather', [['none', 'none'], ['white', 'white'], ['red', 'red'], ['blue', 'blue'], ['pink', 'pink'], ['peacock', 'peacock']])}</div></div>
         <div class="row"><b>Ribbon</b><div class="opts">${ch('ribbon', [['none', 'none'], ['bow', 'bow'], ['streamers', 'streamers']])}</div></div>
-        <div class="row"><b>Necklace</b><div class="opts">${ch('neck', [['none', 'none'], ['pearls', 'pearls'], ['turquoise', 'beads'], ['bolo', 'bolo tie'], ['star', 'star']])}</div></div>
+        <div class="row"><b>Necklace (on your hat)</b><div class="opts">${ch('neck', [['none', 'none'], ['pearls', 'pearls'], ['turquoise', 'beads'], ['bolo', 'bolo tie'], ['star', 'star charm']])}</div></div>
         <div class="row"><b>Braids</b><div class="opts">${ch('braid', [['none', 'none'], ['one', 'one'], ['two', 'two'], ['bows', 'two + bows']])}</div></div>
-        <div class="row"><b>Skin and hair</b><div class="opts">${sw('skin', SKINS)}<span style="width:8px"></span>${sw('hair', HAIRS)}</div></div>
-        <div class="row"><b>Last initials, for the brand</b><div class="opts"><input type="text" maxlength="3" aria-label="Your last initials" placeholder="HY"><button class="go" type="button">Brand it!</button></div></div>
-        <button class="again" type="button" hidden>start over</button>
+        <div class="row"><b>Last initials, for the brand</b><div class="opts"><input type="text" maxlength="3" aria-label="Your last initials" placeholder="HY"></div></div>
+        <div class="row act"><button class="go" type="button">Brand it!</button><button class="rnd" type="button">Random</button><button class="again" type="button" hidden>start over</button></div>
       </div></div>`;
     document.body.appendChild(m); root.classList.add('mx-modal-open');
-    const wrap = m.querySelector('.svgwrap'), input = m.querySelector('input'), go = m.querySelector('.go'), again = m.querySelector('.again'), bubble = m.querySelector('.bubble');
-    const paint = () => { wrap.innerHTML = hatSVG(H); if (m.classList.contains('branded')) m.classList.add('branded'); m.querySelectorAll('[data-g]').forEach(b => b.setAttribute('aria-pressed', String(H[b.dataset.g] === b.dataset.v))); };
+    const wrap = m.querySelector('.svgwrap'), input = m.querySelector('input'), go = m.querySelector('.go'), again = m.querySelector('.again'), bubble = m.querySelector('.bubble'), rndB = m.querySelector('.rnd');
+    let busy = false;
+    const paint = () => { wrap.innerHTML = hatSVG(H); m.querySelectorAll('[data-g]').forEach(b => b.setAttribute('aria-pressed', String(H[b.dataset.g] === b.dataset.v))); };
+    const reset = () => { m.classList.remove('branded'); bubble.classList.remove('show'); again.hidden = true; go.disabled = false; };
     const close = () => closeModal('mx-hat');
-    m.addEventListener('click', e => { if (e.target === m) close(); const b = e.target.closest('[data-g]'); if (b && !busy) { H[b.dataset.g] = b.dataset.v; m.classList.remove('branded'); bubble.classList.remove('show'); paint(); } });
+    const pickOne = a => a[Math.floor(Math.random() * a.length)];
+    m.addEventListener('click', e => { if (e.target === m) close(); const b = e.target.closest('[data-g]'); if (b && !busy) { H[b.dataset.g] = b.dataset.v; reset(); paint(); } });
     m.querySelector('.x').addEventListener('click', close);
     input.addEventListener('input', () => { H.init = input.value.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 3); input.value = H.init; paint(); });
-    let busy = false;
-    again.addEventListener('click', () => { again.hidden = true; m.classList.remove('branded'); bubble.classList.remove('show'); go.disabled = false; paint(); });
+    rndB.addEventListener('click', () => { if (busy) return; Object.assign(H, { style: pickOne(['cowgirl', 'cowboy']), skin: pickOne(SKINS)[0], hair: pickOne(HAIRS)[0], hat: pickOne(HATS), band: pickOne(BANDS), feather: pickOne(['none', 'white', 'red', 'blue', 'pink', 'peacock']), ribbon: pickOne(['none', 'bow', 'streamers']), neck: pickOne(['none', 'pearls', 'turquoise', 'bolo', 'star']), braid: pickOne(['none', 'one', 'two', 'bows']) }); reset(); paint(); });
+    again.addEventListener('click', () => { reset(); paint(); });
     go.addEventListener('click', async () => {
       if (busy) return; busy = true; go.disabled = true; again.hidden = true; bubble.classList.remove('show'); m.classList.remove('branded'); paint();
       const cow = wrap.querySelector('.cowwrap'), steam = wrap.querySelector('.steam'), still = rm();
       const set = (x, y) => { cow.style.transform = `translate(${x}px,${y}px)`; };
-      if (still) { set(275, 125); } else {
-        const anim = (a, b, ms) => cow.animate([{ transform: `translate(${a[0]}px,${a[1]}px)` }, { transform: `translate(${b[0]}px,${b[1]}px)` }], { duration: ms, easing: 'ease-in-out', fill: 'forwards' }).finished;
-        await anim([520, 90], [330, 118], 520); await anim([330, 118], [275, 125], 260); await new Promise(r => setTimeout(r, 450));
+      if (still) { set(325, 132); } else {
+        const anim = (a, b2, ms) => cow.animate([{ transform: `translate(${a[0]}px,${a[1]}px)` }, { transform: `translate(${b2[0]}px,${b2[1]}px)` }], { duration: ms, easing: 'ease-in-out', fill: 'forwards' }).finished;
+        await anim([560, 132], [372, 126], 520); await anim([372, 126], [325, 132], 260); await new Promise(r => setTimeout(r, 450));
         if (steam) steam.animate([{ opacity: 0, transform: 'translateY(0)' }, { opacity: .85, transform: 'translateY(-14px)' }, { opacity: 0, transform: 'translateY(-34px)' }], { duration: 900, fill: 'forwards' });
       }
       m.classList.add('branded');
-      if (!still) { await new Promise(r => setTimeout(r, 700)); cow.animate([{ transform: 'translate(275px,125px)' }, { transform: 'translate(300px,170px)' }], { duration: 360, easing: 'ease-out', fill: 'forwards' }).finished; await new Promise(r => setTimeout(r, 420)); }
+      if (!still) { await new Promise(r => setTimeout(r, 700)); cow.animate([{ transform: 'translate(325px,132px)' }, { transform: 'translate(344px,190px)' }], { duration: 360, easing: 'ease-out', fill: 'forwards' }); await new Promise(r => setTimeout(r, 420)); }
       const w = wrap.querySelector('.cwL'); if (w && !still) { w.style.transformBox = 'fill-box'; w.style.transformOrigin = 'center'; w.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(.08)' }, { transform: 'scaleY(.08)' }, { transform: 'scaleY(1)' }], { duration: 1000 }); }
       const e = wrap.querySelector('.eyeL'); if (e && !still) e.classList.add('wink');
       bubble.classList.add('show'); again.hidden = false; busy = false; again.focus();
@@ -7027,19 +7072,21 @@ document.addEventListener('error', function (e) {
 })();
 </script>
 <script>
-/* pressing the name (or the line under it) switches to a random mood */
+/* pressing the name (or the line under it) opens the mood options; the options list also has a Random button */
 (() => {
   const root = document.documentElement, view = document.getElementById('view');
+  const panel = document.getElementById('mood-panel'), btn = document.getElementById('mood-btn');
   const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
   const label = k => { const c = document.querySelector('.mood-chip[data-k="' + k + '"]'); return c ? c.textContent.trim() : k; };
   const sync = () => { const h = document.getElementById('mood-hint'); if (!h) return; const k = root.dataset.mood;
-    h.innerHTML = k ? 'now feeling ' + label(k) + '. <b>click for another</b>' : 'feeling moody? <b>click here</b>'; };
+    h.innerHTML = k ? 'now feeling ' + label(k) + '. <b>click to change</b>' : 'feeling moody? <b>click here</b>'; };
+  const rnd = document.createElement('button'); rnd.type = 'button'; rnd.className = 'mood-random'; rnd.textContent = 'Random'; rnd.setAttribute('aria-label', 'Pick a random mood'); panel.appendChild(rnd);
+  rnd.addEventListener('click', e => { e.stopPropagation(); const chips = [...panel.querySelectorAll('.mood-chip')], cur = root.dataset.mood || '';
+    const pool = chips.filter(c => c.dataset.k !== cur); if (pool.length) pool[Math.floor(Math.random() * pool.length)].click(); });
   document.addEventListener('click', e => {
     const b = e.target.closest('.name-btn, .mood-hint'); if (!b) return;
-    const chips = [...document.querySelectorAll('.mood-chip')], cur = root.dataset.mood || '';
-    const pool = chips.filter(c => c.dataset.k !== cur); if (!pool.length) return;
-    pool[Math.floor(Math.random() * pool.length)].click();
     const n = document.getElementById('name-btn'); if (n && !reduce()) { n.classList.remove('pop'); void n.offsetWidth; n.classList.add('pop'); }
+    if (panel.hidden) btn.click();
   });
   new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-mood'] });
   new MutationObserver(sync).observe(view, { childList: true }); sync();
