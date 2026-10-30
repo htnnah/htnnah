@@ -1718,6 +1718,24 @@
   html[data-mood="western"][data-route="home"] .home .mood-hint { color: #fff0d2; text-shadow: 0 2px 12px rgba(0, 0, 0, .8); } html[data-mood="western"][data-route="home"] .home .mood-hint b { color: #fff0d2; }
   html[data-mood="y2k"] .mood-hint { background: rgba(255, 236, 247, .9); border-radius: 16px; box-shadow: 0 4px 16px rgba(255, 20, 147, .2); padding: 6px 16px 8px; color: #3d0a5c; font-weight: 700; }
   html[data-mood="arcade"] .mood-hint { font-size: .62rem; padding: 12px 14px 13px; margin-top: 6px; }
+
+  /* ===== Y2K: a different background (and readable neon text) for each page; the front page keeps the collage ===== */
+  html[data-mood="y2k"][data-route="about"] #mood-bg { background-image: url("photos/mood-y2k-pink.jpg"); }
+  html[data-mood="y2k"][data-route="loves"] #mood-bg { background-image: url("photos/mood-y2k-zebra.jpg"); }
+  html[data-mood="y2k"][data-route="goals"] #mood-bg { background-image: url("photos/mood-y2k-cream.jpg"); }
+  html[data-mood="y2k"][data-route="work"] #mood-bg { background-image: url("photos/mood-y2k-hearts.jpg"); }
+  html[data-mood="y2k"][data-route="loves"] #view :is(h1, h2, p, li, .lead, .tag, figcaption, .cap, dd, dt):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open) *) {
+        background: none; box-shadow: none; padding: 0; color: #00eaff; -webkit-text-stroke: 0; text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, -2px 0 0 #000, 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, 0 0 14px #00eaff; font-weight: 800; }
+  html[data-mood="y2k"][data-route="work"] #view :is(h1, h2, p, li, .lead, .tag, figcaption, .cap, dd, dt):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open) *) {
+        background: none; box-shadow: none; padding: 0; color: #39ff14; -webkit-text-stroke: 0; text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, -2px 0 0 #000, 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, 0 0 14px #39ff14; font-weight: 800; }
+  html[data-mood="y2k"][data-route="loves"] #view :is(.backlink, .art-tag) { text-shadow: none; }
+
+  /* Y2K: the Friends & family page gets the pink-grid gadgets picture, with the light pink text boxes */
+  html[data-mood="y2k"][data-route="loves"][data-sub="friends"] #mood-bg { background-image: url("photos/mood-y2k-gadgets.jpg"); }
+  html[data-mood="y2k"][data-route="loves"][data-sub="friends"] #view :is(h1, h2):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open) *) { color: var(--ink); background: none; padding: 0; box-shadow: none; -webkit-text-stroke: 1.5px #3d0a5c; text-shadow: 3px 3px 0 #fff, 6px 6px 0 rgba(255, 20, 147, .55); font-weight: 900; }
+  html[data-mood="y2k"][data-route="loves"][data-sub="friends"] #view :is(p, li, .lead, .tag, figcaption, .cap, dd, dt):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open) *) { color: #3d0a5c; background: rgba(255, 236, 247, .88); padding: .4em .8em .5em; box-shadow: 0 4px 16px rgba(255, 20, 147, .2); -webkit-text-stroke: 0; text-shadow: none; font-weight: 600; }
+  html[data-mood="y2k"][data-route="loves"] #view .card .label { color: #00eaff; font-weight: 800; text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, -2px 0 0 #000, 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, 0 0 12px #00eaff; }
+  html[data-mood="y2k"][data-route="loves"][data-sub="friends"] #view .card .label { color: #3d0a5c; text-shadow: 0 0 6px #fff, 0 0 12px #fff; }
   /* ===== dark academia ===== */
   html[data-mood="academia"] #mood-bg { background-image: linear-gradient(rgba(20, 12, 8, .68), rgba(20, 12, 8, .84)), url("photos/mood-books.jpg"); background-position: center 30%; }
   .mx-castle { position: absolute; left: 0; right: 0; bottom: 0; height: min(46vh, 380px); opacity: .9; }
@@ -6994,7 +7012,8 @@ document.addEventListener('error', function (e) {
 
   /* ===== follow the mood and the page ===== */
   const routeName = () => { const r = location.hash.replace(/^#/, '') || '/'; return r === '/' ? 'home' : (r.split('/')[1] || 'home'); };
-  const syncRoute = () => { root.dataset.route = routeName(); };
+  const subName = () => { const r = location.hash.replace(/^#/, '') || '/'; return r.split('/')[2] || ''; };
+  const syncRoute = () => { root.dataset.route = routeName(); root.dataset.sub = subName(); };
   new MutationObserver(syncRoute).observe(view, { childList: true }); addEventListener('hashchange', syncRoute); addEventListener('popstate', syncRoute); syncRoute();
   let cur = null;
   const onMood = () => {
