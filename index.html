@@ -1773,6 +1773,7 @@
   .play-tab[aria-selected="true"] { background: var(--purple); color: var(--mist); }
   .play-tab:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
   .play-panel[hidden] { display: none; }
+  .gf-frame { display: block; width: 100%; height: min(88vh, 860px); min-height: 620px; border: 0; border-radius: 26px; background: #12084a; box-shadow: 0 14px 34px rgba(30, 60, 100, .3); }
   .play-soon { display: grid; justify-items: center; align-content: center; gap: 10px; text-align: center; min-height: 320px; padding: 40px 24px; border-radius: 26px; background: var(--mist); border: 2px dashed var(--purple); color: var(--ink); }
   .play-soon svg { width: 88px; height: 88px; }
   html[data-mood] #view .play-soon :is(h2, p) { background: none !important; box-shadow: none !important; padding: 0 !important; color: var(--ink) !important; text-shadow: none !important; -webkit-text-stroke: 0 !important; margin: 0; }
@@ -4791,6 +4792,8 @@ const PLAY_TABS = [
     icon: '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 50C6 38 14 22 30 20C46 18 58 30 56 48C50 54 14 56 8 50Z" fill="#a9a9b8" stroke="#494D5F" stroke-width="2.500" stroke-linejoin="round"/><circle cx="25" cy="34" r="7" fill="#fff" stroke="#494D5F" stroke-width="2"/><circle cx="40" cy="33" r="7" fill="#fff" stroke="#494D5F" stroke-width="2"/><circle cx="26" cy="35" r="3" fill="#222"/><circle cx="41" cy="34" r="3" fill="#222"/><path d="M26 45Q33 49 40 45" fill="none" stroke="#494D5F" stroke-width="2.500" stroke-linecap="round"/></svg>' },
   { k: 'aquarium', n: 'Aquarium', d: 'Visit my fish and feed them.',
     icon: '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 34C16 20 32 18 44 30C32 44 16 46 8 34Z" fill="#ff9a4d" stroke="#494D5F" stroke-width="2.500" stroke-linejoin="round"/><path d="M42 30L58 18V44Z" fill="#ffb86b" stroke="#494D5F" stroke-width="2.500" stroke-linejoin="round"/><circle cx="19" cy="30" r="3" fill="#222"/><path d="M26 22C30 28 30 36 26 42" fill="none" stroke="#494D5F" stroke-width="2"/></svg>' },
+  { k: 'goldfish', n: 'Goldfish', d: 'Feed the fish and break the glass.',
+    icon: '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 32C16 18 34 16 46 30C34 46 16 46 8 32Z" fill="#ffc83d" stroke="#494D5F" stroke-width="2.500" stroke-linejoin="round"/><path d="M44 30L58 20V42Z" fill="#ff9a4d" stroke="#494D5F" stroke-width="2.500" stroke-linejoin="round"/><circle cx="19" cy="28" r="3" fill="#222"/></svg>' },
   { k: 'fortune', n: 'Fortune cookie', d: 'Crack one open and see what it says.',
     icon: '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 38C8 22 28 14 50 24C58 28 56 42 46 46C32 52 8 50 8 38Z" fill="#f2c27a" stroke="#494D5F" stroke-width="2.500" stroke-linejoin="round"/><path d="M30 18C26 30 28 40 36 48" fill="none" stroke="#c98d3a" stroke-width="2.500" stroke-linecap="round"/><rect x="36" y="8" width="20" height="9" rx="1.500" transform="rotate(14 46 12)" fill="#fff" stroke="#494D5F" stroke-width="2"/></svg>' }
 ];
@@ -4906,13 +4909,14 @@ const aquariumHtml = () => `
         </div>
       </div>`;
 
+const goldfishHtml = () => `<iframe class="gf-frame" src="fish-game.html" title="Goldfish, a fish slot game" loading="lazy"></iframe>`;
 const playgroundHtml = key => `
     <section class="play">
       <h1>Playground</h1>
       <p class="lead">Little things to play with.</p>
       <div class="play-tabs" role="tablist" aria-label="Playground">${PLAY_TABS.map(t => `<button type="button" class="play-tab" role="tab" id="pt-${t.k}" data-tab="${t.k}" aria-controls="pp-${t.k}" aria-selected="${t.k === key}" tabindex="${t.k === key ? 0 : -1}">${t.n}</button>`).join('')}</div>
       ${PLAY_TABS.map(t => `<div class="play-panel" role="tabpanel" id="pp-${t.k}" aria-labelledby="pt-${t.k}" ${t.k === key ? '' : 'hidden'}>
-        ${t.k === 'aquarium' ? aquariumHtml() : `<div class="play-soon">${t.icon}<h2>${t.n}</h2><p>${t.d}</p><span class="play-badge">coming soon</span></div>`}
+        ${t.k === 'aquarium' ? aquariumHtml() : t.k === 'goldfish' ? goldfishHtml() : `<div class="play-soon">${t.icon}<h2>${t.n}</h2><p>${t.d}</p><span class="play-badge">coming soon</span></div>`}
       </div>`).join('')}
     </section>`;
 document.addEventListener('click', e => {
@@ -5040,6 +5044,7 @@ const pages = {
   '/playground/arcade': { title: 'playground', html: () => playgroundHtml('arcade') },
   '/playground/rock': { title: 'playground', html: () => playgroundHtml('rock') },
   '/playground/aquarium': { title: 'playground', html: () => playgroundHtml('aquarium') },
+  '/playground/goldfish': { title: 'playground', html: () => playgroundHtml('goldfish') },
   '/playground/fortune': { title: 'playground', html: () => playgroundHtml('fortune') },
   '/goals': { title: 'goals', html: () => `
     <h1>My goals in life</h1>
