@@ -45,6 +45,8 @@
   p.lead { max-width: 50ch; line-height: 1.5; opacity: .95; font-size: 1.25rem; }
   .backlink { display: inline-block; margin-bottom: 28px; padding: 5px 20px 8px; font-size: 1.25rem; font-weight: 600; line-height: 1.2; color: var(--ink); background: rgba(255, 255, 255, .72); border: 2px solid var(--purple); border-radius: 999px; box-shadow: 0 6px 16px rgba(132, 88, 179, .22); transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease); }
   .backlink:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 10px 22px rgba(132, 88, 179, .3); }
+  .placerow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 28px; } .placerow .backlink { margin-bottom: 0; } .placerow .placelink { font-size: 1rem; }
+  .placenav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 44px; } .placenav .backlink { margin-bottom: 0; }
   .backlink:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
   .ph { background: var(--mist); border: 2px dashed rgba(73,77,95,.3); border-radius: 18px;
         display: grid; place-items: center; text-align: center; padding: 20px; opacity: .8; min-height: 220px; }
@@ -1777,7 +1779,12 @@
   .play-panel[hidden] { display: none; }
   /* ---------- hidden treasure ---------- */
   #hunt-ui { position: relative; z-index: 90; }
-  .hunt-egg { display: inline-block; width: 28px; height: 28px; margin: 0 0 -7px 8px; padding: 0; border: 0; background: none; cursor: pointer; opacity: .5; vertical-align: middle; filter: saturate(.8); transition: opacity .2s, transform .2s; }
+  .hunt-egg { display: inline-block; width: 46px; height: 46px; margin: 0 0 -10px 10px; padding: 0; border: 0; background: none; cursor: pointer; opacity: .8; vertical-align: middle; transition: opacity .2s, transform .2s; }
+  .hunt-egg.easy { width: 68px; height: 68px; opacity: 1; filter: drop-shadow(0 0 8px rgba(255, 220, 120, .95)); animation: huntBob 2.6s ease-in-out infinite; }
+  .hunt-egg.mid { width: 50px; height: 50px; opacity: .85; }
+  .hunt-egg.hard { width: 40px; height: 40px; opacity: .6; filter: saturate(.8); }
+  .hunt-egg.home-egg { display: block; margin: 8px auto 0; }
+  @keyframes huntBob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
   .hunt-egg svg { display: block; width: 100%; height: 100%; }
   .hunt-egg:hover, .hunt-egg:focus-visible { opacity: 1; transform: scale(1.3) rotate(-6deg); }
   .hunt-egg:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; border-radius: 6px; }
@@ -1817,7 +1824,11 @@
   .hunt-save { margin-top: 14px; text-align: left; font-size: .85rem; } .hunt-save summary { cursor: pointer; font-weight: 700; }
   .hunt-code { display: block; width: 100%; margin: 6px 0 0; padding: 8px; font: .7rem/1.3 monospace; border: 2px solid #c9a24a; border-radius: 10px; background: #fff; color: #3b2e22; resize: vertical; }
   .hunt-map { display: block; width: 100%; height: auto; margin: 10px 0 4px; }
-  .hunt-door { display: block; width: 38px; height: 54px; margin: 60px 0 6px; padding: 0; border: 0; background: none; cursor: pointer; opacity: .55; transition: opacity .2s, transform .2s; transform-origin: 0 100%; }
+  .hunt-steps { text-align: left; margin: 12px 0 0; padding-left: 1.3em; font-size: .88rem; line-height: 1.5; } .hunt-steps li { margin-bottom: 8px; } .hunt-steps b { color: #6b3fa0; }
+  @media (prefers-reduced-motion: reduce) { .hunt-egg.easy { animation: none; } }
+  .hunt-door { position: fixed; left: 8vw; bottom: 15vh; z-index: 6; display: block; width: 76px; height: 108px; padding: 0; border: 0; background: none; cursor: pointer; opacity: .9; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .3)); transition: opacity .2s, transform .2s; transform-origin: 0 100%; }
+  .hunt-door::after { content: attr(data-tip); position: absolute; left: 50%; bottom: 112%; transform: translateX(-50%) translateY(6px); padding: 5px 14px 7px; border-radius: 999px; background: #2b1a3d; color: #fff; font: 700 .85rem/1.2 inherit; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+  .hunt-door:hover::after, .hunt-door:focus-visible::after { opacity: 1; transform: translateX(-50%); }
   .hunt-door svg { width: 100%; height: 100%; display: block; }
   .hunt-door:hover, .hunt-door:focus-visible { opacity: 1; } .hunt-door:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
   .hunt-door.knock { animation: huntShake .5s; } .hunt-door.open { opacity: 1; transform: perspective(200px) rotateY(-55deg); filter: drop-shadow(8px 0 14px rgba(255, 210, 120, .95)); transition: transform .8s, filter .8s; }
@@ -1890,7 +1901,7 @@
   .q-bigcompass { width: 150px; margin: 14px auto 6px; } .q-bigcompass svg { width: 100%; display: block; }
   .ar-modal .hunt-title, .ar-modal .hunt-sub { color: #ecdcb0; } .ar-modal .q-secret { font: 700 1.1rem/1.5 "Special Elite", monospace; color: #3a2a14; background: #ecdcb0; padding: 18px; border-radius: 8px; margin: 12px 0; }
   .ar-modal .hunt-sheet:has(.q-secret), .ar-modal .hunt-sheet:has(.q-bigcompass) { background: #2b1609; border: 3px solid #c9a24a; padding: 24px; }
-  @media (max-width: 640px) { .q-obj { min-width: 54px; } .ar-shelf { grid-template-columns: 1fr; } .ar-polaroids { grid-template-columns: repeat(2, 1fr); } #hunt-pouch { width: 54px; height: 54px; } #hunt-pouch svg { width: 36px; height: 36px; } .q-obj { transform: translate(-50%, -50%); } }
+  @media (max-width: 640px) { .hunt-door { width: 62px; height: 88px; left: 6vw; } .hunt-egg.easy { width: 58px; height: 58px; } .q-obj { min-width: 54px; } .ar-shelf { grid-template-columns: 1fr; } .ar-polaroids { grid-template-columns: repeat(2, 1fr); } #hunt-pouch { width: 54px; height: 54px; } #hunt-pouch svg { width: 36px; height: 36px; } .q-obj { transform: translate(-50%, -50%); } }
   @media (prefers-reduced-motion: reduce) { html.on-arch::after, html.on-quarters::after, .hunt-egg.shake, .hunt-sheet, .hunt-iconrow .hunt-icon { animation: none; } .hunt-toast, .hunt-egg, .q-obj { transition: none; } }
 
   /* ---------- goals: a fuller page ---------- */
@@ -6378,12 +6389,12 @@ const HUNT = (() => {
   const ROUTES = ['/about', '/loves', '/loves/travel', '/loves/food', '/loves/friends', '/loves/artists', '/loves/art', '/loves/movies', '/loves/tv', '/work'];
 
   /* ===== what the visitor has found: saved in their own browser, so it is still there when they come back ===== */
-  const blank = () => ({ inv: { shell: 0, diamond: 0, crown: 0, key: 0, map: 0 }, finds: 0, pity: 0, unlocked: false, folders: [], quarters: false, hinted: false });
+  const blank = () => ({ inv: { shell: 0, diamond: 0, crown: 0, key: 0, map: 0 }, finds: 0, pity: 0, unlocked: false, folders: [], quarters: false, hinted: false, noNote: false });
   const num = (v, max) => { v = Math.floor(+v); return Number.isFinite(v) && v > 0 ? Math.min(max, v) : 0; };
   const clean = o => {
     const b = blank(); if (!o || typeof o !== 'object') return b;
     Object.keys(b.inv).forEach(k => { b.inv[k] = num(o.inv && o.inv[k], 9999); });
-    b.finds = num(o.finds, 99999); b.pity = num(o.pity, 99999); b.unlocked = !!o.unlocked; b.quarters = !!o.quarters; b.hinted = !!o.hinted;
+    b.finds = num(o.finds, 99999); b.pity = num(o.pity, 99999); b.unlocked = !!o.unlocked; b.quarters = !!o.quarters; b.hinted = !!o.hinted; b.noNote = !!o.noNote;
     b.folders = Array.isArray(o.folders) ? [...new Set(o.folders.filter(f => ['classified', 'confidential', 'case', 'redacted'].includes(f)))] : [];
     return b;
   };
@@ -6401,7 +6412,7 @@ const HUNT = (() => {
     closeModal(); const m = document.createElement('div'); m.className = 'hunt-modal ' + cls; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true');
     m.innerHTML = `<div class="hunt-sheet">${html}</div>`;
     m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) closeModal(); });
-    ui.appendChild(m); openM = m; const f = m.querySelector('[data-close]'); if (f) f.focus(); return m;
+    ui.appendChild(m); openM = m; const f = m.querySelector('[data-close]'); if (f) f.focus({ preventScroll: true }); m.querySelector('.hunt-sheet').scrollTop = 0; return m;
   };
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   const pouch = document.createElement('button'); pouch.id = 'hunt-pouch'; pouch.type = 'button'; pouch.hidden = true; pouch.setAttribute('aria-label', 'Open your treasure pouch');
@@ -6442,22 +6453,39 @@ const HUNT = (() => {
   /* ===== where the egg is hiding: a random page, a random spot in the text, a fresh one each time a mood is picked ===== */
   const sget = () => { try { return JSON.parse(sessionStorage.getItem('htn-egg')); } catch (_) { return null; } };
   let spawn = sget();
+  const EASY_ROUTES = ['/', '/about', '/loves'], MID_ROUTES = ['/loves/travel', '/loves/food', '/loves/friends', '/loves/artists', '/loves/art', '/loves/movies', '/loves/tv', '/work'];
+  const newSpawn = mood => {
+    const r = Math.random(), lvl = r < .6 ? 'easy' : r < .8 ? 'mid' : 'hard';
+    const trav = places.filter(p => pages['/loves/travel/' + p.slug]).map(p => '/loves/travel/' + p.slug);
+    setSpawn({ mood, lvl, found: false, route: lvl === 'easy' ? pick(EASY_ROUTES) : lvl === 'mid' ? pick(MID_ROUTES) : pick(trav.length ? trav : MID_ROUTES), frac: lvl === 'easy' ? 0 : lvl === 'mid' ? rnd(.25, .7) : rnd(.8, 1) });
+  };
   const setSpawn = s => { spawn = s; try { sessionStorage.setItem('htn-egg', JSON.stringify(s)); } catch (_) {} };
   const routeNow = () => location.hash.replace(/^#/, '') || '/';
   function place() {
     document.querySelectorAll('.hunt-egg').forEach(e => e.remove());
     const mood = root.dataset.mood, v = document.getElementById('view'); if (!mood || !EGGS[mood] || !spawn || spawn.mood !== mood || spawn.found || routeNow() !== spawn.route) return;
     const c = [...v.querySelectorAll('p, li, figcaption')].filter(el => !el.closest('a, button, nav, .hunt-egg, [hidden]') && el.textContent.trim().length > 12);
-    const host = c.length ? c[Math.floor(spawn.frac * c.length)] : v;
-    const b = document.createElement('button'); b.type = 'button'; b.className = 'hunt-egg'; b.setAttribute('aria-label', 'Hidden treasure: ' + EGGS[mood].n + '. Open it.'); b.innerHTML = EGGS[mood].svg;
+    const seen = () => [...v.querySelectorAll('h1, p, li')].find(el => { if (el.closest('a, button, nav, .hunt-egg, [hidden]')) return false; const r = el.getBoundingClientRect(); return r.width > 0 && r.top > 70 && r.top < innerHeight - 140; });
+    const host = spawn.route === '/' ? (v.querySelector('.home') || v) : spawn.lvl === 'easy' ? (seen() || c[0] || v) : c.length ? c[Math.min(c.length - 1, Math.floor(spawn.frac * c.length))] : v;
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'hunt-egg ' + (spawn.lvl || 'mid') + (spawn.route === '/' ? ' home-egg' : ''); b.setAttribute('aria-label', 'Hidden treasure: ' + EGGS[mood].n + '. Open it.'); b.innerHTML = EGGS[mood].svg;
     host.appendChild(b);
   }
   let lastMood = null;
   new MutationObserver(() => {
     const mood = root.dataset.mood || null; if (mood === lastMood) return; lastMood = mood; document.querySelectorAll('.hunt-egg').forEach(e => e.remove());
-    if (!mood) return; setSpawn({ mood, route: pick(ROUTES), frac: Math.random(), found: false }); place();
-    if (!st.hinted) { st.hinted = true; save(); setTimeout(() => toast('Psst. Every mood hides one tiny treasure somewhere on this site.'), 900); }
+    if (!mood) return; newSpawn(mood); place();
+    if (mood === 'tropical' && !st.noNote) setTimeout(() => huntNote(), 700);
   }).observe(root, { attributes: true, attributeFilter: ['data-mood'] });
+
+  /* ===== the note that explains the hunt (shown when Tommy Bahama is picked) ===== */
+  function huntNote(force) {
+    if (!force && root.dataset.mood !== 'tropical') return;
+    const m = modal(`<div class="hunt-iconrow"><span class="hunt-icon">${CHEST}</span></div><h2 class="hunt-name">There is a treasure hunt!</h2>
+      <ol class="hunt-steps"><li>A tiny <b>treasure chest</b> is hiding somewhere on this site. Look closely. It could be on any page.</li><li><b>Click it.</b> It shakes, opens, and coins fly out. You win one random treasure.</li><li>Your treasure goes in the <b>pouch</b> (the little bag at the bottom right). It is saved in your browser.</li><li>Common: shell. Rare: diamond. Epic: gold crown. <b>Legendary: a key and a secret map.</b></li><li>The map shows where the key goes: a <b>tiny locked door on the home page</b>. It opens to something secret.</li></ol>
+      <p class="hunt-sub">Every mood hides its own treasure, and a new one hides each time you pick a mood. Happy hunting!</p>
+      <button type="button" class="hunt-btn" data-close>Let's hunt</button>${force ? '' : '<button type="button" class="hunt-btn alt" data-act="nonote">Do not show this again</button>'}`, 'hunt-note');
+    m.addEventListener('click', e => { if (e.target.closest('[data-act="nonote"]')) { st.noNote = true; save(); closeModal(); } });
+  }
 
   /* ===== the pouch ===== */
   const SLOTS = ['shell', 'diamond', 'crown', 'key', 'map'];
@@ -6465,7 +6493,7 @@ const HUNT = (() => {
     let taps = 0;
     const m = modal(`<h2 class="hunt-title" id="hunt-ptitle">Treasure pouch</h2><p class="hunt-sub">${st.finds ? `You have found ${st.finds} hidden ${st.finds === 1 ? 'treasure' : 'treasures'}.` : 'Nothing yet. Pick a mood and go looking.'}</p>
       <ul class="hunt-grid">${SLOTS.map(k => { const n = st.inv[k], I = ITEMS[k]; return `<li class="hunt-slot${n ? '' : ' empty'}" style="--c:${RARITY[I.r]}"><span class="hunt-icon">${ICON[k]}</span><b>${n ? I.n : '???'}</b><em>${I.r}</em><i>${n ? 'x' + n : 'not found'}</i></li>`; }).join('')}</ul>
-      ${st.inv.map ? '<button type="button" class="hunt-btn alt" data-act="map">Read the secret map</button>' : ''}
+      ${st.inv.map ? '<button type="button" class="hunt-btn alt" data-act="map">Read the secret map</button>' : ''}<button type="button" class="hunt-btn alt" data-act="how">How does this work?</button>
       ${st.unlocked ? '<a class="hunt-btn" href="#/archives" data-close>Visit the forbidden archives</a>' : (st.inv.key && st.inv.map ? '<p class="hunt-sub">You have a key and a map. Follow the map to find where the key goes.</p>' : '')}
       <details class="hunt-save"><summary>Save or move your treasure</summary><p class="hunt-sub">Your treasure is saved in this browser automatically. To move it to another device, copy this code and paste it there.</p><textarea readonly rows="3" class="hunt-code" aria-label="Your save code"></textarea><button type="button" class="hunt-btn alt" data-act="copy">Copy code</button><textarea rows="2" class="hunt-code" placeholder="Paste a code here" aria-label="Paste a save code"></textarea><button type="button" class="hunt-btn alt" data-act="load">Load code</button><p class="hunt-sub hunt-msg" aria-live="polite"></p></details>
       <button type="button" class="hunt-btn" data-close>Close</button>`);
@@ -6475,6 +6503,7 @@ const HUNT = (() => {
     m.addEventListener('click', e => {
       const a = e.target.closest('[data-act]'); if (!a) return;
       if (a.dataset.act === 'map') openMap();
+      if (a.dataset.act === 'how') huntNote(true);
       if (a.dataset.act === 'copy') { mine.select(); try { navigator.clipboard.writeText(mine.value); msg.textContent = 'Copied!'; } catch (_) { msg.textContent = 'Select the code and copy it.'; } }
       if (a.dataset.act === 'load') { try { const o = clean(JSON.parse(decodeURIComponent(escape(atob(theirs.value.trim()))))); st = o; save(); closeModal(); toast('Treasure loaded!'); } catch (_) { msg.textContent = 'That code did not work. Try copying it again.'; } }
     });
@@ -6483,32 +6512,34 @@ const HUNT = (() => {
   let typed = ''; addEventListener('keydown', e => { if (/^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || ''))) return; typed = (typed + e.key.toLowerCase()).slice(-8); if (typed === 'treasure') { pouch.dataset.force = '1'; syncPouch(); openPouch(); } });
   function openMap() {
     modal(`<h2 class="hunt-title">The secret map</h2>
-      <svg class="hunt-map" viewBox="0 0 320 220" role="img" aria-label="An old treasure map. A red X marks the spot at the very bottom of the About page, in the lower left corner.">
+      <svg class="hunt-map" viewBox="0 0 320 220" role="img" aria-label="An old treasure map. A red X marks the spot on the home page, the very first page of the site, near the bottom left.">
         <defs><radialGradient id="hmg" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="#f3e2b4"/><stop offset="1" stop-color="#d9b97a"/></radialGradient></defs>
         <rect x="4" y="4" width="312" height="212" rx="10" fill="url(#hmg)" stroke="#8a6a30" stroke-width="3"/>
         <path d="M34 150 C30 100 70 70 110 78 C140 40 200 40 222 76 C262 70 292 100 284 142 C276 188 200 196 150 186 C96 196 38 190 34 150Z" fill="#b9d98a" stroke="#6b8a3a" stroke-width="2.5"/>
-        <g font-family="serif" font-size="11" fill="#5a3a12" font-style="italic"><text x="104" y="104">Loves Lagoon</text><text x="176" y="94">Goals Peak</text><text x="206" y="150">Work Harbor</text><text x="132" y="126" font-weight="bold">About Cove</text></g>
+        <g font-family="serif" font-size="11" fill="#5a3a12" font-style="italic"><text x="104" y="104">Loves Lagoon</text><text x="176" y="94">Goals Peak</text><text x="206" y="150">Work Harbor</text><text x="132" y="126" font-weight="bold">Home Port</text></g>
         <path d="M70 168 C84 150 100 140 128 134" stroke="#8a2a1a" stroke-width="2" stroke-dasharray="5 5" fill="none"/>
         <path d="M54 172 l12 12 M66 172 l-12 12" stroke="#d12a1a" stroke-width="5" stroke-linecap="round"/>
         <text x="40" y="206" font-family="serif" font-size="11" fill="#7a1a0a" font-style="italic">X marks the spot</text>
         <g transform="translate(272 36)"><circle r="18" fill="none" stroke="#6b4a1a" stroke-width="2"/><path d="M0 -16 L4 0 L0 16 L-4 0Z" fill="#8a2a1a"/><path d="M-16 0 L0 -4 L16 0 L0 4Z" fill="#6b4a1a"/><text y="-21" text-anchor="middle" font-size="10" font-family="serif" fill="#5a3a12">N</text></g>
       </svg>
-      <p class="hunt-sub">The X is in the bottom corner of the About page. Scroll all the way down, look in the lower left, and bring the key.</p>
+      <p class="hunt-sub">The X marks the very first page, the home page. Look near the bottom left of the screen for a tiny door, and bring the key.</p>
       <button type="button" class="hunt-btn" data-close>Got it</button>`);
   }
 
   /* ===== the tiny door at the bottom of the About page ===== */
   const DOOR = SVG('0 0 34 48', '<path d="M3 46 V18 Q3 3 17 3 Q31 3 31 18 V46Z" fill="#7a4a24" stroke="#3a2010" stroke-width="2"/><path d="M8 44 V19 Q8 9 17 9 Q26 9 26 19 V44Z" fill="#9a6034" stroke="#3a2010" stroke-width="1.4"/><circle cx="23" cy="28" r="2.2" fill="#ffd66b" stroke="#6b4a1a"/><rect x="14" y="31" width="6" height="7" rx="1" fill="#ffd66b" stroke="#6b4a1a" stroke-width="1" class="hunt-lock"/>');
+  const doorTip = () => (st.unlocked || st.inv.key > 0) ? 'You have the key. Open it!' : 'A key is needed';
   function placeDoor() {
     document.querySelectorAll('.hunt-door').forEach(e => e.remove());
-    if (routeNow() !== '/about') return; const v = document.getElementById('view');
-    const d = document.createElement('button'); d.type = 'button'; d.className = 'hunt-door'; d.setAttribute('aria-label', 'A tiny locked door'); d.innerHTML = DOOR; v.appendChild(d);
+    if (routeNow() !== '/') return; const v = document.getElementById('view');
+    const d = document.createElement('button'); d.type = 'button'; d.className = 'hunt-door'; d.setAttribute('aria-label', 'A small locked door. A key is needed.'); d.innerHTML = DOOR; d.dataset.tip = doorTip(); v.appendChild(d);
+    ['pointerenter', 'focus'].forEach(ev => d.addEventListener(ev, () => { d.dataset.tip = doorTip(); }));
   }
   document.addEventListener('click', e => {
     const egg = e.target.closest('.hunt-egg'); if (egg) { e.preventDefault(); e.stopPropagation(); openEgg(egg); return; }
     const d = e.target.closest('.hunt-door'); if (!d) return;
     if (st.unlocked || st.inv.key > 0) { if (!st.unlocked) { st.unlocked = true; save(); } d.classList.add('open'); toast(st.unlocked ? 'The key turns. The door creaks open...' : ''); setTimeout(() => { location.hash = '#/archives'; }, rm() ? 200 : 1100); }
-    else { d.classList.remove('knock'); void d.offsetWidth; d.classList.add('knock'); toast('Locked. It looks like it needs a key.'); }
+    else { d.classList.remove('knock'); void d.offsetWidth; d.classList.add('knock'); toast('A key is needed to open this door.'); }
   }, true);
 
   /* ===== after every page change: hide the egg, add the door, and dress the secret pages ===== */
@@ -6662,10 +6693,24 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const routeOf = () => (location.hash.replace(/^#/, '') || '/');
 let busy = false, pending = null, current = routeOf();
 
+/* travel place pages: previous and next place buttons (top and bottom), in the same order as the travel list */
+function placeNav(route) {
+  const m = route.match(/^\/loves\/travel\/([^/]+)$/); if (!m) return;
+  const list = places.filter(p => pages['/loves/travel/' + p.slug]), i = list.findIndex(p => p.slug === m[1]);
+  if (i < 0 || list.length < 2) return;
+  const prev = list[(i - 1 + list.length) % list.length], next = list[(i + 1) % list.length];
+  const link = (p, dir) => { const a = document.createElement('a'); a.className = 'backlink placelink'; a.href = '#/loves/travel/' + p.slug; a.innerHTML = dir < 0 ? `&larr; ${p.name}` : `${p.name} &rarr;`; a.setAttribute('aria-label', (dir < 0 ? 'Previous place: ' : 'Next place: ') + p.name); return a; };
+  const bottom = document.createElement('div'); bottom.className = 'placenav'; bottom.setAttribute('role', 'navigation'); bottom.setAttribute('aria-label', 'More places');
+  bottom.append(link(prev, -1), link(next, 1)); view.appendChild(bottom);
+  const top = view.querySelector('.backlink');
+  if (top) { const row = document.createElement('div'); row.className = 'placerow'; top.replaceWith(row); row.append(top, link(prev, -1), link(next, 1)); }
+}
+
 function render(route) {
   const page = pages[route] || pages['/'];
   view.classList.toggle('wide', route === '/loves/travel');
   view.innerHTML = page.html();
+  placeNav(route);
   document.title = route === '/' ? 'Hannah Young' : page.title + ' | Hannah Young';
   document.querySelectorAll('nav ul a').forEach(a => {
     const href = a.getAttribute('href').slice(1);
