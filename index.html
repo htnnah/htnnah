@@ -5912,20 +5912,23 @@ const FORT = (() => {
   let bag = [];
   const draw = () => { if (!bag.length) bag = FORTUNES.map((_, i) => i).sort(() => Math.random() - .5); return FORTUNES[bag.pop()]; };
   const lucky = () => { const n = new Set(); while (n.size < 6) n.add(1 + Math.floor(Math.random() * 49)); return [...n].sort((a, b) => a - b).join(' · '); };
-  const JAGL = 'L150 30 L145 52 L155 72 L145 94 L155 114 L148 134 L150 146';
-  const BODY = 'M28 122 C20 60 80 26 150 28 C220 26 280 60 272 122 C270 154 232 170 198 152 C176 140 162 134 150 140 C138 134 124 140 102 152 C68 170 30 154 28 122Z';
+  const JAGL = 'L150 34 L146 54 L154 72 L146 92 L154 108 L148 122 L150 128';
+  const BODY = 'M24 116 C18 70 70 30 150 34 C230 30 282 70 276 116 C274 134 258 150 238 150 C214 150 190 136 172 126 C160 120 140 120 128 126 C110 136 86 150 62 150 C42 150 26 134 24 116Z';
+  const INNER = 'M50 110 C56 72 104 50 150 52 C196 50 244 72 250 110 C228 96 190 88 150 90 C110 88 72 96 50 110Z';
   const half = s => `<button type="button" class="fc-half ${s}" aria-label="${s === 'L' ? 'Left' : 'Right'} half of the fortune cookie">
     <svg viewBox="${s === 'L' ? '0 0 150 200' : '150 0 150 200'}" aria-hidden="true">
       <defs><clipPath id="fcc${s}"><path d="${s === 'L' ? 'M0 0 H150 ' + JAGL + ' V200 H0Z' : 'M300 0 H150 ' + JAGL + ' V200 H300Z'}"/></clipPath>
-      <radialGradient id="fcg${s}" cx=".5" cy=".3" r=".85"><stop offset="0" stop-color="#f8d58c"/><stop offset=".6" stop-color="#e8aa4e"/><stop offset="1" stop-color="#c58030"/></radialGradient></defs>
+      <linearGradient id="fcg${s}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9a94a"/><stop offset=".55" stop-color="#d9913a"/><stop offset="1" stop-color="#b8701f"/></linearGradient></defs>
       <g clip-path="url(#fcc${s})">
-        <path d="${BODY}" fill="url(#fcg${s})" stroke="#b87428" stroke-width="3" stroke-linejoin="round"/>
-        <path d="M52 96 C66 58 112 42 146 48 M254 96 C240 58 192 42 154 48" fill="none" stroke="#fff3c9" stroke-width="7" stroke-linecap="round" opacity=".5"/>
-        <path d="M150 136 C142 104 114 84 74 80 M150 136 C158 104 186 84 226 80" fill="none" stroke="#a8641c" stroke-width="4" stroke-linecap="round" opacity=".5"/>
-        <path d="M150 136 C146 112 126 96 100 90 M150 136 C154 112 174 96 200 90" fill="none" stroke="#fff3c9" stroke-width="3" stroke-linecap="round" opacity=".35"/>
-        <path d="M44 130 C70 160 110 160 130 146 M256 130 C230 160 190 160 170 146" fill="none" stroke="#a8641c" stroke-width="3" stroke-linecap="round" opacity=".3"/>
+        <path d="${BODY}" fill="url(#fcg${s})" stroke="#a8641c" stroke-width="3.5" stroke-linejoin="round"/>
+        <path d="${INNER}" fill="#fbe2a6" stroke="#c88a3a" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M60 106 C70 78 108 62 150 62 C192 62 230 78 240 106" fill="none" stroke="#fff6d8" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+        <path d="M24 116 C28 134 44 150 62 150 C86 150 110 136 128 126 M276 116 C272 134 256 150 238 150 C214 150 190 136 172 126" fill="none" stroke="#8a4d12" stroke-width="5" stroke-linecap="round" opacity=".35"/>
+        <path d="M44 128 C62 144 92 134 112 124 M256 128 C238 144 208 134 188 124" fill="none" stroke="#fff0c4" stroke-width="3" stroke-linecap="round" opacity=".35"/>
+        <path d="M128 126 C138 118 162 118 172 126 C164 132 136 132 128 126Z" fill="#a8641c" opacity=".45"/>
+        <g fill="#a8641c" opacity=".28"><circle cx="64" cy="124" r="2.2"/><circle cx="92" cy="140" r="2"/><circle cx="116" cy="108" r="1.8"/><circle cx="236" cy="124" r="2.2"/><circle cx="208" cy="140" r="2"/><circle cx="184" cy="108" r="1.8"/><circle cx="96" cy="78" r="1.8"/><circle cx="206" cy="78" r="1.8"/><circle cx="150" cy="104" r="1.6"/></g>
       </g>
-      <path class="fc-crack" d="M150 28 L145 52 L155 72 L145 94 L155 114 L148 134 L150 146" pathLength="1" fill="none" stroke="#6b3d10" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="fc-crack" d="M150 34 L146 54 L154 72 L146 92 L154 108 L148 122 L150 128" pathLength="1" fill="none" stroke="#6b3d10" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg></button>`;
   const inner = () => `
     <p class="fc-hint" aria-live="polite">Tap the cookie 3 times.</p>
@@ -5942,13 +5945,14 @@ const FORT = (() => {
     const n = +fc.dataset.taps + 1; fc.dataset.taps = n;
     const st = fc.querySelector('.fc-stage'); st.classList.remove('wob'); void st.offsetWidth; st.classList.add('wob');
     fc.querySelectorAll('.fc-dots i').forEach((d, i) => d.classList.toggle('on', i < n));
-    hint(fc, n < 3 ? `${3 - n} more ${3 - n === 1 ? 'tap' : 'taps'}...` : 'It cracked! Pull the left side, then the right side.');
+    hint(fc, n < 3 ? `${3 - n} more ${3 - n === 1 ? 'tap' : 'taps'}...` : 'It cracked! Drag the left side to the left.');
   };
   const pull = (fc, side) => {
     const h = fc.querySelector('.fc-half.' + side); if (h.classList.contains('gone')) return;
+    if (side === 'R' && +fc.dataset.pulled === 0) { hint(fc, 'Start with the left side. Drag it to the left.'); return; }
     h.classList.add('gone'); h.disabled = true;
     const n = +fc.dataset.pulled + 1; fc.dataset.pulled = n;
-    if (n === 1) { fc.dataset.stage = 'half'; hint(fc, side === 'L' ? 'Now pull the right side!' : 'Now pull the left side!'); return; }
+    if (n === 1) { fc.dataset.stage = 'half'; hint(fc, 'Now drag the right side to the right!'); return; }
     hint(fc, 'Here it comes...');
     setTimeout(() => {
       if (!fc.isConnected) return;
@@ -5961,6 +5965,7 @@ const FORT = (() => {
     const fc = document.getElementById('fc'), h = e.target.closest && e.target.closest('.fc-half'); if (!fc || !h || !fc.contains(h)) return;
     delete fc.dataset.dragged;
     if (+fc.dataset.taps < 3 || h.classList.contains('gone')) return;
+    if (h.classList.contains('R') && +fc.dataset.pulled === 0) { hint(fc, 'Start with the left side. Drag it to the left.'); return; }
     drag = { fc, h, side: h.classList.contains('L') ? 'L' : 'R', x0: e.clientX, dx: 0 }; h.style.transition = 'none'; try { h.setPointerCapture(e.pointerId); } catch (_) {}
   });
   document.addEventListener('pointermove', e => {
@@ -5974,7 +5979,11 @@ const FORT = (() => {
     if (e.target.closest('.fc-again')) { fc.dataset.taps = 0; fc.dataset.stage = 'whole'; fc.dataset.pulled = 0; fc.innerHTML = inner(); return; }
     const h = e.target.closest('.fc-half'); if (!h) return;
     if (fc.dataset.dragged) { delete fc.dataset.dragged; return; }
-    if (+fc.dataset.taps < 3) tap(fc); else pull(fc, h.classList.contains('L') ? 'L' : 'R');
+    if (+fc.dataset.taps < 3) tap(fc); else hint(fc, +fc.dataset.pulled === 0 ? 'Press and drag the left side to the left.' : 'Press and drag the right side to the right.');
+  });
+  document.addEventListener('keydown', e => {
+    const fc = document.getElementById('fc'), h = e.target.closest && e.target.closest('.fc-half'); if (!fc || !h || +fc.dataset.taps < 3) return;
+    if (e.key === 'ArrowLeft' && h.classList.contains('L')) { e.preventDefault(); pull(fc, 'L'); } else if (e.key === 'ArrowRight' && h.classList.contains('R')) { e.preventDefault(); pull(fc, 'R'); }
   });
   return { html };
 })();
