@@ -1699,6 +1699,10 @@
   #mx-load .bar { position: absolute; left: 50%; bottom: 8vh; width: min(52vw, 420px); height: 22px; margin-left: calc(min(52vw, 420px) / -2); border: 4px solid #fff; border-radius: 6px; padding: 3px; background: rgba(255, 255, 255, .25); }
   #mx-load .bar i { display: block; height: 100%; width: 0; background: repeating-linear-gradient(90deg, #ffe14d 0 12px, #ff9ad6 12px 16px); }
 
+
+  html[data-mood="y2k"] #view :is(p, li, .lead, .tag, figcaption, .cap, dd, dt):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open) *) {
+        display: block; width: fit-content; max-width: 100%; background: rgba(255, 236, 247, .88); border-radius: 16px; padding: .4em .8em .5em; box-shadow: 0 4px 16px rgba(255, 20, 147, .2); text-shadow: none; }
+  html[data-mood="y2k"] #view :is(li):not(:is(.fact, .hub, .polaroid, .card, .face, button, .job-cs, .songs) *) { margin-block: .35em; }
   /* ===== dark academia ===== */
   html[data-mood="academia"] #mood-bg { background-image: linear-gradient(rgba(20, 12, 8, .68), rgba(20, 12, 8, .84)), url("photos/mood-books.jpg"); background-position: center 30%; }
   .mx-castle { position: absolute; left: 0; right: 0; bottom: 0; height: min(46vh, 380px); opacity: .9; }
@@ -5548,93 +5552,38 @@ document.addEventListener('error', function (e) {
     const curl = (x, y, s, flip) => `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})"><path d="M0 0 C-34 -12 -52 22 -30 46 C-10 66 26 52 22 22 C18 0 -10 -6 -18 14 C-22 26 -10 36 0 30" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M0 0 C-34 -12 -52 22 -30 46 C-10 66 26 52 22 22 C18 0 -10 -6 -18 14 C-22 26 -10 36 0 30" fill="none" stroke="#cdd8f4" stroke-width="2" stroke-linecap="round"/></g>`;
 
 
-    /* the goddess: silver-white hair, opal jewels, an iridescent one-shoulder gown, glowing white eyes */
+    /* the pop-star goddess: hot-pink hair, a sparkly bodysuit, a headset mic and a star crown */
     const goddess = () => `<svg viewBox="0 0 400 560" aria-hidden="true">
       <defs>
-        <linearGradient id="mgHairBack" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9e0f6"/><stop offset=".5" stop-color="#b4c1e6"/><stop offset="1" stop-color="#9fb0dc"/></linearGradient>
-        <linearGradient id="mgHairFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#f6f8ff"/><stop offset="1" stop-color="#e3eafb"/></linearGradient>
-        <linearGradient id="mgHairTint" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffc3e8" stop-opacity=".0"/><stop offset=".25" stop-color="#ffc3e8" stop-opacity=".32"/><stop offset=".5" stop-color="#a8e4ff" stop-opacity=".34"/><stop offset=".75" stop-color="#cbb6ff" stop-opacity=".3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-        <linearGradient id="mgHair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#e9eefb"/><stop offset="1" stop-color="#c3cfea"/></linearGradient>
-        <linearGradient id="mgSkin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdeae0"/><stop offset="1" stop-color="#f1cdbd"/></linearGradient>
-        <linearGradient id="mgGown" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#f7ecff"/><stop offset=".65" stop-color="#e2f4ff"/><stop offset="1" stop-color="#fff0f4"/></linearGradient>
-        <linearGradient id="mgSheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffb6e1" stop-opacity=".0"/><stop offset=".3" stop-color="#ffb6e1" stop-opacity=".35"/><stop offset=".55" stop-color="#9ee8ff" stop-opacity=".4"/><stop offset=".8" stop-color="#c9b6ff" stop-opacity=".3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-        <linearGradient id="mgGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0b8"/><stop offset=".5" stop-color="#e2b45a"/><stop offset="1" stop-color="#a97a2a"/></linearGradient>
-        <radialGradient id="mgOpal" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#f6e9ff"/><stop offset=".75" stop-color="#bfeaf6"/><stop offset="1" stop-color="#f3b9d8"/></radialGradient>
-        <linearGradient id="mgStreak" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-        <radialGradient id="mgEye"><stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset=".35" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-        <filter id="mgGlow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        <filter id="mgSoft"><feGaussianBlur stdDeviation="1.4"/></filter>
+        <linearGradient id="ppHairB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7ad9"/><stop offset=".55" stop-color="#d04fe0"/><stop offset="1" stop-color="#8f5bff"/></linearGradient>
+        <linearGradient id="ppHairF" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd0f2"/><stop offset=".5" stop-color="#ff7ad9"/><stop offset="1" stop-color="#c04fe0"/></linearGradient>
+        <linearGradient id="ppSuit" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fdf2ff"/><stop offset=".35" stop-color="#cfe3ff"/><stop offset=".7" stop-color="#ffd0f2"/><stop offset="1" stop-color="#b9a6ff"/></linearGradient>
+        <radialGradient id="ppFace" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#ffe9db"/><stop offset="1" stop-color="#f3c3a8"/></radialGradient>
       </defs>
-      <!-- a huge, flowing, shimmering mane behind her -->
-      <g class="mf-hair">
-        <path d="${mane(1, 0)}" fill="url(#mgHairBack)"/>
-        <path d="${mane(.9, 1.3)}" fill="url(#mgHair)"/>
-        <path d="${mane(.78, 2.6)}" fill="url(#mgHairFront)"/>
-        <path d="${mane(.9, 1.3)}" fill="url(#mgHairTint)"/>
-        <g fill="none" stroke-linecap="round">
-          <g stroke="#fff" opacity=".9"><path d="M150 60 C80 100 40 200 56 300 C70 380 30 470 52 590" stroke-width="3"/><path d="M164 52 C100 84 66 170 78 262 C88 340 52 430 70 590" stroke-width="2.2"/><path d="M176 46 C124 70 96 140 104 226 C110 300 84 380 96 590" stroke-width="1.8"/><path d="M190 40 C150 56 126 112 130 190 C134 260 116 340 126 590" stroke-width="1.4"/></g>
-          <g stroke="#cfd9f6" opacity=".95"><path d="M136 74 C60 130 20 240 40 340 C54 420 14 510 34 600" stroke-width="2.6"/><path d="M120 96 C40 170 -4 280 20 380 C34 450 -6 540 14 610" stroke-width="2.2"/><path d="M96 120 C20 200 -30 320 -6 420 C8 480 -30 560 -10 620" stroke-width="2"/><path d="M70 160 C-10 240 -50 340 -30 440" stroke-width="1.6"/></g>
-          <g stroke="#ffc6e6" opacity=".55"><path d="M144 66 C74 118 32 222 50 324 C62 400 26 488 44 596" stroke-width="2"/><path d="M110 108 C32 184 -14 296 8 396" stroke-width="1.6"/></g>
-          <g stroke="#b9e6ff" opacity=".6"><path d="M158 56 C90 92 52 184 66 280 C76 356 40 450 60 596" stroke-width="2"/><path d="M84 140 C6 218 -40 330 -18 430" stroke-width="1.6"/></g>
-        </g>
-        <g fill="none" stroke-linecap="round" transform="translate(400 0) scale(-1 1)">
-          <g stroke="#fff" opacity=".9"><path d="M150 60 C80 100 40 200 56 300 C70 380 30 470 52 590" stroke-width="3"/><path d="M164 52 C100 84 66 170 78 262 C88 340 52 430 70 590" stroke-width="2.2"/><path d="M176 46 C124 70 96 140 104 226 C110 300 84 380 96 590" stroke-width="1.8"/><path d="M190 40 C150 56 126 112 130 190 C134 260 116 340 126 590" stroke-width="1.4"/></g>
-          <g stroke="#cfd9f6" opacity=".95"><path d="M136 74 C60 130 20 240 40 340 C54 420 14 510 34 600" stroke-width="2.6"/><path d="M120 96 C40 170 -4 280 20 380 C34 450 -6 540 14 610" stroke-width="2.2"/><path d="M96 120 C20 200 -30 320 -6 420 C8 480 -30 560 -10 620" stroke-width="2"/><path d="M70 160 C-10 240 -50 340 -30 440" stroke-width="1.6"/></g>
-          <g stroke="#ffc6e6" opacity=".55"><path d="M144 66 C74 118 32 222 50 324 C62 400 26 488 44 596" stroke-width="2"/><path d="M110 108 C32 184 -14 296 8 396" stroke-width="1.6"/></g>
-          <g stroke="#b9e6ff" opacity=".6"><path d="M158 56 C90 92 52 184 66 280 C76 356 40 450 60 596" stroke-width="2"/><path d="M84 140 C6 218 -40 330 -18 430" stroke-width="1.6"/></g>
-        </g>
-        
-        <g fill="#fff"><circle class="mf-sp" cx="-40" cy="90" r="3"/><circle class="mf-sp s2" cx="440" cy="130" r="3"/><circle class="mf-sp s3" cx="-70" cy="300" r="2.6"/><circle class="mf-sp s4" cx="470" cy="260" r="2.6"/><circle class="mf-sp" cx="10" cy="470" r="2.4"/><circle class="mf-sp s3" cx="392" cy="500" r="2.4"/><circle class="mf-sp s2" cx="120" cy="10" r="2.2"/><circle class="mf-sp s4" cx="290" cy="6" r="2.2"/></g>
-      </g>
-      <!-- shoulders / bare skin -->
-      <path d="M178 206 C178 238 170 256 128 274 C96 288 76 322 70 372 L70 560 L330 560 L330 372 C324 322 304 288 272 274 C230 256 222 238 222 206Z" fill="url(#mgSkin)"/>
-      <path d="M178 206 C190 228 210 228 222 206 L222 240 C210 252 190 252 178 240Z" fill="#e6b9a7" opacity=".55"/>
-      <!-- bare arm with a gold armlet -->
-      <path d="M92 310 C70 360 66 430 74 540 L124 540 C124 460 130 400 148 352Z" fill="url(#mgSkin)"/>
-      <path d="M72 438 C90 452 112 452 128 440 L130 462 C112 474 90 474 72 460Z" fill="url(#mgGold)"/><circle cx="101" cy="455" r="8" fill="url(#mgOpal)" stroke="#c99a40" stroke-width="2"/>
-      <!-- iridescent gown over one shoulder -->
-      <path d="M124 372 C150 348 190 352 214 372 C238 392 252 332 266 284 C276 262 304 270 316 292 C328 318 332 346 332 372 L332 560 L124 560 C130 480 120 420 124 372Z" fill="url(#mgGown)"/>
-      <path d="M124 372 C150 348 190 352 214 372 C238 392 252 332 266 284 C276 262 304 270 316 292 C328 318 332 346 332 372 L332 560 L124 560 C130 480 120 420 124 372Z" fill="url(#mgSheen)"/>
-      <g fill="none" stroke="#d4def5" stroke-width="1.6" stroke-linecap="round" opacity=".9"><path d="M170 392 C176 450 168 500 150 556"/><path d="M214 400 C226 460 222 510 214 558"/><path d="M262 360 C276 440 280 500 290 558"/><path d="M300 350 C312 430 316 500 322 556"/></g>
-      <circle cx="268" cy="286" r="10" fill="url(#mgGold)"/><circle cx="268" cy="286" r="6.4" fill="url(#mgOpal)"/>
-      <!-- long locks falling over her shoulders -->
-      <g class="mf-hair mf-hair-f">
-        <path d="M150 138 C98 196 120 262 90 330 C70 378 100 430 66 490 C54 516 68 548 52 580 C92 560 116 520 120 470 C124 416 148 378 154 326 C160 266 172 212 172 160Z" fill="url(#mgHair)"/>
-        <path d="M150 138 C98 196 120 262 90 330 C70 378 100 430 66 490 C54 516 68 548 52 580 C92 560 116 520 120 470 C124 416 148 378 154 326 C160 266 172 212 172 160Z" fill="url(#mgHairTint)"/>
-        <path d="M150 168 C118 238 134 318 100 400 M142 200 C112 270 126 340 92 440" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".85"/>
-        <g transform="translate(400 0) scale(-1 1)"><path d="M150 138 C98 196 120 262 90 330 C70 378 100 430 66 490 C54 516 68 548 52 580 C92 560 116 520 120 470 C124 416 148 378 154 326 C160 266 172 212 172 160Z" fill="url(#mgHair)"/>
-        <path d="M150 138 C98 196 120 262 90 330 C70 378 100 430 66 490 C54 516 68 548 52 580 C92 560 116 520 120 470 C124 416 148 378 154 326 C160 266 172 212 172 160Z" fill="url(#mgHairTint)"/>
-        <path d="M150 168 C118 238 134 318 100 400 M142 200 C112 270 126 340 92 440" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".85"/></g>
-      </g>
-      <!-- face -->
-      <path d="M200 82 C164 82 148 118 150 152 C152 190 172 222 200 224 C228 222 248 190 250 152 C252 118 236 82 200 82Z" fill="url(#mgSkin)"/>
-      <ellipse cx="167" cy="180" rx="13" ry="7" fill="#ffb3c2" opacity=".32"/><ellipse cx="233" cy="180" rx="13" ry="7" fill="#ffb3c2" opacity=".32"/>
-      <g fill="none" stroke="#d9cfe8" stroke-width="2.4" stroke-linecap="round"><path d="M159 132 C169 125 184 125 193 131"/><path d="M207 131 C216 125 231 125 241 132"/></g>
-      <path d="M198 160 C196 172 194 178 198 181 C201 182 204 181 206 179" fill="none" stroke="#d9a493" stroke-width="1.6" stroke-linecap="round" opacity=".75"/>
-      <path d="M184 194 C192 190 198 192 200 193 C202 192 208 190 216 194 C210 205 190 205 184 194Z" fill="#e88aa0"/><path d="M190 196 C196 193 204 193 210 196" fill="none" stroke="#fff" stroke-width="1.2" opacity=".55"/>
-      <!-- glowing white eyes -->
+      <g class="mf-hair"><path d="M118 128C62 150 50 300 92 430C108 480 150 490 162 430H238C250 490 292 480 308 430C350 300 338 150 282 128Z" fill="url(#ppHairB)"/></g>
+      <g fill="#fff"><circle class="mf-sp" cx="40" cy="110" r="3"/><circle class="mf-sp s2" cx="360" cy="150" r="3"/><circle class="mf-sp s3" cx="30" cy="300" r="2.6"/><circle class="mf-sp s4" cx="372" cy="320" r="2.6"/><circle class="mf-sp" cx="70" cy="60" r="2.2"/><circle class="mf-sp s2" cx="334" cy="64" r="2.2"/></g>
+      <path d="M112 306Q82 372 88 470L120 472Q126 386 142 326Z" fill="url(#ppSuit)"/><path d="M288 306Q318 372 312 470L280 472Q274 386 258 326Z" fill="url(#ppSuit)"/>
+      <path d="M100 560L114 304Q124 246 178 238H222Q276 246 286 304L300 560Z" fill="url(#ppSuit)"/>
+      <path d="M96 268l10-26 10 26-20-15h20z" fill="#ffe27a" opacity=".95"/><path d="M304 268l-10-26-10 26 20-15h-20z" fill="#ffe27a" opacity=".95"/>
+      <g fill="#fff" opacity=".95"><circle cx="150" cy="330" r="3"/><circle cx="244" cy="350" r="3"/><circle cx="170" cy="400" r="3"/><circle cx="226" cy="430" r="3"/><circle cx="190" cy="470" r="3"/><circle cx="256" cy="500" r="3"/><circle cx="140" cy="500" r="3"/><circle cx="120" cy="400" r="2.4"/><circle cx="280" cy="410" r="2.4"/></g>
+      <g fill="#ff7ad9"><path d="M200 300l6 14 15 1.500-11.500 10 3.500 15-13-8-13 8 3.500-15-11.500-10 15-1.500z"/></g>
+      <rect x="182" y="196" width="36" height="52" rx="14" fill="#f1c0a4"/>
+      <path d="M178 234Q200 252 222 234" fill="none" stroke="#ff4fb0" stroke-width="6" stroke-linecap="round"/><path d="M200 246l4 9 10 1-7.500 6.500 2.500 10-9-5.500-9 5.500 2.500-10-7.500-6.500 10-1z" fill="#ffe27a" stroke="#fff" stroke-width="1"/>
+      <ellipse cx="200" cy="150" rx="52" ry="60" fill="url(#ppFace)"/>
+      <ellipse cx="149" cy="160" rx="8" ry="12" fill="#f3c3a8"/><ellipse cx="251" cy="160" rx="8" ry="12" fill="#f3c3a8"/>
       <g class="mf-eyes">
-        <rect x="104" y="148.2" width="192" height="3.6" rx="1.8" fill="url(#mgStreak)"/>
-        <path d="M176 118 L179 150 L176 182 L173 150Z" fill="#fff" opacity=".85"/><path d="M224 118 L227 150 L224 182 L221 150Z" fill="#fff" opacity=".85"/>
-        <circle cx="176" cy="150" r="30" fill="url(#mgEye)"/><circle cx="224" cy="150" r="30" fill="url(#mgEye)"/>
-        <path d="M158 150 C166 140 186 140 194 150 C186 160 166 160 158 150Z" fill="#fff" filter="url(#mgGlow)"/><path d="M206 150 C214 140 234 140 242 150 C234 160 214 160 206 150Z" fill="#fff" filter="url(#mgGlow)"/>
+        <ellipse cx="177" cy="152" rx="11" ry="9.500" fill="#fff"/><circle cx="177" cy="152" r="7.200" fill="#7a4bd8"/><circle cx="177" cy="152" r="3.400" fill="#2a1a4a"/><circle cx="180.500" cy="148.500" r="2.600" fill="#fff"/>
+        <ellipse cx="223" cy="152" rx="11" ry="9.500" fill="#fff"/><circle cx="223" cy="152" r="7.200" fill="#7a4bd8"/><circle cx="223" cy="152" r="3.400" fill="#2a1a4a"/><circle cx="226.500" cy="148.500" r="2.600" fill="#fff"/>
+        <path d="M162 150Q177 136 192 148M208 148Q223 136 238 150" fill="none" stroke="#2a1a4a" stroke-width="3.400" stroke-linecap="round"/><path d="M162 150l-7-6M238 150l7-6" stroke="#2a1a4a" stroke-width="3" stroke-linecap="round"/>
+        <path d="M168 142l-1-8M176 140v-8M185 142l2-7M215 142l-2-7M224 140v-8M232 142l1-8" stroke="#2a1a4a" stroke-width="1.800" stroke-linecap="round"/>
       </g>
-      <g fill="none" stroke="#7a6a96" stroke-width="2.4" stroke-linecap="round"><path d="M156 149 C166 138 188 138 196 149"/><path d="M204 149 C214 138 236 138 244 149"/><path d="M158 146 l-5 -5 M163 142 l-3 -6 M241 146 l5 -5 M236 142 l3 -6" stroke-width="1.6"/></g>
-      <!-- hair framing the face -->
-      <path d="M200 62 C156 66 140 112 146 164 C149 194 140 226 120 252 C152 242 166 214 164 180 C162 140 176 104 200 90Z" fill="url(#mgHair)"/>
-      <path d="M200 62 C244 66 260 112 254 164 C251 194 260 226 280 252 C248 242 234 214 236 180 C238 140 224 104 200 90Z" fill="url(#mgHair)"/>
-      <path d="M200 40 C150 40 132 84 138 120 C150 90 172 72 200 72 C228 72 250 90 262 120 C268 84 250 40 200 40Z" fill="url(#mgHair)"/>
-      <g fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".85"><path d="M170 76 C152 100 150 150 148 190"/><path d="M230 76 C248 100 250 150 252 190"/><path d="M186 70 C170 96 164 140 164 176"/><path d="M214 70 C230 96 236 140 236 176"/></g>
-      <!-- tiara -->
-      <path d="M156 98 C168 80 184 72 200 68 C216 72 232 80 244 98" fill="none" stroke="url(#mgGold)" stroke-width="4.5" stroke-linecap="round"/>
-      <circle cx="200" cy="70" r="8" fill="url(#mgGold)"/><circle cx="200" cy="70" r="5.4" fill="url(#mgOpal)"/>
-      <g fill="url(#mgOpal)" stroke="#d9a84a" stroke-width="1.6"><circle cx="178" cy="78" r="4.2"/><circle cx="222" cy="78" r="4.2"/><circle cx="160" cy="92" r="3.6"/><circle cx="240" cy="92" r="3.6"/></g>
-      <!-- earrings + necklace -->
-      <g><circle cx="147" cy="186" r="3.4" fill="url(#mgGold)"/><path d="M147 190 C140 200 140 210 147 215 C154 210 154 200 147 190Z" fill="url(#mgOpal)" stroke="#d9a84a" stroke-width="1.6"/>
-         <circle cx="253" cy="186" r="3.4" fill="url(#mgGold)"/><path d="M253 190 C246 200 246 210 253 215 C260 210 260 200 253 190Z" fill="url(#mgOpal)" stroke="#d9a84a" stroke-width="1.6"/></g>
-      <path d="M168 232 C176 264 224 264 232 232" fill="none" stroke="url(#mgGold)" stroke-width="2.6" stroke-linecap="round"/>
-      <g fill="url(#mgOpal)" stroke="#d9a84a" stroke-width="1.6"><circle cx="182" cy="254" r="5"/><circle cx="218" cy="254" r="5"/><circle cx="200" cy="262" r="6.4"/></g>
-      <path d="M200 270 C192 281 192 293 200 298 C208 293 208 281 200 270Z" fill="url(#mgOpal)" stroke="#d9a84a" stroke-width="1.8"/>
+      <path d="M163 130Q177 122 191 130M209 130Q223 122 237 130" fill="none" stroke="#b05a9a" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="160" cy="176" r="9" fill="#ff8fb8" opacity=".5"/><circle cx="240" cy="176" r="9" fill="#ff8fb8" opacity=".5"/><path d="M197 164Q200 170 203 164" fill="none" stroke="#d99a86" stroke-width="2.200" stroke-linecap="round"/>
+      <path d="M182 184Q200 204 218 184Q200 192 182 184Z" fill="#ff2f86"/><path d="M190 190Q200 196 210 190" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2" stroke-linecap="round"/>
+      <g class="mf-hair mf-hair-f"><path d="M146 150C140 94 176 72 206 78C242 82 264 108 254 152C246 118 226 102 196 104C170 106 154 124 146 150Z" fill="url(#ppHairF)"/><path d="M148 150C130 204 134 256 148 306C158 256 154 204 158 162Z" fill="url(#ppHairF)"/><path d="M252 150C270 204 266 256 252 306C242 256 246 204 242 162Z" fill="url(#ppHairF)"/></g>
+      <path d="M200 40l8 18 19 2-14 12 4 19-17-10-17 10 4-19-14-12 19-2z" fill="#ffe27a" stroke="#fff" stroke-width="2"/>
+      <path d="M252 120Q274 168 226 194" fill="none" stroke="#2a2a3a" stroke-width="4" stroke-linecap="round"/><circle cx="252" cy="124" r="8" fill="#2a2a3a"/><circle cx="226" cy="194" r="6.500" fill="#2a2a3a"/><circle cx="224" cy="192" r="1.800" fill="#fff" opacity=".7"/>
+      <path d="M149 176l3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1z" fill="#ffe27a"/>
     </svg>`;
 
     /* the temple-and-sea ambience behind her */
@@ -5780,16 +5729,16 @@ document.addEventListener('error', function (e) {
   };
 
   const MF_LINES = {
-    ask: 'This first penny is for Hannah\'s wish, Wish Maker... watch it fly into the fountain',
+    ask: 'Hey, it\'s your pop goddess, b****. It would be toxic for you not to manifest things for Hannah... watch her coin fly into the fountain',
     herToss: 'Here goes Hannah\'s manifestation!',
     herDone: 'Hannah\'s wish has been heard!',
-    yours: 'Now it\'s your turn, Wish Maker... make your own wish, then flick the coin up into the fountain yourself!',
+    yours: 'Now it\'s your turn, superstar... make your own wish, then flick the coin up into the fountain yourself!',
     flick: 'Flick the coin up into the fountain!',
-    short: 'A little farther...',
-    far: 'Whoa, not so hard!',
-    wide: 'Aim for the fountain!',
+    short: 'Gimme more! A little farther...',
+    far: 'Gimme more! Whoa, not so hard!',
+    wide: 'Gimme more! Aim for the fountain!',
     ting: 'Ting! A lucky bounce!',
-    done: 'Your wish has been heard... now go make it happen, Wish Maker!'
+    done: 'Oops... you did it again! Your wish has been heard... now go make it happen, superstar!'
   };
 
   function startManifest() {
