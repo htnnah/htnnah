@@ -1779,7 +1779,8 @@
   .rk-step[hidden] { display: none; }
   .rk-h { font-size: 1.5rem; font-weight: 700; line-height: 1.15; margin: 0 0 6px; }
   .rk-sub { font-family: "Nunito", ui-rounded, system-ui, sans-serif; font-size: .85rem; line-height: 1.5; opacity: .9; margin: 0 0 18px; max-width: 46ch; }
-  .rk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 12px; }
+  .rk-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  @media (max-width: 800px) { .rk-grid { grid-template-columns: repeat(4, 1fr); } }
   .rk-pick { display: block; padding: 8px 6px 4px; border: 2px solid transparent; border-radius: 18px; background: rgba(255, 255, 255, .55); cursor: pointer; transition: transform .2s, background .2s, border-color .2s; }
   .rk-pick svg { display: block; width: 100%; height: auto; }
   .rk-pick:hover { transform: translateY(-4px) rotate(-2deg); background: #fff; border-color: var(--purple); }
