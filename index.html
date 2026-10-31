@@ -1780,14 +1780,20 @@
   /* ---------- hidden treasure ---------- */
   #hunt-ui { position: relative; z-index: 90; }
   .hunt-egg { display: inline-block; width: 46px; height: 46px; margin: 0 0 -10px 10px; padding: 0; border: 0; background: none; cursor: pointer; opacity: .8; vertical-align: middle; transition: opacity .2s, transform .2s; }
-  .hunt-egg.easy { width: 68px; height: 68px; opacity: 1; filter: drop-shadow(0 0 8px rgba(255, 220, 120, .95)); animation: huntBob 2.6s ease-in-out infinite; }
-  .hunt-egg.mid { width: 50px; height: 50px; opacity: .85; }
-  .hunt-egg.hard { width: 40px; height: 40px; opacity: .6; filter: saturate(.8); }
+  .hunt-egg.easy { width: 92px; height: 92px; opacity: 1; filter: drop-shadow(0 0 8px rgba(255, 220, 120, .95)); animation: huntBob 2.6s ease-in-out infinite; }
+  .hunt-egg.mid { width: 70px; height: 70px; opacity: .95; filter: drop-shadow(0 3px 5px rgba(80, 50, 10, .35)); }
+  .hunt-egg.hard { width: 60px; height: 60px; opacity: .92; }
+  .hunt-egg.in-tank { position: absolute; left: 5%; bottom: 6%; margin: 0; z-index: 30; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .55)); }
+  .hunt-list { list-style: none; margin: 12px 0 4px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px 10px; text-align: left; }
+  .hunt-list li { display: grid; grid-template-columns: 22px 1fr; column-gap: 8px; align-items: center; padding: 4px 8px; border-radius: 10px; background: #fff; border: 2px solid #eadfc4; } .hunt-list li.got { border-color: #8bc58a; background: #f1fbef; }
+  .hunt-check { grid-row: span 2; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; border: 2px solid #c9a24a; font-size: .8rem; font-weight: 800; color: #fff; } .hunt-list li.got .hunt-check { background: #4caf6a; border-color: #4caf6a; }
+  .hunt-list b { font-size: .78rem; } .hunt-list em { font-size: .66rem; font-style: normal; opacity: .75; }
   .hunt-egg.home-egg { display: block; margin: 8px auto 0; }
   .hunt-egg.hard.end { display: block; margin: 36px 0 6px 58%; }
   @keyframes huntBob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
-  .hunt-egg svg { display: block; width: 100%; height: 100%; }
-  .hunt-egg:hover, .hunt-egg:focus-visible { opacity: 1; transform: scale(1.3) rotate(-6deg); }
+  .hunt-egg svg { display: block; width: 100%; height: 100%; pointer-events: none; transition: transform .18s ease-out; }
+  .hunt-egg:hover, .hunt-egg:focus-visible { opacity: 1; animation-play-state: paused; }
+  .hunt-egg:hover svg, .hunt-egg:focus-visible svg { transform: scale(1.12); }
   .hunt-egg:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; border-radius: 6px; }
   .hunt-egg.shake { opacity: 1; transform: scale(1.5); animation: huntShake .65s ease-in-out; }
   .hunt-egg.opened { opacity: 1; transform: scale(1.7); }
@@ -1825,10 +1831,20 @@
   .hunt-save { margin-top: 14px; text-align: left; font-size: .85rem; } .hunt-save summary { cursor: pointer; font-weight: 700; }
   .hunt-code { display: block; width: 100%; margin: 6px 0 0; padding: 8px; font: .7rem/1.3 monospace; border: 2px solid #c9a24a; border-radius: 10px; background: #fff; color: #3b2e22; resize: vertical; }
   .hunt-map { display: block; width: 100%; height: auto; margin: 10px 0 4px; }
+  .hunt-h3 { margin: 16px 0 6px !important; font-size: 1rem; }
+  .hunt-chests { list-style: none; margin: 0 0 8px; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .hunt-chests li { display: grid; justify-items: center; gap: 1px; padding: 8px 4px 7px; border-radius: 14px; background: #fff; border: 2px solid #e0c98a; line-height: 1.2; }
+  .hunt-chests .hunt-icon { width: 36px; height: 36px; } .hunt-chests b { font-size: .74rem; } .hunt-chests i { font-size: .62rem; font-style: normal; opacity: .75; }
+  .hunt-chests li.off { border-style: dashed; opacity: .65; } .hunt-chests li.off .hunt-icon svg { filter: grayscale(1) opacity(.45); }
   .hunt-steps { text-align: left; margin: 12px 0 0; padding-left: 1.3em; font-size: .88rem; line-height: 1.5; } .hunt-steps li { margin-bottom: 8px; } .hunt-steps b { color: #6b3fa0; }
   @media (prefers-reduced-motion: reduce) { .hunt-egg.easy { animation: none; } }
-  .hunt-door { position: fixed; left: 8vw; bottom: 15vh; z-index: 6; display: block; width: 76px; height: 108px; padding: 0; border: 0; background: none; cursor: pointer; opacity: .9; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .3)); transition: opacity .2s, transform .2s; transform-origin: 0 100%; }
-  .hunt-door::after { content: attr(data-tip); position: absolute; left: 50%; bottom: 112%; transform: translateX(-50%) translateY(6px); padding: 5px 14px 7px; border-radius: 999px; background: #2b1a3d; color: #fff; font: 700 .85rem/1.2 inherit; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+  .hunt-door { position: fixed; left: 8vw; bottom: 15vh; z-index: 6; display: block; width: 76px; height: 108px; padding: 0; border: 0; background: none; cursor: pointer; opacity: .9; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .3)); transition: opacity .2s; transform-origin: 0 100%; }
+  .hunt-door svg { pointer-events: none; }
+  .hunt-keeper { position: fixed; left: calc(8vw + 90px); bottom: 15vh; z-index: 6; width: 74px; height: 54px; padding: 0; border: 0; background: none; cursor: pointer; filter: drop-shadow(0 4px 5px rgba(0, 0, 0, .3)); }
+  .hunt-keeper svg { width: 100%; height: 100%; display: block; pointer-events: none; }
+  .hunt-keeper::after { content: attr(data-tip); position: absolute; left: 50%; bottom: 112%; transform: translateX(-50%) translateY(6px); padding: 5px 14px 7px; border-radius: 999px; background: #2b1a3d; color: #fff; font-weight: 700; font-size: .8rem; line-height: 1.2; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+  .hunt-keeper:hover::after, .hunt-keeper:focus-visible::after { opacity: 1; transform: translateX(-50%); }
+  .hunt-door::after { content: attr(data-tip); position: absolute; left: 50%; bottom: 112%; transform: translateX(-50%) translateY(6px); padding: 7px 16px 9px; border-radius: 999px; background: #2b1a3d; color: #fff; font-family: inherit; font-weight: 800; font-size: .95rem; line-height: 1.2; white-space: nowrap; box-shadow: 0 6px 16px rgba(0, 0, 0, .35); opacity: 0; pointer-events: none; transition: opacity .12s, transform .12s; }
   .hunt-door:hover::after, .hunt-door:focus-visible::after { opacity: 1; transform: translateX(-50%); }
   .hunt-door svg { width: 100%; height: 100%; display: block; }
   .hunt-door:hover, .hunt-door:focus-visible { opacity: 1; } .hunt-door:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
@@ -1902,7 +1918,7 @@
   .q-bigcompass { width: 150px; margin: 14px auto 6px; } .q-bigcompass svg { width: 100%; display: block; }
   .ar-modal .hunt-title, .ar-modal .hunt-sub { color: #ecdcb0; } .ar-modal .q-secret { font: 700 1.1rem/1.5 "Special Elite", monospace; color: #3a2a14; background: #ecdcb0; padding: 18px; border-radius: 8px; margin: 12px 0; }
   .ar-modal .hunt-sheet:has(.q-secret), .ar-modal .hunt-sheet:has(.q-bigcompass) { background: #2b1609; border: 3px solid #c9a24a; padding: 24px; }
-  @media (max-width: 640px) { .hunt-door { width: 62px; height: 88px; left: 6vw; } .hunt-egg.easy { width: 58px; height: 58px; } .q-obj { min-width: 54px; } .ar-shelf { grid-template-columns: 1fr; } .ar-polaroids { grid-template-columns: repeat(2, 1fr); } #hunt-pouch { width: 54px; height: 54px; } #hunt-pouch svg { width: 36px; height: 36px; } .q-obj { transform: translate(-50%, -50%); } }
+  @media (max-width: 640px) { .hunt-door { width: 62px; height: 88px; left: 6vw; } .hunt-keeper { left: calc(6vw + 74px); width: 62px; height: 46px; } .hunt-egg.easy { width: 72px; height: 72px; } .q-obj { min-width: 54px; } .ar-shelf { grid-template-columns: 1fr; } .ar-polaroids { grid-template-columns: repeat(2, 1fr); } #hunt-pouch { width: 54px; height: 54px; } #hunt-pouch svg { width: 36px; height: 36px; } .q-obj { transform: translate(-50%, -50%); } }
   @media (prefers-reduced-motion: reduce) { html.on-arch::after, html.on-quarters::after, .hunt-egg.shake, .hunt-sheet, .hunt-iconrow .hunt-icon { animation: none; } .hunt-toast, .hunt-egg, .q-obj { transition: none; } }
 
   /* ---------- goals: a fuller page ---------- */
@@ -6352,7 +6368,7 @@ const HUNT = (() => {
   const root = document.documentElement;
   const rm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
   const rnd = (a, b) => a + Math.random() * (b - a), pick = a => a[Math.floor(Math.random() * a.length)];
-  const KEY = 'htn-treasure-v2', OLD_KEY = 'htn-treasure-v1';
+  const KEY = 'htn-treasure-v3', OLD_KEY = 'htn-treasure-v2';
   const SVG = (vb, body) => `<svg viewBox="${vb}" aria-hidden="true">${body}</svg>`;
 
   /* ===== the three symbols ===== */
@@ -6373,16 +6389,13 @@ const HUNT = (() => {
   const CHEST_OPEN = SVG('0 0 40 40', '<rect x="5" y="19" width="30" height="16" rx="2.5" fill="#9a5a28" stroke="#4a2a12" stroke-width="1.6"/><ellipse cx="20" cy="19" rx="13" ry="4" fill="#ffd66b"/><circle cx="13" cy="17" r="3" fill="#ffc83d" stroke="#a8741a"/><circle cx="21" cy="15" r="3.2" fill="#ffd66b" stroke="#a8741a"/><circle cx="28" cy="17.5" r="2.8" fill="#ffc83d" stroke="#a8741a"/><g transform="rotate(-62 6 19)"><path d="M5 19 Q5 6 20 6 Q35 6 35 19Z" fill="#b87333" stroke="#4a2a12" stroke-width="1.6"/><rect x="11" y="7" width="3.5" height="12" fill="#e0b040"/><rect x="25.5" y="7" width="3.5" height="12" fill="#e0b040"/></g>');
 
   /* ===== the nine chests: eight are out in the open, the ninth (the key) is hiding at the very bottom of a travel page ===== */
+  const TOLL = 50;   // gold coins the keeper of the door wants
   const CHESTS = [
-    { id: 'c1', route: '/', give: 'coins', slot: 0 },
-    { id: 'c2', route: '/about', give: 'shell', slot: 1 },
-    { id: 'c3', route: '/loves', give: 'coins', slot: 0 },
-    { id: 'c4', route: '/loves/travel', give: 'coins', slot: 1 },
-    { id: 'c5', route: '/loves/food', give: 'crown', slot: 1 },
-    { id: 'c6', route: '/loves/friends', give: 'coins', slot: 0 },
-    { id: 'c7', route: '/loves/movies', give: 'coins', slot: 2 },
-    { id: 'c8', route: '/work', give: 'coins', slot: 1 },
-    { id: 'c9', route: '/loves/travel/bahamas', give: 'key', hard: true }
+    { id: 'c1', route: '/', give: 'coins', coins: 25, tier: 'easy', slot: 0, name: 'Home page', hint: 'It starts where the site starts: the home page.' },
+    { id: 'c2', route: '/about', give: 'coins', coins: 25, tier: 'easy', slot: 0, name: 'About page', hint: 'Look on the page where I introduce myself.' },
+    { id: 'c3', route: '/loves/travel', give: 'shell', tier: 'mid', slot: 2, name: 'Travel page', hint: 'Passport stamps live here: the travel page. Look a little way down.' },
+    { id: 'c4', route: '/work', give: 'crown', tier: 'mid', slot: 2, name: 'Work page', hint: 'Where I clock in: the work page. Peek a little way down.' },
+    { id: 'c5', route: '/playground/aquarium', give: 'key', hard: true, name: 'Aquarium', hint: 'The key is in the water. Go to the Playground, open the Aquarium, and look along the sand.' }
   ];
 
   /* ===== what the visitor has found: saved in their own browser ===== */
@@ -6418,7 +6431,7 @@ const HUNT = (() => {
   const pouch = document.createElement('button'); pouch.id = 'hunt-pouch'; pouch.type = 'button'; pouch.hidden = true; pouch.setAttribute('aria-label', 'Open your treasure pouch');
   pouch.innerHTML = SVG('0 0 48 48', '<path d="M16 8 Q24 14 32 8 L30 14 Q24 18 18 14Z" fill="#c9a24a" stroke="#6b4a1a" stroke-width="1.6" stroke-linejoin="round"/><path d="M17 15 C6 22 4 34 8 40 C14 45 34 45 40 40 C44 34 42 22 31 15 Q24 19 17 15Z" fill="#9a5a28" stroke="#4a2a12" stroke-width="2"/><circle cx="24" cy="31" r="5" fill="#ffd66b" stroke="#6b4a1a" stroke-width="1.6"/>') + '<i class="hunt-count"></i>';
   ui.appendChild(pouch);
-  function syncPouch() { pouch.hidden = !(st.chests.length > 0 || st.unlocked || pouch.dataset.force); pouch.querySelector('.hunt-count').textContent = symbols() + '/3'; }
+  function syncPouch() { pouch.hidden = !(pouch.dataset.force || (root.dataset.mood === 'tropical' && (st.chests.length > 0 || st.unlocked))); pouch.querySelector('.hunt-count').textContent = st.chests.length + '/' + CHESTS.length; }
   syncPouch();
 
   /* ===== opening a chest: it shakes, coins fly out, and its treasure is revealed ===== */
@@ -6430,19 +6443,19 @@ const HUNT = (() => {
       c.animate([{ transform: 'translate(0,0) scale(.6) rotate(0)', opacity: 1 }, { transform: `translate(${dx * .6}px,${-up}px) scale(1) rotate(${rnd(-200, 200)}deg)`, opacity: 1, offset: .45 }, { transform: `translate(${dx}px,${fall}px) scale(.9) rotate(${rnd(-400, 400)}deg)`, opacity: 0 }], { duration: rnd(900, 1400), easing: 'cubic-bezier(.2,.7,.4,1)' }).finished.then(() => c.remove(), () => c.remove());
     }
   };
-  const LAST_HINT = 'The last chest is the sneakiest. It is hiding at the very bottom of a page about a place where the sand is white and the water is turquoise.';
+  const LAST_HINT = 'The last chest, with the key, is the sneakiest. It is hiding somewhere in the water. Open your pouch and ask for a hint if you get stuck.';
   function reveal(c) {
     if (!st.chests.includes(c.id)) st.chests.push(c.id);
     let k = c.give, n = 0, title, text;
-    if (k === 'coins') { n = 10 * Math.ceil(Math.random() * 5); st.coins += n; title = `${n} gold coins`; text = 'A little pile of gold. Shiny, but it is not one of the three symbols.'; }
+    if (k === 'coins') { n = c.coins || 25; st.coins += n; title = `${n} gold coins`; text = `A little pile of gold. Keep it safe, because the keeper of the door will want ${TOLL} coins.`; }
     else { st.inv[k] = 1; title = ITEMS[k].n; text = ITEMS[k].t; }
     save();
     const have = symbols(), left = NEED.filter(x => !st.inv[x]).map(x => x === 'key' ? 'the key (the very last one)' : 'the ' + x);
-    let hint;
-    if (k === 'key') hint = 'You found all three symbols! The key opens the tiny locked door on the home page.';
-    else if (st.inv.shell && st.inv.crown) hint = 'Two symbols down. ' + LAST_HINT;
-    else hint = 'Still looking for: ' + left.join(', ') + '. Check every page. These chests are out in the open.';
-    modal(`<p class="hunt-found">You opened a treasure chest!</p><div class="hunt-iconrow"><span class="hunt-icon" style="--c:${COLORS[k]}">${ICON[k]}</span></div><p class="hunt-tier" style="color:${k === 'coins' ? '#c8901a' : COLORS[k]}">${k === 'coins' ? 'GOLD' : 'SYMBOL ' + have + ' OF 3'}</p><h2 class="hunt-name">${title}</h2><p class="hunt-flavor">${text}</p><p class="hunt-added">${hint}</p><p class="hunt-sub">Chests opened: ${st.chests.length} of ${CHESTS.length}</p><button type="button" class="hunt-btn" data-close>Nice!</button>`, k === 'key' ? 'legendary' : '');
+    let hint; const coinLine = `Gold coins: ${st.coins} of ${TOLL} for the doorkeeper.`;
+    if (k === 'key') hint = 'You found the key! Take it to the tiny door on the home page' + (st.coins >= TOLL ? ', and pay the doorkeeper your ' + TOLL + ' coins.' : ', along with ' + TOLL + ' gold coins for the doorkeeper. ' + coinLine);
+    else if (st.inv.shell && st.inv.crown && !st.inv.key) hint = 'The shell and the crown are yours! ' + LAST_HINT + ' ' + coinLine;
+    else hint = 'Still looking for: ' + left.join(', ') + '. ' + coinLine;
+    modal(`<p class="hunt-found">You opened a treasure chest!</p><div class="hunt-iconrow"><span class="hunt-icon" style="--c:${COLORS[k]}">${ICON[k]}</span></div><p class="hunt-tier" style="color:${k === 'coins' ? '#c8901a' : COLORS[k]}">${k === 'coins' ? 'GOLD' : (k === 'key' ? 'THE KEY' : 'SYMBOL ' + have + ' OF 2')}</p><h2 class="hunt-name">${title}</h2><p class="hunt-flavor">${text}</p><p class="hunt-added">${hint}</p><p class="hunt-sub">Chests opened: ${st.chests.length} of ${CHESTS.length}</p><button type="button" class="hunt-btn" data-close>Nice!</button>`, k === 'key' ? 'legendary' : '');
     if (k === 'key') setTimeout(() => { const r = pouch.getBoundingClientRect(); coins(innerWidth / 2, innerHeight / 2, ['#ffd66b', '#ffb927'], 36); }, 200);
   }
   function openChest(btn) {
@@ -6462,14 +6475,14 @@ const HUNT = (() => {
     if (!here.length) return;
     const seen = [...v.querySelectorAll('h1, p, li')].filter(el => { if (el.closest('a, button, nav, .hunt-egg, [hidden]')) return false; const q = el.getBoundingClientRect(); return q.width > 0 && q.top > 70 && q.top < innerHeight - 140; });
     here.forEach(c => {
-      const b = document.createElement('button'); b.type = 'button'; b.dataset.id = c.id; b.className = 'hunt-egg ' + (c.hard ? 'hard end' : 'easy') + (r === '/' ? ' home-egg' : '');
+      const b = document.createElement('button'); b.type = 'button'; b.dataset.id = c.id; b.className = 'hunt-egg ' + (c.hard ? 'hard in-tank' : c.tier === 'mid' ? 'mid' : 'easy') + (r === '/' ? ' home-egg' : '');
       b.setAttribute('aria-label', 'A hidden treasure chest. Open it.'); b.innerHTML = CHEST;
-      (c.hard ? v : r === '/' ? (v.querySelector('.home') || v) : (seen[c.slot % Math.max(1, seen.length)] || v)).appendChild(b);
+      (c.hard ? (v.querySelector('.aq-tank') || v) : r === '/' ? (v.querySelector('.home') || v) : (seen[c.slot % Math.max(1, seen.length)] || v)).appendChild(b);
     });
   }
   let lastMood = null;
   new MutationObserver(() => {
-    const mood = root.dataset.mood || null; if (mood === lastMood) return; lastMood = mood; place();
+    const mood = root.dataset.mood || null; if (mood === lastMood) return; lastMood = mood; place(); placeDoor(); syncPouch();
     if (mood === 'tropical' && !st.noNote) setTimeout(() => huntNote(), 700);
   }).observe(root, { attributes: true, attributeFilter: ['data-mood'] });
 
@@ -6477,30 +6490,41 @@ const HUNT = (() => {
   function huntNote(force) {
     if (!force && root.dataset.mood !== 'tropical') return;
     const m = modal(`<div class="hunt-iconrow"><span class="hunt-icon">${CHEST}</span></div><h2 class="hunt-name">There is a treasure hunt!</h2>
-      <ol class="hunt-steps"><li><b>Nine treasure chests</b> are hiding around this site while you are in the Tommy Bahama mood. Most of them are out in the open, so look around every page.</li><li><b>Click a chest.</b> It shakes, opens, and coins fly out.</li><li>Three of the chests hold the <b>three symbols</b>: the <b>seashell</b>, the <b>gold crown</b>, and lastly the <b>key</b>.</li><li>Find the shell and the crown first. The key chest is the <b>sneakiest one</b>, and it only shows up once you have both.</li><li>With the key, open the <b>tiny locked door on the home page</b>. It leads somewhere secret.</li></ol>
+      <ol class="hunt-steps"><li><b>Five treasure chests</b> are hiding around this site, and they are big, so look around.</li><li><b>Click a chest.</b> It shakes, opens, and coins fly out.</li><li>Two chests hold <b>gold coins</b>. The little crab who keeps the door wants <b>50 coins</b> to let you in.</li><li>Two more hold the <b>seashell</b> and the <b>gold crown</b>. Find them both and the last chest appears.</li><li>The last chest holds the <b>key</b>, and it is the sneakiest one: it is hiding in the water.</li><li>With the key and 50 coins, go to the <b>tiny door on the home page</b>. It leads somewhere secret.</li></ol>
       <p class="hunt-sub">Your treasure goes in the little bag at the bottom right, and it is saved in your browser. Happy hunting!</p>
-      <button type="button" class="hunt-btn" data-close>Let's hunt</button>${force ? '' : '<button type="button" class="hunt-btn alt" data-act="nonote">Do not show this again</button>'}`, 'hunt-note');
-    m.addEventListener('click', e => { if (e.target.closest('[data-act="nonote"]')) { st.noNote = true; save(); closeModal(); } });
+      <button type="button" class="hunt-btn" data-close>Let's hunt</button><button type="button" class="hunt-btn alt" data-act="hint">I want a hint</button>${force ? '' : '<button type="button" class="hunt-btn alt" data-act="nonote">Do not show this again</button>'}`, 'hunt-note');
+    m.addEventListener('click', e => { if (e.target.closest('[data-act="nonote"]')) { st.noNote = true; save(); closeModal(); } else if (e.target.closest('[data-act="hint"]')) showHint(); });
+  }
+
+  /* ===== an optional hint for the next chest ===== */
+  function showHint() {
+    const order = ['shell', 'crown', 'key', 'coins'];
+    const next = CHESTS.filter(c => !st.chests.includes(c.id) && (c.give !== 'key' || (st.inv.shell && st.inv.crown))).sort((a, b) => order.indexOf(a.give) - order.indexOf(b.give))[0];
+    modal(next
+      ? `<div class="hunt-iconrow"><span class="hunt-icon">${CHEST}</span></div><h2 class="hunt-name">A little hint</h2><p class="hunt-flavor">${next.hint}</p><p class="hunt-sub">${next.give === 'coins' ? 'This one only has gold coins.' : 'This one holds a symbol!'}</p><button type="button" class="hunt-btn" data-close>Thanks!</button>`
+      : `<h2 class="hunt-name">Nothing left to find!</h2><p class="hunt-flavor">You opened every chest. The only thing left is the door.</p><button type="button" class="hunt-btn" data-close>Close</button>`);
   }
 
   /* ===== the pouch ===== */
   function openPouch() {
     let taps = 0;
-    const m = modal(`<h2 class="hunt-title" id="hunt-ptitle">Treasure pouch</h2><p class="hunt-sub">Symbols found: ${symbols()} of 3 &middot; Chests opened: ${st.chests.length} of ${CHESTS.length} &middot; Gold coins: ${st.coins}</p>
+    const m = modal(`<h2 class="hunt-title" id="hunt-ptitle">Treasure pouch</h2><p class="hunt-sub">Chests opened: ${st.chests.length} of ${CHESTS.length} &middot; Gold coins: ${st.coins} of ${TOLL} for the doorkeeper</p>
       <ul class="hunt-grid">${NEED.map((k, i) => `<li class="hunt-slot${st.inv[k] ? '' : ' empty'}" style="--c:${COLORS[k]}"><span class="hunt-icon">${ICON[k]}</span><b>${st.inv[k] ? ITEMS[k].n : '???'}</b><em>${i === 2 ? 'last of all' : 'symbol ' + (i + 1)}</em><i>${st.inv[k] ? 'found' : 'not found'}</i></li>`).join('')}</ul>
-      ${st.unlocked ? '<a class="hunt-btn" href="#/archives" data-close>Visit the forbidden archives</a>' : st.inv.key ? '<p class="hunt-sub">You have the key! Open the tiny locked door on the home page.</p>' : symbols() === 2 ? `<p class="hunt-sub">${LAST_HINT}</p>` : ''}
-      <button type="button" class="hunt-btn alt" data-act="how">How does this work?</button>
+      <ul class="hunt-list" aria-label="Chests">${CHESTS.map((c, i) => { const f = st.chests.includes(c.id); return `<li class="${f ? 'got' : ''}"><span class="hunt-check" aria-hidden="true">${f ? '&#10003;' : ''}</span><b>${f ? c.name : 'Chest ' + (i + 1)}</b><em>${f ? (c.give === 'coins' ? 'gold coins' : ITEMS[c.give].n) : 'not found yet'}</em></li>`; }).join('')}</ul>
+      ${st.unlocked ? '<a class="hunt-btn" href="#/archives" data-close>Visit the forbidden archives</a>' : st.inv.key ? `<p class="hunt-sub">You have the key! ${st.coins >= TOLL ? 'Take it to the tiny door on the home page and pay the doorkeeper.' : 'Find ' + TOLL + ' gold coins for the doorkeeper, then use the tiny door on the home page.'}</p>` : (st.inv.shell && st.inv.crown) ? `<p class="hunt-sub">${LAST_HINT}</p>` : ''}
+      <button type="button" class="hunt-btn alt" data-act="hint">Give me a hint</button><button type="button" class="hunt-btn alt" data-act="how">How does this work?</button>
       <details class="hunt-save"><summary>Save, move or restart</summary><p class="hunt-sub">Your treasure is saved in this browser automatically. To move it to another device, copy this code and paste it there.</p><textarea readonly rows="3" class="hunt-code" aria-label="Your save code"></textarea><button type="button" class="hunt-btn alt" data-act="copy">Copy code</button><textarea rows="2" class="hunt-code" placeholder="Paste a code here" aria-label="Paste a save code"></textarea><button type="button" class="hunt-btn alt" data-act="load">Load code</button><button type="button" class="hunt-btn alt" data-act="again">Hide the chests again</button><p class="hunt-sub hunt-msg" aria-live="polite"></p></details>
       <button type="button" class="hunt-btn" data-close>Close</button>`);
     const [mine, theirs] = m.querySelectorAll('.hunt-code'), msg = m.querySelector('.hunt-msg');
     try { mine.value = btoa(unescape(encodeURIComponent(JSON.stringify(st)))); } catch (_) {}
-    m.querySelector('#hunt-ptitle').addEventListener('click', () => { if (++taps >= 7) { taps = 0; NEED.forEach(k => { st.inv[k] = 1; }); save(); closeModal(); toast('A little voice whispers: the shell, the crown and the key just appeared.'); setTimeout(openPouch, 300); } });
+    m.querySelector('#hunt-ptitle').addEventListener('click', () => { if (++taps >= 7) { taps = 0; NEED.forEach(k => { st.inv[k] = 1; }); st.coins = Math.max(st.coins, TOLL); save(); closeModal(); toast('A little voice whispers: the shell, the crown, the key and 50 coins just appeared.'); setTimeout(openPouch, 300); } });
     m.addEventListener('click', e => {
       const a = e.target.closest('[data-act]'); if (!a) return;
       if (a.dataset.act === 'how') huntNote(true);
+      if (a.dataset.act === 'hint') showHint();
       if (a.dataset.act === 'copy') { mine.select(); try { navigator.clipboard.writeText(mine.value); msg.textContent = 'Copied!'; } catch (_) { msg.textContent = 'Select the code and copy it.'; } }
       if (a.dataset.act === 'load') { try { st = clean(JSON.parse(decodeURIComponent(escape(atob(theirs.value.trim()))))); save(); closeModal(); place(); toast('Treasure loaded!'); } catch (_) { msg.textContent = 'That code did not work. Try copying it again.'; } }
-      if (a.dataset.act === 'again') { st.inv = { shell: 0, crown: 0, key: 0 }; st.chests = []; st.coins = 0; save(); closeModal(); place(); toast('The chests are hidden again. Happy hunting!'); }
+      if (a.dataset.act === 'again') { st.inv = { shell: 0, crown: 0, key: 0 }; st.chests = []; st.coins = 0; save(); closeModal(); place(); placeDoor(); toast('The chests are hidden again. Happy hunting!'); }
     });
   }
   pouch.addEventListener('click', openPouch);
@@ -6508,18 +6532,26 @@ const HUNT = (() => {
 
   /* ===== the small locked door on the home page ===== */
   const DOOR = SVG('0 0 34 48', '<path d="M3 46 V18 Q3 3 17 3 Q31 3 31 18 V46Z" fill="#7a4a24" stroke="#3a2010" stroke-width="2"/><path d="M8 44 V19 Q8 9 17 9 Q26 9 26 19 V44Z" fill="#9a6034" stroke="#3a2010" stroke-width="1.4"/><circle cx="23" cy="28" r="2.2" fill="#ffd66b" stroke="#6b4a1a"/><rect x="14" y="31" width="6" height="7" rx="1" fill="#ffd66b" stroke="#6b4a1a" stroke-width="1" class="hunt-lock"/>');
-  const doorTip = () => (st.unlocked || st.inv.key > 0) ? 'You have the key. Open it!' : 'A key is needed';
+  const doorTip = () => st.unlocked ? 'Open the door' : !st.inv.key ? 'A key is needed' : st.coins < TOLL ? `The keeper wants ${TOLL} coins` : 'Pay the keeper and open it';
+  const KEEPER = SVG('0 0 60 44', '<g stroke="#7a2a14" stroke-width="2" stroke-linecap="round" fill="none"><path d="M12 30 L4 38 M18 34 L12 42 M48 30 L56 38 M42 34 L48 42"/></g><ellipse cx="30" cy="28" rx="18" ry="12" fill="#e8553a" stroke="#7a2a14" stroke-width="2"/><path d="M14 22 C6 20 4 10 10 6 C14 4 18 8 16 12 C20 12 20 18 14 22Z" fill="#f2694c" stroke="#7a2a14" stroke-width="2"/><path d="M46 22 C54 20 56 10 50 6 C46 4 42 8 44 12 C40 12 40 18 46 22Z" fill="#f2694c" stroke="#7a2a14" stroke-width="2"/><circle cx="24" cy="14" r="4" fill="#fff" stroke="#7a2a14" stroke-width="1.5"/><circle cx="36" cy="14" r="4" fill="#fff" stroke="#7a2a14" stroke-width="1.5"/><circle cx="24.5" cy="14.5" r="1.8" fill="#222"/><circle cx="36.5" cy="14.5" r="1.8" fill="#222"/><path d="M26 31 Q30 34 34 31" stroke="#7a2a14" stroke-width="2" fill="none"/>');
+  const keeperLine = () => st.unlocked ? 'Welcome back! Go right in.' : `Halt! I keep this door. I want a key and ${TOLL} gold coins. You have ${st.inv.key ? 'the key' : 'no key'} and ${st.coins} coins.`;
   function placeDoor() {
-    document.querySelectorAll('.hunt-door').forEach(e => e.remove());
-    if (routeNow() !== '/') return; const v = document.getElementById('view');
+    document.querySelectorAll('.hunt-door, .hunt-keeper').forEach(e => e.remove());
+    if (routeNow() !== '/' || root.dataset.mood !== 'tropical') return; const v = document.getElementById('view');
     const d = document.createElement('button'); d.type = 'button'; d.className = 'hunt-door'; d.setAttribute('aria-label', 'A small locked door. A key is needed.'); d.innerHTML = DOOR; d.dataset.tip = doorTip(); v.appendChild(d);
     ['pointerenter', 'focus'].forEach(ev => d.addEventListener(ev, () => { d.dataset.tip = doorTip(); }));
+    const k = document.createElement('button'); k.type = 'button'; k.className = 'hunt-keeper'; k.setAttribute('aria-label', 'The doorkeeper, a little crab. Talk to him.'); k.innerHTML = KEEPER; k.dataset.tip = `Doorkeeper: ${TOLL} coins and a key, please`; v.appendChild(k);
   }
   document.addEventListener('click', e => {
     const egg = e.target.closest('.hunt-egg'); if (egg) { e.preventDefault(); e.stopPropagation(); openChest(egg); return; }
+    if (e.target.closest('.hunt-keeper')) { toast(keeperLine()); return; }
     const d = e.target.closest('.hunt-door'); if (!d) return;
-    if (st.unlocked || st.inv.key > 0) { if (!st.unlocked) { st.unlocked = true; save(); } d.classList.add('open'); toast('The key turns. The door creaks open...'); setTimeout(() => { location.hash = '#/archives'; }, rm() ? 200 : 1100); }
-    else { d.classList.remove('knock'); void d.offsetWidth; d.classList.add('knock'); toast('A key is needed to open this door.'); }
+    const go = msg => { d.classList.add('open'); toast(msg); setTimeout(() => { location.hash = '#/archives'; }, rm() ? 200 : 1100); };
+    const nope = msg => { d.classList.remove('knock'); void d.offsetWidth; d.classList.add('knock'); toast(msg); };
+    if (st.unlocked) go('The door creaks open...');
+    else if (!st.inv.key) nope('A key is needed to open this door.');
+    else if (st.coins < TOLL) nope(`The doorkeeper wants ${TOLL} gold coins. You have ${st.coins}.`);
+    else { st.coins -= TOLL; st.unlocked = true; save(); go(`You paid the doorkeeper ${TOLL} coins. The key turns, and the door creaks open...`); }
   }, true);
 
   /* ===== after every page change: hide the chests, add the door, and dress the secret pages ===== */
