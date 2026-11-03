@@ -1509,7 +1509,8 @@
   html[data-saber] #mood-fx, html.mf-open #mood-fx, html.mood-nofx #mood-fx { display: none; }
   html.mf-open #mood-ui, html.mf-open #mood-reset { display: none; }
 
-  #mood-ui { position: fixed; left: 14px; bottom: 14px; z-index: 6; }
+  #mood-ui { position: fixed; left: 14px; bottom: 14px; z-index: 9; }
+  html:has(#mood-panel:not([hidden])) :is(#hunt-hint, #hunt-pouch) { visibility: hidden; }
   html[data-saber] #mood-ui { bottom: 64px; }
   #mood-btn, #mood-reset { font: inherit; font-size: 1.05rem; font-weight: 700; color: var(--ink); cursor: pointer; padding: 5px 20px 8px; line-height: 1.2;
         background: var(--navbg, rgba(229, 234, 245, .9)); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
@@ -1709,22 +1710,28 @@
   html[data-mood="y2k"] #view :is(li):not(:is(.fact, .hub, .polaroid, .card, .face, button, .job-cs, .songs) *) { margin-block: .35em; }
 
   /* ---------- one-line pressable name + mood hint ---------- */
-  .home h1 { font-size: clamp(2.4rem, 8.4vw, 7rem); margin-bottom: 4px; }
+  .home h1 { font-size: clamp(3rem, 11.5vw, 9.5rem); margin-bottom: 4px; }
   .name-btn { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: center; -webkit-text-stroke: inherit; text-shadow: inherit; display: inline-block; transition: transform .25s var(--ease); }
   .name-btn:hover { transform: scale(1.03) rotate(-.6deg); } .name-btn:active { transform: scale(.97); }
   .name-btn:focus-visible { outline: 3px solid var(--purple); outline-offset: 8px; border-radius: 18px; }
   .name-btn.pop { animation: namePop .55s ease; } @keyframes namePop { 35% { transform: scale(1.08) rotate(-2deg); } 70% { transform: scale(.98) rotate(1deg); } }
-  .mood-hint { position: relative; display: block; margin: 6px auto 0; width: 230px; aspect-ratio: 200 / 196; padding: 0; border: 0; background: none; cursor: pointer; font: inherit; color: #2a2457; filter: drop-shadow(0 8px 14px rgba(42, 36, 87, .35)); transition: transform .25s var(--ease); animation: sbPulse 3.2s ease-in-out infinite; }
+  .mood-hint { position: fixed; left: max(12px, env(safe-area-inset-left)); bottom: max(12px, env(safe-area-inset-bottom)); z-index: 7; display: block; margin: 0; width: 124px; aspect-ratio: 200 / 196; padding: 0; border: 0; background: none; cursor: pointer; font: inherit; color: #2a2457; filter: drop-shadow(0 6px 10px rgba(42, 36, 87, .35)); transition: transform .25s var(--ease); animation: sbPulse 3.2s ease-in-out infinite; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
   .mood-hint .sb-star { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-  .mood-hint .sb-txt { position: absolute; left: 50%; top: 53%; width: 58%; transform: translate(-50%, -50%); display: grid; gap: 2px; text-align: center; line-height: 1.1; }
-  .mood-hint .sb-a { font-size: .86rem; font-weight: 700; } .mood-hint .sb-b { font-size: 1.2rem; font-weight: 800; }
+  .mood-hint .sb-txt { position: absolute; left: 50%; top: 54%; width: 66%; transform: translate(-50%, -50%); display: grid; gap: 1px; text-align: center; line-height: 1.08; }
+  .mood-hint .sb-a { font-size: .68rem; font-weight: 700; } .mood-hint .sb-b { font-size: .86rem; font-weight: 800; }
   .mood-hint:hover { transform: scale(1.08) rotate(-4deg); animation: none; } .mood-hint:active { transform: scale(.96); }
   .mood-hint:focus-visible { outline: 3px solid var(--purple); outline-offset: 6px; border-radius: 50%; }
+
+  /* shooting star that flies across the page when the name is hovered */
+  .shoot-star { position: fixed; left: 0; top: 0; width: 0; height: 0; z-index: 8; pointer-events: none; will-change: transform, opacity; }
+  .shoot-star .tail { position: absolute; right: 6px; top: -2px; width: 190px; height: 4px; border-radius: 4px; background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .85) 72%, #ffe27a); filter: drop-shadow(0 0 6px rgba(255, 226, 122, .9)); }
+  .shoot-star svg { position: absolute; right: -16px; top: -16px; width: 32px; height: 32px; filter: drop-shadow(0 0 8px rgba(255, 214, 90, .95)); }
+  @media (max-width: 640px) { .shoot-star .tail { width: 130px; } .shoot-star svg { width: 26px; height: 26px; right: -13px; top: -13px; } }
   @keyframes sbPulse { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.05) rotate(3deg); } }
   @media (prefers-reduced-motion: reduce) { .mood-hint { animation: none; } }
-  @media (max-width: 640px) { .mood-hint { width: 190px; } .mood-hint .sb-a { font-size: .74rem; } .mood-hint .sb-b { font-size: 1.02rem; } }
-  html[data-mood="arcade"] .home h1 { font-size: clamp(1.1rem, 4.2vw, 3rem); } html[data-mood="disco"] .home h1 { font-size: clamp(1.6rem, 5.2vw, 4rem); }
-  html[data-mood="western"] .home h1, html[data-mood="vintage"] .home h1 { font-size: clamp(1.8rem, 6vw, 4.6rem); } html[data-mood="y2k"] .home h1 { font-size: clamp(2rem, 7vw, 6rem); }
+  @media (max-width: 640px) { .mood-hint { width: 104px; } .mood-hint .sb-a { font-size: .62rem; } .mood-hint .sb-b { font-size: .78rem; } }
+  html[data-mood="arcade"] .home h1 { font-size: clamp(1.3rem, 5.6vw, 4rem); } html[data-mood="disco"] .home h1 { font-size: clamp(2rem, 7vw, 5.2rem); }
+  html[data-mood="western"] .home h1, html[data-mood="vintage"] .home h1 { font-size: clamp(2.3rem, 8.2vw, 6rem); } html[data-mood="y2k"] .home h1 { font-size: clamp(2.6rem, 9.5vw, 8rem); }
 
   /* ===== Y2K: a different background (and readable neon text) for each page; the front page keeps the collage ===== */
   html[data-mood="y2k"][data-route="about"] #mood-bg { background-image: url("photos/mood-y2k-leopard.jpg"); }
@@ -1780,9 +1787,13 @@
   /* ---------- hidden treasure ---------- */
   #hunt-ui { position: relative; z-index: 90; }
   .hunt-egg { display: inline-block; width: 46px; height: 46px; margin: 0 0 -10px 10px; padding: 0; border: 0; background: none; cursor: pointer; opacity: .8; vertical-align: middle; transition: opacity .2s, transform .2s; }
-  .hunt-egg.easy { width: 92px; height: 92px; opacity: 1; filter: drop-shadow(0 0 8px rgba(255, 220, 120, .95)); animation: huntBob 2.6s ease-in-out infinite; }
+  .hunt-egg.easy { width: 124px; height: 124px; opacity: 1; filter: drop-shadow(0 0 8px rgba(255, 220, 120, .95)); animation: huntBob 2.6s ease-in-out infinite; }
   .hunt-egg.mid { width: 70px; height: 70px; opacity: .95; filter: drop-shadow(0 3px 5px rgba(80, 50, 10, .35)); }
-  .hunt-egg.hard { width: 60px; height: 60px; opacity: .92; }
+  .hunt-egg.hard { width: 84px; height: 84px; opacity: .95; }
+  .hunt-egg.float { position: fixed; right: 1.5vw; z-index: 40; margin: 0; }
+  #hunt-hint { position: fixed; right: 14px; bottom: 146px; z-index: 60; min-height: 44px; touch-action: manipulation; -webkit-tap-highlight-color: transparent; padding: 6px 18px 8px; border: 3px solid #6b4a1a; border-radius: 999px; background: #fff3d2; color: #4a2a12; font: 800 .95rem/1.1 inherit; cursor: pointer; box-shadow: 0 6px 14px rgba(0, 0, 0, .25); } #hunt-hint[hidden] { display: none; } #hunt-hint:hover { background: #fff; } #hunt-hint:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  /* the whole hunt belongs to Tommy Bahama: nothing of it shows in any other mood */
+  html:not([data-mood="tropical"]) :is(.hunt-egg, .hunt-door, .hunt-keeper, #hunt-hint, #hunt-pouch, .hunt-toast, .hunt-modal:not(.ar-modal)) { display: none !important; }
   .hunt-egg.in-tank { position: absolute; left: 5%; bottom: 6%; margin: 0; z-index: 30; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .55)); }
   .hunt-list { list-style: none; margin: 12px 0 4px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px 10px; text-align: left; }
   .hunt-list li { display: grid; grid-template-columns: 22px 1fr; column-gap: 8px; align-items: center; padding: 4px 8px; border-radius: 10px; background: #fff; border: 2px solid #eadfc4; } .hunt-list li.got { border-color: #8bc58a; background: #f1fbef; }
@@ -1790,20 +1801,6 @@
   .hunt-list b { font-size: .78rem; } .hunt-list em { font-size: .66rem; font-style: normal; opacity: .75; }
   .hunt-egg.home-egg { display: block; margin: 8px auto 0; }
   .hunt-egg.hard.end { display: block; margin: 36px 0 6px 58%; }
-  /* big, glowing chests that sit in plain sight (Tommy Bahama only) */
-  .hunt-egg.spot { position: fixed; z-index: 40; display: block; margin: 0; width: clamp(92px, 11vw, 148px); height: clamp(92px, 11vw, 148px); opacity: 1; filter: drop-shadow(0 0 12px rgba(255, 220, 120, .95)) drop-shadow(0 6px 8px rgba(80, 50, 10, .4)); animation: huntBob 2.6s ease-in-out infinite; }
-  .hunt-egg.hard.in-tank { top: 5%; bottom: auto; left: 4%; width: clamp(84px, 9vw, 120px); height: clamp(84px, 9vw, 120px); opacity: 1; filter: drop-shadow(0 0 14px rgba(255, 210, 90, 1)) drop-shadow(0 4px 6px rgba(0, 0, 0, .55)); animation: huntBob 2.2s ease-in-out infinite; }
-  #hunt-hint { position: fixed; right: 88px; bottom: 82px; z-index: 60; padding: 9px 20px 11px; font: inherit; font-size: 1rem; font-weight: 800; line-height: 1.1; color: #3b2e22; background: #ffe9a8; border: 3px solid #6b4a1a; border-radius: 999px; cursor: pointer; box-shadow: 0 8px 18px rgba(0, 0, 0, .25); transition: transform .2s; }
-  #hunt-hint[hidden] { display: none; }
-  .hunt-hints { list-style: none; margin: 12px 0 4px; padding: 0; display: grid; gap: 4px; }
-  .hunt-hinttext { margin: 4px 0 8px; padding: 10px 14px; border-radius: 14px; background: #fff; border: 2px solid #e0c98a; font-size: .95rem; line-height: 1.4; }
-  .hunt-hinttext[hidden] { display: none; }
-  #hunt-hint:hover { transform: translateY(-3px) rotate(-3deg); } #hunt-hint:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
-  html { --dw: min(210px, 38vh, 42vw); }
-  .work-li-wrap { margin: 14px 0 0; }
-  .work-li { display: inline-flex; align-items: center; gap: 9px; padding: 9px 20px 10px 16px; border-radius: 999px; background: #0a66c2; color: #fff !important; font-weight: 800; text-decoration: none; box-shadow: 0 6px 14px rgba(0, 0, 0, .2); transition: transform .2s; }
-  .work-li svg { width: 20px; height: 20px; display: block; }
-  .work-li:hover { transform: translateY(-2px); } .work-li:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
   @keyframes huntBob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
   .hunt-egg svg { display: block; width: 100%; height: 100%; pointer-events: none; transition: transform .18s ease-out; }
   .hunt-egg:hover, .hunt-egg:focus-visible { opacity: 1; animation-play-state: paused; }
@@ -1815,15 +1812,15 @@
   .hunt-coin { position: fixed; z-index: 95; width: 15px; height: 15px; margin: -7px 0 0 -7px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff3b0, #ffc83d 60%, #c8901a); border: 1.5px solid #8a6210; pointer-events: none; }
   .hunt-toast { position: fixed; left: 50%; bottom: 86px; z-index: 96; transform: translate(-50%, 20px); max-width: min(92vw, 520px); padding: 9px 20px 11px; border-radius: 999px; background: #2b1a3d; color: #fff; font-weight: 700; font-size: .85rem; text-align: center; opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; box-shadow: 0 8px 22px rgba(0, 0, 0, .3); }
   .hunt-toast.on { opacity: 1; transform: translate(-50%, 0); }
-  #hunt-pouch { position: fixed; right: 14px; bottom: 72px; z-index: 60; width: 62px; height: 62px; padding: 0; border: 3px solid #6b4a1a; border-radius: 50%; background: #fff3d2; cursor: pointer; box-shadow: 0 8px 18px rgba(0, 0, 0, .25); transition: transform .2s; }
+  #hunt-pouch { touch-action: manipulation; -webkit-tap-highlight-color: transparent; position: fixed; right: 14px; bottom: 72px; z-index: 60; width: 62px; height: 62px; padding: 0; border: 3px solid #6b4a1a; border-radius: 50%; background: #fff3d2; cursor: pointer; box-shadow: 0 8px 18px rgba(0, 0, 0, .25); transition: transform .2s; }
   #hunt-pouch[hidden] { display: none; }
   #hunt-pouch:hover { transform: translateY(-3px) rotate(-4deg); } #hunt-pouch:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
   #hunt-pouch svg { width: 42px; height: 42px; display: block; margin: 5px auto 0; }
   .hunt-count { position: absolute; top: -6px; right: -6px; min-width: 24px; height: 24px; padding: 0 6px; display: grid; place-items: center; border-radius: 999px; background: #a35cff; color: #fff; font-style: normal; font-size: .75rem; font-weight: 800; border: 2px solid #fff; }
   .hunt-modal { position: fixed; inset: 0; z-index: 92; display: grid; place-items: center; padding: 16px; background: rgba(20, 10, 40, .66); }
-  .hunt-sheet { width: min(520px, 100%); max-height: 92vh; overflow: auto; padding: 24px 24px 26px; border-radius: 24px; border: 3px solid #c9a24a; background: #fff8e6; color: #3b2e22; text-align: center; box-shadow: 0 24px 60px rgba(0, 0, 0, .5); animation: huntPop .35s cubic-bezier(.3, 1.4, .5, 1); }
+  .hunt-sheet { width: min(520px, 100%); max-height: 92vh; overflow: auto; padding: 24px 24px 26px; border-radius: 24px; border: 3px solid #c9a24a; background: #fff8e6; color: #3b2e22; text-align: center; box-shadow: 0 24px 60px rgba(0, 0, 0, .5); animation: huntPop .14s ease-out; overscroll-behavior: contain; }
   .hunt-modal.legendary .hunt-sheet { box-shadow: 0 0 0 4px #ffb927, 0 0 60px 10px rgba(255, 185, 39, .65), 0 24px 60px rgba(0, 0, 0, .5); }
-  @keyframes huntPop { from { transform: scale(.7); opacity: 0; } }
+  @keyframes huntPop { from { transform: scale(.94); } }
   .hunt-sheet h2, .hunt-sheet p { margin: 0; color: inherit; }
   .hunt-found { font-size: .9rem; font-weight: 700; opacity: .8; }
   .hunt-iconrow { display: flex; gap: 14px; justify-content: center; margin: 12px 0 4px; }
@@ -1851,18 +1848,19 @@
   .hunt-chests .hunt-icon { width: 36px; height: 36px; } .hunt-chests b { font-size: .74rem; } .hunt-chests i { font-size: .62rem; font-style: normal; opacity: .75; }
   .hunt-chests li.off { border-style: dashed; opacity: .65; } .hunt-chests li.off .hunt-icon svg { filter: grayscale(1) opacity(.45); }
   .hunt-steps { text-align: left; margin: 12px 0 0; padding-left: 1.3em; font-size: .88rem; line-height: 1.5; } .hunt-steps li { margin-bottom: 8px; } .hunt-steps b { color: #6b3fa0; }
-  @media (prefers-reduced-motion: reduce) { .hunt-egg.easy, .hunt-egg.spot, .hunt-egg.hard.in-tank { animation: none; } }
-  .hunt-door { position: fixed; left: 8vw; bottom: 15vh; z-index: 6; display: block; width: var(--dw); height: auto; padding: 0; border: 0; background: none; cursor: pointer; opacity: 1; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, .35)); transition: opacity .2s; transform-origin: 0 100%; }
+  @media (prefers-reduced-motion: reduce) { .hunt-egg.easy { animation: none; } }
+  .hunt-door { position: fixed; left: 8vw; bottom: max(15vh, 168px); z-index: 6; display: block; width: 76px; height: 108px; padding: 0; border: 0; background: none; cursor: pointer; opacity: .9; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .3)); transition: opacity .2s; transform-origin: 0 100%; }
   .hunt-door svg { pointer-events: none; }
-  .hunt-keeper { position: fixed; left: calc(8vw + var(--dw) + 12px); bottom: 15vh; z-index: 6; width: calc(var(--dw) * .62); height: calc(var(--dw) * .45); padding: 0; border: 0; background: none; cursor: pointer; filter: drop-shadow(0 4px 5px rgba(0, 0, 0, .3)); }
+  .hunt-keeper { position: fixed; left: calc(8vw + 90px); bottom: max(15vh, 168px); z-index: 6; width: 74px; height: 54px; padding: 0; border: 0; background: none; cursor: pointer; filter: drop-shadow(0 4px 5px rgba(0, 0, 0, .3)); }
   .hunt-keeper svg { width: 100%; height: 100%; display: block; pointer-events: none; }
   .hunt-keeper::after { content: attr(data-tip); position: absolute; left: 50%; bottom: 112%; transform: translateX(-50%) translateY(6px); padding: 5px 14px 7px; border-radius: 999px; background: #2b1a3d; color: #fff; font-weight: 700; font-size: .8rem; line-height: 1.2; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
   .hunt-keeper:hover::after, .hunt-keeper:focus-visible::after { opacity: 1; transform: translateX(-50%); }
-  .hunt-door::after { content: attr(data-tip); position: absolute; left: 50%; bottom: 112%; transform: translateX(-50%) translateY(6px); padding: 7px 16px 9px; border-radius: 999px; background: #2b1a3d; color: #fff; font-family: inherit; font-weight: 800; font-size: .95rem; line-height: 1.2; white-space: nowrap; box-shadow: 0 6px 16px rgba(0, 0, 0, .35); opacity: 0; pointer-events: none; transition: opacity .12s, transform .12s; }
-  .hunt-door:hover::after, .hunt-door:focus-visible::after { opacity: 1; transform: translateX(-50%); }
+  .hunt-door::after { content: attr(data-tip); position: absolute; left: 0; bottom: 112%; transform: translateY(6px); width: max-content; max-width: min(240px, 70vw); text-align: left; padding: 7px 16px 9px; border-radius: 999px; background: #2b1a3d; color: #fff; font-family: inherit; font-weight: 800; font-size: .95rem; line-height: 1.2; white-space: normal; box-shadow: 0 6px 16px rgba(0, 0, 0, .35); opacity: 0; pointer-events: none; transition: opacity .12s, transform .12s; }
+  .hunt-door:hover::after, .hunt-door:focus-visible::after { opacity: 1; transform: none; }
   .hunt-door svg { width: 100%; height: 100%; display: block; }
-  .hunt-door img { display: block; width: 100%; height: auto; pointer-events: none; user-select: none; -webkit-user-drag: none; }
   .hunt-door:hover, .hunt-door:focus-visible { opacity: 1; } .hunt-door:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
+  .hunt-door.beckon { opacity: 1; animation: huntBeckon 1.1s ease-in-out 4; }
+  @keyframes huntBeckon { 0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 210, 120, .6)); scale: 1; } 50% { filter: drop-shadow(0 0 22px rgba(255, 210, 120, 1)); scale: 1.08; } }
   .hunt-door.knock { animation: huntShake .5s; } .hunt-door.open { opacity: 1; transform: perspective(200px) rotateY(-55deg); filter: drop-shadow(8px 0 14px rgba(255, 210, 120, .95)); transition: transform .8s, filter .8s; }
 
   /* ---------- the forbidden archives (dark mahogany, antique gold, old paper, candlelight) ---------- */
@@ -1871,7 +1869,7 @@
   html.on-arch #mood-bg, html.on-arch #mood-fx, html.on-quarters #mood-bg, html.on-quarters #mood-fx { display: none !important; }
   html.on-arch::after, html.on-quarters::after { content: ""; position: fixed; inset: 0; z-index: 4; pointer-events: none; background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, .72) 100%), radial-gradient(circle at 16% 10%, rgba(255, 170, 60, .2), transparent 38%), radial-gradient(circle at 86% 18%, rgba(255, 170, 60, .15), transparent 34%); animation: huntFlick 3.6s ease-in-out infinite; }
   @keyframes huntFlick { 0%, 100% { opacity: .9; } 18% { opacity: 1; } 34% { opacity: .82; } 52% { opacity: 1; } 70% { opacity: .88; } }
-  section.ar-room, .q, .ar-locked { color: #ecdcb0; font-family: "Special Elite", "Courier New", monospace; text-align: center; }
+  .ar, .q, .ar-locked { color: #ecdcb0; font-family: "Special Elite", "Courier New", monospace; text-align: center; }
   .ar-locked { padding-top: 12vh; } .ar-locked h1 { font-family: "IM Fell English SC", Georgia, serif; font-weight: 400; color: #d8b45a; } .ar a, .q a, .ar-locked a { color: #d8b45a; }
   .ar-eyebrow { margin: 0; font-size: .75rem; letter-spacing: .3em; text-transform: uppercase; color: #b99350; }
   .ar-title, .q-title { margin: 6px 0 22px; font-family: "IM Fell English SC", "Cormorant Garamond", Georgia, serif; font-weight: 400; font-size: clamp(2rem, 6vw, 3.4rem); letter-spacing: .06em; color: #e2bd62; text-shadow: 0 2px 0 #3a1a08, 0 0 24px rgba(255, 180, 70, .4); }
@@ -1933,7 +1931,9 @@
   .q-bigcompass { width: 150px; margin: 14px auto 6px; } .q-bigcompass svg { width: 100%; display: block; }
   .ar-modal .hunt-title, .ar-modal .hunt-sub { color: #ecdcb0; } .ar-modal .q-secret { font: 700 1.1rem/1.5 "Special Elite", monospace; color: #3a2a14; background: #ecdcb0; padding: 18px; border-radius: 8px; margin: 12px 0; }
   .ar-modal .hunt-sheet:has(.q-secret), .ar-modal .hunt-sheet:has(.q-bigcompass) { background: #2b1609; border: 3px solid #c9a24a; padding: 24px; }
-  @media (max-width: 640px) { html { --dw: min(120px, 30vh); } .hunt-door { left: 2vw; } .hunt-keeper { left: calc(2vw + var(--dw) + 6px); } #hunt-hint { right: 76px; bottom: 76px; font-size: .9rem; padding: 8px 16px 10px; } .q-obj { min-width: 54px; } .ar-shelf { grid-template-columns: 1fr; } .ar-polaroids { grid-template-columns: repeat(2, 1fr); } #hunt-pouch { width: 54px; height: 54px; } #hunt-pouch svg { width: 36px; height: 36px; } .q-obj { transform: translate(-50%, -50%); } }
+  .hunt-sheet { max-height: 92vh; max-height: 92dvh; }
+  .hunt-btn { min-height: 44px; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  @media (max-width: 640px) { .hunt-door { bottom: max(15vh, 150px); } .hunt-keeper { bottom: max(15vh, 150px); } .hunt-sheet { padding: 18px 16px 20px; border-radius: 20px; } .hunt-modal { padding: 10px; } .hunt-toast { bottom: 80px; font-size: .8rem; } .hunt-chests { gap: 6px; } .hunt-door { width: 46px; height: 66px; left: 6vw; } .hunt-keeper { left: calc(6vw + 56px); width: 50px; height: 38px; } .hunt-egg.easy { width: 96px; height: 96px; } .hunt-egg.float { right: 2vw; } #hunt-hint { bottom: 132px; } .q-obj { min-width: 54px; } .ar-shelf { grid-template-columns: 1fr; } .ar-polaroids { grid-template-columns: repeat(2, 1fr); } #hunt-pouch { width: 54px; height: 54px; } #hunt-pouch svg { width: 36px; height: 36px; } .q-obj { transform: translate(-50%, -50%); } }
   @media (prefers-reduced-motion: reduce) { html.on-arch::after, html.on-quarters::after, .hunt-egg.shake, .hunt-sheet, .hunt-iconrow .hunt-icon { animation: none; } .hunt-toast, .hunt-egg, .q-obj { transition: none; } }
 
   /* ---------- goals: a fuller page ---------- */
@@ -6355,7 +6355,6 @@ const pages = {
     <h1>Work</h1>
     <a class="work-logo-link" href="https://thatch.com/" target="_blank" rel="noopener" aria-label="Thatch (opens thatch.com in a new tab)"><img class="work-logo" src="${(window.__P||{})['photos/thatch-logo.png'] || 'photos/thatch-logo.png'}" alt="Thatch"></a>
     <p class="lead">I work at Thatch Health in Austin, Texas. I love that I get to be a part of building a healthcare system people love.</p>
-    <p class="work-li-wrap"><a class="work-li" href="https://www.linkedin.com/in/htnnah" target="_blank" rel="noopener" aria-label="Hannah on LinkedIn (opens in a new tab)"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Find me on LinkedIn</a></p>
 
     <section class="job-matters">
       <p class="jm-big">Health care can be stressful. I get to make that journey a little easier for someone, and <mark>that matters to me</mark>.</p>
@@ -6384,7 +6383,7 @@ const HUNT = (() => {
   const root = document.documentElement;
   const rm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
   const rnd = (a, b) => a + Math.random() * (b - a), pick = a => a[Math.floor(Math.random() * a.length)];
-  const KEY = 'htn-treasure-v4', OLD_KEY = 'htn-treasure-v3', OLDER_KEY = 'htn-treasure-v2';
+  const KEY = 'htn-treasure-v4', OLD_KEY = 'htn-treasure-v3';
   const SVG = (vb, body) => `<svg viewBox="${vb}" aria-hidden="true">${body}</svg>`;
 
   /* ===== the three symbols ===== */
@@ -6404,11 +6403,14 @@ const HUNT = (() => {
   const CHEST = SVG('0 0 40 40', '<rect x="5" y="17" width="30" height="17" rx="2.5" fill="#9a5a28" stroke="#4a2a12" stroke-width="1.6"/><path d="M5 19 Q5 8 20 8 Q35 8 35 19Z" fill="#b87333" stroke="#4a2a12" stroke-width="1.6"/><rect x="11" y="9" width="3.5" height="25" fill="#e0b040" opacity=".9"/><rect x="25.5" y="9" width="3.5" height="25" fill="#e0b040" opacity=".9"/><rect x="17" y="17" width="6" height="7" rx="1.2" fill="#ffd66b" stroke="#4a2a12" stroke-width="1.2"/><circle cx="20" cy="20.5" r="1" fill="#4a2a12"/>');
   const CHEST_OPEN = SVG('0 0 40 40', '<rect x="5" y="19" width="30" height="16" rx="2.5" fill="#9a5a28" stroke="#4a2a12" stroke-width="1.6"/><ellipse cx="20" cy="19" rx="13" ry="4" fill="#ffd66b"/><circle cx="13" cy="17" r="3" fill="#ffc83d" stroke="#a8741a"/><circle cx="21" cy="15" r="3.2" fill="#ffd66b" stroke="#a8741a"/><circle cx="28" cy="17.5" r="2.8" fill="#ffc83d" stroke="#a8741a"/><g transform="rotate(-62 6 19)"><path d="M5 19 Q5 6 20 6 Q35 6 35 19Z" fill="#b87333" stroke="#4a2a12" stroke-width="1.6"/><rect x="11" y="7" width="3.5" height="12" fill="#e0b040"/><rect x="25.5" y="7" width="3.5" height="12" fill="#e0b040"/></g>');
 
-  /* ===== five chests: four are out in the open on the About, Loves, Goals and Work pages, and the key chest is in the aquarium ===== */
+  /* ===== the nine chests: eight are out in the open, the ninth (the key) is hiding at the very bottom of a travel page ===== */
+  const TOLL = 50;   // gold coins the keeper of the door wants
   const CHESTS = [
-    { id: 'ch-about', route: '/about', give: 'shell', name: 'About page', spot: 'right: 1vw; top: 50vh;', hint: "It's where you'll learn all about Hannah." },
-    { id: 'ch-croatia', route: '/loves/travel/croatia', give: 'crown', name: 'Croatia page', spot: 'right: 1vw; top: 50vh;', hint: "It's somewhere in Croatia." },
-    { id: 'ch-key', route: '/playground/aquarium', give: 'key', hard: true, name: 'Aquarium', hint: 'Where fish call home.' }
+    { id: 'c1', route: '/about', give: 'coins', coins: 25, top: 34, name: 'About page', hint: 'Look on the page where I introduce myself. The chest is floating on the right.' },
+    { id: 'c2', route: '/loves', give: 'coins', coins: 25, top: 42, name: 'Loves page', hint: 'Check the page full of everything I love. The chest is floating on the right.' },
+    { id: 'c3', route: '/goals', give: 'shell', top: 50, name: 'Goals page', hint: 'Head to my goals. The chest is floating on the right.' },
+    { id: 'c4', route: '/work', give: 'crown', top: 40, name: 'Work page', hint: 'Where I clock in: the work page. The chest is floating on the right.' },
+    { id: 'c5', route: '/playground/aquarium', give: 'key', hard: true, name: 'Aquarium', hint: 'The key is in the water. Go to the Playground, open the Aquarium, and look along the sand.' }
   ];
 
   /* ===== what the visitor has found: saved in their own browser ===== */
@@ -6424,7 +6426,7 @@ const HUNT = (() => {
     return b;
   };
   let st = blank();
-  try { const cur = localStorage.getItem(KEY); if (cur) st = clean(JSON.parse(cur)); else { const o = JSON.parse(localStorage.getItem(OLD_KEY)) || JSON.parse(localStorage.getItem(OLDER_KEY)); if (o) { st.unlocked = !!o.unlocked; st.quarters = !!o.quarters; st.folders = clean({ folders: o.folders }).folders; } } } catch (_) { st = blank(); }
+  try { const cur = localStorage.getItem(KEY); if (cur) st = clean(JSON.parse(cur)); else { const o = JSON.parse(localStorage.getItem(OLD_KEY)); if (o) { st.unlocked = !!o.unlocked; st.quarters = !!o.quarters; st.noNote = !!o.noNote; st.folders = clean({ folders: o.folders }).folders; } } } catch (_) { st = blank(); }
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (_) {} syncPouch(); };
   const symbols = () => NEED.filter(k => st.inv[k]).length;
 
@@ -6433,9 +6435,9 @@ const HUNT = (() => {
   let toastT = 0;
   const toast = t => { let el = ui.querySelector('.hunt-toast'); if (!el) { el = document.createElement('div'); el.className = 'hunt-toast'; el.setAttribute('role', 'status'); ui.appendChild(el); } el.textContent = t; el.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('on'), 4200); };
   let openM = null;
-  const closeModal = () => { if (openM) { openM.remove(); openM = null; } };
+  const closeModal = (run = true) => { if (openM) { const m = openM, f = m._onClose; m.remove(); openM = null; if (run && f) f(); } };
   const modal = (html, cls = '') => {
-    closeModal(); const m = document.createElement('div'); m.className = 'hunt-modal ' + cls; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true');
+    closeModal(false); const m = document.createElement('div'); m.className = 'hunt-modal ' + cls; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true');
     m.innerHTML = `<div class="hunt-sheet">${html}</div>`;
     m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) closeModal(); });
     ui.appendChild(m); openM = m; const f = m.querySelector('[data-close]'); if (f) f.focus({ preventScroll: true }); m.querySelector('.hunt-sheet').scrollTop = 0; return m;
@@ -6444,9 +6446,8 @@ const HUNT = (() => {
   const pouch = document.createElement('button'); pouch.id = 'hunt-pouch'; pouch.type = 'button'; pouch.hidden = true; pouch.setAttribute('aria-label', 'Open your treasure pouch');
   pouch.innerHTML = SVG('0 0 48 48', '<path d="M16 8 Q24 14 32 8 L30 14 Q24 18 18 14Z" fill="#c9a24a" stroke="#6b4a1a" stroke-width="1.6" stroke-linejoin="round"/><path d="M17 15 C6 22 4 34 8 40 C14 45 34 45 40 40 C44 34 42 22 31 15 Q24 19 17 15Z" fill="#9a5a28" stroke="#4a2a12" stroke-width="2"/><circle cx="24" cy="31" r="5" fill="#ffd66b" stroke="#6b4a1a" stroke-width="1.6"/>') + '<i class="hunt-count"></i>';
   ui.appendChild(pouch);
-  const hintBtn = document.createElement('button'); hintBtn.id = 'hunt-hint'; hintBtn.type = 'button'; hintBtn.hidden = true; hintBtn.textContent = 'Need a hint?'; hintBtn.setAttribute('aria-label', 'Get a hint for the treasure hunt');
-  ui.appendChild(hintBtn);
-  function syncPouch() { const tb = root.dataset.mood === 'tropical'; hintBtn.hidden = !tb; pouch.hidden = !(tb && (pouch.dataset.force || st.chests.length > 0 || st.unlocked)); pouch.querySelector('.hunt-count').textContent = st.chests.length + '/' + CHESTS.length; }
+  const hintBtn = document.createElement('button'); hintBtn.id = 'hunt-hint'; hintBtn.type = 'button'; hintBtn.textContent = 'Hint?'; hintBtn.hidden = true; hintBtn.setAttribute('aria-label', 'Get a hint about where the next treasure chest is'); ui.appendChild(hintBtn); hintBtn.addEventListener('click', () => showHint());
+  function syncPouch() { const tb = root.dataset.mood === 'tropical'; pouch.hidden = !tb; hintBtn.hidden = !tb; pouch.querySelector('.hunt-count').textContent = st.chests.length + '/' + CHESTS.length; }
   syncPouch();
 
   /* ===== opening a chest: it shakes, coins fly out, and its treasure is revealed ===== */
@@ -6458,13 +6459,30 @@ const HUNT = (() => {
       c.animate([{ transform: 'translate(0,0) scale(.6) rotate(0)', opacity: 1 }, { transform: `translate(${dx * .6}px,${-up}px) scale(1) rotate(${rnd(-200, 200)}deg)`, opacity: 1, offset: .45 }, { transform: `translate(${dx}px,${fall}px) scale(.9) rotate(${rnd(-400, 400)}deg)`, opacity: 0 }], { duration: rnd(900, 1400), easing: 'cubic-bezier(.2,.7,.4,1)' }).finished.then(() => c.remove(), () => c.remove());
     }
   };
+  let beckonNext = false, beckonUntil = 0;
+  const ready = () => st.inv.key && st.coins >= TOLL && !st.unlocked;
+  function goToDoor() {
+    if (root.dataset.mood !== 'tropical') return;
+    beckonNext = true; beckonUntil = Date.now() + 6000;
+    if (routeNow() === '/') { placeDoor(); } else { location.hash = '#/'; }
+    window.scrollTo(0, 0);
+  }
+  const LAST_HINT = 'The last chest, with the key, is the sneakiest. It is hiding somewhere in the water. Open your pouch and ask for a hint if you get stuck.';
   function reveal(c) {
     if (!st.chests.includes(c.id)) st.chests.push(c.id);
-    const k = c.give; st.inv[k] = 1; save();
-    const have = symbols();
-    const line = k === 'key' ? 'You found the key! Take it to the wooden door on the home page.' : (st.inv.shell && st.inv.crown) ? 'You have the shell and the crown! The last chest has appeared. Tap Need a hint? if you want help.' : 'One down! Tap Need a hint? if you want help finding the next one.';
-    modal(`<p class="hunt-found">You opened a treasure chest!</p><div class="hunt-iconrow"><span class="hunt-icon" style="--c:${COLORS[k]}">${ICON[k]}</span></div><p class="hunt-tier" style="color:${COLORS[k]}">${k === 'key' ? 'THE KEY' : 'SYMBOL ' + have + ' OF 2'}</p><h2 class="hunt-name">${ITEMS[k].n}</h2><p class="hunt-flavor">${ITEMS[k].t}</p><p class="hunt-added">${line}</p><p class="hunt-sub">Chests opened: ${st.chests.length} of ${CHESTS.length}</p><button type="button" class="hunt-btn" data-close>Nice!</button>`, k === 'key' ? 'legendary' : '');
-    if (k === 'key') setTimeout(() => { coins(innerWidth / 2, innerHeight / 2, ['#ffd66b', '#ffb927'], 36); }, 200);
+    let k = c.give, n = 0, title, text;
+    if (k === 'coins') { n = c.coins || 25; st.coins += n; title = `${n} gold coins`; text = `A little pile of gold. Keep it safe, because the keeper of the door will want ${TOLL} coins.`; }
+    else { st.inv[k] = 1; title = ITEMS[k].n; text = ITEMS[k].t; }
+    save();
+    const have = symbols(), left = NEED.filter(x => !st.inv[x]).map(x => x === 'key' ? 'the key (the very last one)' : 'the ' + x);
+    let hint; const coinLine = `Gold coins: ${st.coins} of ${TOLL} for the doorkeeper.`;
+    if (ready()) hint = 'You have the key and ' + TOLL + ' gold coins. That is everything the doorkeeper wants! Tap the button and we will take you to the door.';
+    else if (k === 'key') hint = 'You found the key! Take it to the tiny door on the home page' + (st.coins >= TOLL ? ', and pay the doorkeeper your ' + TOLL + ' coins.' : ', along with ' + TOLL + ' gold coins for the doorkeeper. ' + coinLine);
+    else if (st.inv.shell && st.inv.crown && !st.inv.key) hint = 'The shell and the crown are yours! ' + LAST_HINT + ' ' + coinLine;
+    else hint = 'Still looking for: ' + left.join(', ') + '. ' + coinLine;
+    modal(`<p class="hunt-found">You opened a treasure chest!</p><div class="hunt-iconrow"><span class="hunt-icon" style="--c:${COLORS[k]}">${ICON[k]}</span></div><p class="hunt-tier" style="color:${k === 'coins' ? '#c8901a' : COLORS[k]}">${k === 'coins' ? 'GOLD' : (k === 'key' ? 'THE KEY' : 'SYMBOL ' + have + ' OF 2')}</p><h2 class="hunt-name">${title}</h2><p class="hunt-flavor">${text}</p><p class="hunt-added">${hint}</p><p class="hunt-sub">Chests opened: ${st.chests.length} of ${CHESTS.length}</p><button type="button" class="hunt-btn" data-close>${ready() ? 'Take me to the door!' : 'Nice!'}</button>`, (k === 'key' || ready()) ? 'legendary' : '');
+    if (ready()) { const mm = openM; if (mm) mm._onClose = goToDoor; }
+    if (k === 'key') setTimeout(() => { const r = pouch.getBoundingClientRect(); coins(innerWidth / 2, innerHeight / 2, ['#ffd66b', '#ffb927'], 36); }, 200);
   }
   function openChest(btn) {
     const c = CHESTS.find(x => x.id === btn.dataset.id); if (!c || btn.dataset.busy) return; btn.dataset.busy = '1';
@@ -6479,16 +6497,17 @@ const HUNT = (() => {
   function place() {
     document.querySelectorAll('.hunt-egg').forEach(e => e.remove());
     const v = document.getElementById('view'); if (root.dataset.mood !== 'tropical' || !v) return;
-    const r = routeNow(), here = CHESTS.filter(c => c.route === r && !st.chests.includes(c.id) && (c.give !== 'key' || (st.inv.shell && st.inv.crown)));
-    here.forEach(c => {
-      const b = document.createElement('button'); b.type = 'button'; b.dataset.id = c.id; b.className = 'hunt-egg ' + (c.hard ? 'hard in-tank' : 'spot');
-      b.setAttribute('aria-label', 'A treasure chest. Open it.'); b.innerHTML = CHEST;
-      if (c.hard) (v.querySelector('.aq-tank') || v).appendChild(b); else { b.style.cssText = c.spot || ''; ui.appendChild(b); }
+    const r = routeNow();
+    CHESTS.filter(c => c.route === r && !st.chests.includes(c.id) && (c.give !== 'key' || (st.inv.shell && st.inv.crown))).forEach(c => {
+      const b = document.createElement('button'); b.type = 'button'; b.dataset.id = c.id; b.className = 'hunt-egg ' + (c.hard ? 'hard in-tank' : 'easy float');
+      if (!c.hard) b.style.top = c.top + 'vh';
+      b.setAttribute('aria-label', 'A hidden treasure chest. Open it.'); b.innerHTML = CHEST;
+      (c.hard ? (v.querySelector('.aq-tank') || v) : ui).appendChild(b);
     });
   }
   let lastMood = null;
   new MutationObserver(() => {
-    const mood = root.dataset.mood || null; if (mood === lastMood) return; lastMood = mood; if (mood !== 'tropical') { closeModal(); const t = ui.querySelector('.hunt-toast'); if (t) t.classList.remove('on'); } place(); placeDoor(); syncPouch();
+    const mood = root.dataset.mood || null; if (mood === lastMood) return; lastMood = mood; if (mood !== 'tropical') { if (openM && !openM.classList.contains('ar-modal')) closeModal(false); const tt = ui.querySelector('.hunt-toast'); if (tt) tt.classList.remove('on'); beckonNext = false; } place(); placeDoor(); syncPouch();
     if (mood === 'tropical' && !st.noNote) setTimeout(() => huntNote(), 700);
   }).observe(root, { attributes: true, attributeFilter: ['data-mood'] });
 
@@ -6496,34 +6515,35 @@ const HUNT = (() => {
   function huntNote(force) {
     if (!force && root.dataset.mood !== 'tropical') return;
     const m = modal(`<div class="hunt-iconrow"><span class="hunt-icon">${CHEST}</span></div><h2 class="hunt-name">There is a treasure hunt!</h2>
-      <p class="hunt-flavor">Find <b>3 hidden treasure chests</b>: a <b>shell</b>, a <b>crown</b>, and a <b>key</b>. Click a chest to open it. With the key, you can open the secret door on the home page.</p>
-      <button type="button" class="hunt-btn" data-close>Let's hunt</button><button type="button" class="hunt-btn alt" data-act="hint">Need a hint?</button>${force ? '' : '<button type="button" class="hunt-btn alt" data-act="nonote">Do not show this again</button>'}`, 'hunt-note');
+      <ol class="hunt-steps"><li><b>Five treasure chests</b> are hiding in this mood: on the <b>About, Loves, Goals and Work</b> pages, and in the <b>Aquarium</b>. They are big, so you will spot them.</li><li><b>Click a chest.</b> It shakes, opens, and coins fly out.</li><li>Two chests hold <b>gold coins</b>. The little crab who keeps the door wants <b>50 coins</b> to let you in.</li><li>Two more hold the <b>seashell</b> and the <b>gold crown</b>. Find them both and the last chest appears.</li><li>The last chest holds the <b>key</b>, and it is the sneakiest one: it is hiding in the aquarium.</li><li>With the key and 50 coins, go to the <b>tiny door on the home page</b>. It leads somewhere secret.</li></ol><p class="hunt-sub">Stuck? Tap <b>Hint?</b> at the bottom right any time.</p>
+      <p class="hunt-sub">Your treasure goes in the little bag at the bottom right, and it is saved in your browser. Happy hunting!</p>
+      <button type="button" class="hunt-btn" data-close>Let's hunt</button><button type="button" class="hunt-btn alt" data-act="hint">I want a hint</button>${force ? '' : '<button type="button" class="hunt-btn alt" data-act="nonote">Do not show this again</button>'}`, 'hunt-note');
     m.addEventListener('click', e => { if (e.target.closest('[data-act="nonote"]')) { st.noNote = true; save(); closeModal(); } else if (e.target.closest('[data-act="hint"]')) showHint(); });
   }
 
   /* ===== an optional hint for the next chest ===== */
   function showHint() {
-    const locked = !(st.inv.shell && st.inv.crown);
-    const m = modal(`<h2 class="hunt-name">Need a hint?</h2><p class="hunt-sub">Tap a hint to see it.</p>
-      <ul class="hunt-hints">${CHESTS.map((c, i) => `<li><button type="button" class="hunt-btn alt" data-hint="${i}" aria-expanded="false">Hint ${i + 1}${st.chests.includes(c.id) ? ' (found)' : ''}</button><p class="hunt-hinttext" hidden>${c.hint}${c.give === 'key' && locked ? ' This chest only appears after you find the shell and the crown.' : ''}</p></li>`).join('')}</ul>
-      <button type="button" class="hunt-btn" data-close>Close</button>`);
-    m.addEventListener('click', e => { const b = e.target.closest('[data-hint]'); if (!b) return; const t = b.nextElementSibling; t.hidden = !t.hidden; b.setAttribute('aria-expanded', String(!t.hidden)); });
+    const order = ['shell', 'crown', 'key', 'coins'];
+    const next = CHESTS.filter(c => !st.chests.includes(c.id) && (c.give !== 'key' || (st.inv.shell && st.inv.crown))).sort((a, b) => order.indexOf(a.give) - order.indexOf(b.give))[0];
+    const m = modal(next
+      ? `<div class="hunt-iconrow"><span class="hunt-icon">${CHEST}</span></div><h2 class="hunt-name">A little hint</h2><p class="hunt-flavor">${next.hint}</p><p class="hunt-sub">${next.give === 'coins' ? 'This one only has gold coins.' : 'This one holds a symbol!'}</p><button type="button" class="hunt-btn" data-go="${next.route}">Take me there</button><button type="button" class="hunt-btn alt" data-close>Thanks!</button>`
+      : `<h2 class="hunt-name">Nothing left to find!</h2><p class="hunt-flavor">You opened every chest. The only thing left is the door.</p><button type="button" class="hunt-btn" data-close>Close</button>`);
+    m.addEventListener('click', e => { const g = e.target.closest('[data-go]'); if (g) { closeModal(); location.hash = '#' + g.dataset.go; } });
   }
 
   /* ===== the pouch ===== */
   function openPouch() {
     let taps = 0;
-    const m = modal(`<h2 class="hunt-title" id="hunt-ptitle">Treasure pouch</h2><p class="hunt-sub">Chests opened: ${st.chests.length} of ${CHESTS.length}</p>
+    const m = modal(`<h2 class="hunt-title" id="hunt-ptitle">Treasure pouch</h2><p class="hunt-sub">Chests opened: ${st.chests.length} of ${CHESTS.length} &middot; Gold coins: ${st.coins} of ${TOLL} for the doorkeeper</p>
       <ul class="hunt-grid">${NEED.map((k, i) => `<li class="hunt-slot${st.inv[k] ? '' : ' empty'}" style="--c:${COLORS[k]}"><span class="hunt-icon">${ICON[k]}</span><b>${st.inv[k] ? ITEMS[k].n : '???'}</b><em>${i === 2 ? 'last of all' : 'symbol ' + (i + 1)}</em><i>${st.inv[k] ? 'found' : 'not found'}</i></li>`).join('')}</ul>
-      <ul class="hunt-list" aria-label="Chests">${CHESTS.map((c, i) => { const f = st.chests.includes(c.id); return `<li class="${f ? 'got' : ''}"><span class="hunt-check" aria-hidden="true">${f ? '&#10003;' : ''}</span><b>${f ? c.name : 'Chest ' + (i + 1)}</b><em>${f ? ITEMS[c.give].n : 'not found yet'}</em></li>`; }).join('')}</ul>
-      ${st.unlocked ? '<a class="hunt-btn" href="#/archives" data-close>Visit the forbidden archives</a>' : st.inv.key ? `<p class="hunt-sub">You have the key! Take it to the wooden door on the home page.</p>` : ''}
-
-      <button type="button" class="hunt-btn alt" data-act="hint">Need a hint?</button><button type="button" class="hunt-btn alt" data-act="how">How does this work?</button>
+      <ul class="hunt-list" aria-label="Chests">${CHESTS.map((c, i) => { const f = st.chests.includes(c.id); return `<li class="${f ? 'got' : ''}"><span class="hunt-check" aria-hidden="true">${f ? '&#10003;' : ''}</span><b>${f ? c.name : 'Chest ' + (i + 1)}</b><em>${f ? (c.give === 'coins' ? 'gold coins' : ITEMS[c.give].n) : 'not found yet'}</em></li>`; }).join('')}</ul>
+      ${st.unlocked ? '<a class="hunt-btn" href="#/archives" data-close>Visit the forbidden archives</a>' : st.inv.key ? `<p class="hunt-sub">You have the key! ${st.coins >= TOLL ? 'Take it to the tiny door on the home page and pay the doorkeeper.' : 'Find ' + TOLL + ' gold coins for the doorkeeper, then use the tiny door on the home page.'}</p>` : (st.inv.shell && st.inv.crown) ? `<p class="hunt-sub">${LAST_HINT}</p>` : ''}
+      <button type="button" class="hunt-btn alt" data-act="hint">Give me a hint</button><button type="button" class="hunt-btn alt" data-act="how">How does this work?</button>
       <details class="hunt-save"><summary>Save, move or restart</summary><p class="hunt-sub">Your treasure is saved in this browser automatically. To move it to another device, copy this code and paste it there.</p><textarea readonly rows="3" class="hunt-code" aria-label="Your save code"></textarea><button type="button" class="hunt-btn alt" data-act="copy">Copy code</button><textarea rows="2" class="hunt-code" placeholder="Paste a code here" aria-label="Paste a save code"></textarea><button type="button" class="hunt-btn alt" data-act="load">Load code</button><button type="button" class="hunt-btn alt" data-act="again">Hide the chests again</button><p class="hunt-sub hunt-msg" aria-live="polite"></p></details>
       <button type="button" class="hunt-btn" data-close>Close</button>`);
     const [mine, theirs] = m.querySelectorAll('.hunt-code'), msg = m.querySelector('.hunt-msg');
     try { mine.value = btoa(unescape(encodeURIComponent(JSON.stringify(st)))); } catch (_) {}
-    m.querySelector('#hunt-ptitle').addEventListener('click', () => { if (++taps >= 7) { taps = 0; NEED.forEach(k => { st.inv[k] = 1; }); save(); closeModal(); toast('A little voice whispers: the shell, the crown and the key just appeared.'); setTimeout(openPouch, 300); } });
+    m.querySelector('#hunt-ptitle').addEventListener('click', () => { if (++taps >= 7) { taps = 0; NEED.forEach(k => { st.inv[k] = 1; }); st.coins = Math.max(st.coins, TOLL); save(); closeModal(); toast('A little voice whispers: the shell, the crown, the key and 50 coins just appeared.'); setTimeout(openPouch, 300); } });
     m.addEventListener('click', e => {
       const a = e.target.closest('[data-act]'); if (!a) return;
       if (a.dataset.act === 'how') huntNote(true);
@@ -6534,20 +6554,20 @@ const HUNT = (() => {
     });
   }
   pouch.addEventListener('click', openPouch);
-  hintBtn.addEventListener('click', showHint);
-  let typed = ''; addEventListener('keydown', e => { if (/^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || ''))) return; typed = (typed + e.key.toLowerCase()).slice(-8); if (typed === 'treasure' && root.dataset.mood === 'tropical') { pouch.dataset.force = '1'; syncPouch(); openPouch(); } });
+  let typed = ''; addEventListener('keydown', e => { if (/^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || ''))) return; typed = (typed + e.key.toLowerCase()).slice(-8); if (typed === 'treasure' && root.dataset.mood === 'tropical') openPouch(); });
 
   /* ===== the small locked door on the home page ===== */
-  const DOOR = '<img src="data:image/webp;base64,UklGRnY/AABXRUJQVlA4WAoAAAAQAAAAygAANQEAQUxQSJgJAAABCTcS2LbNAeBG/P/DapBTx4j+TwCWto2R65mnE9SelxxQtSFJE09QtbAk72FhSz5BDbaF4CWn8EJkBCSRfo3OsZ3jDf6hHANJ3mDIOd6YZnyB7Ea4yWDctpEjy/13PWn38v0iYgKUA9gGNGWzNwBOvKT2hq7mjVu00dqg1T4jG/5CNkRWBy3e4FOyIVIwMhXJxkurpiJiiMF+R0zABFDDtv9sZL1pUg07Kna2PMO1za5t27aNT8e2bdvW2ra3Y9ZJjmamSZPf+RoRE+DJtm1Vemxba31OM/tMzFLIYTMzc5Q5uHOxs7DLzsBOwU6Kx/beMWZmdBSbrTV7YCxpL8deFIuICci4Wn232+22EreennY743mMYYit0Sdb7Pbr1y7vt70Jnn7qjx+9YY/7d+7875mni4uLq2qjFNIkZLnzHdZ0robnYT06DxxzsLr05sUTF3w3K8IiXdhUd2Gh0xTkIUfeX3Xt7NEjZ30hihiyW7bL14Yhb6Hq6oHfD16sEkihc3TuZqtFfEZ8J//49XgxTwSNuV3vnCDiWaw89fWnR8MAbM6wTiHEv3j1nmf+48aO4aGMvvcP/nYhrGJMamFbK5Qzcumrdw741co8qF9iFMp6+4tX9vjVKLX/cD8U2PfJ8zrVSeg9hodCXx2Zy6mKttWUNCh34xFjPRrVYPMnFohQck3OqIFmlbBO6CpA6dmCIa31KqDtNi0MVfTdxyqedUYTqGVlspNTNK7TjDDUM3Fs70QFM03qDFXlnG2tjFLlLwpCbY1N87SKpPVOEKG+jKPQqEBpc5sjPsVolI8etuawTHwAJkeq4ri2TobMjzcryn2Vfn9lFFouUetxmPg4gS7XzCgKk5Gth4wjZVcunvTxFocn32lpbE016AtulwciPJgvS2flBJtlYRWEtdk0kGu46PyJK1FrJH9r/0baKGIc2tMmSVaA2alTDC47AzINX91ziG81cmRnOxsRIaWggdyTMrUKwaYmQpb8tT/3G0ctHpAhAsgxQGF1qawiJOk5yDDwR9UB/9DNQ1kotiboV4DktQxkWPzWyfYbFqZD0St+C8cdt3w3pK/67rcpbzeC4lfYDfHW8p1cyYK//jTgqS5QQ0tafOlGdOYhsXDi65YPtYdKtpcVO6YbpPZ9Zby/H9TT03jZMAO7QuLgnqtL5kBVx9Evl44jIPGFb73boLbzzfnlUTAT0vq/DNzbHOp7739zPJiXQNqiI6PvhCo//fc4MG4JSxI5d+LKdqj0P52y08y8F1IGSvtOroFaj40pcuveDVL69s8dABUPnKyVl2sapBRujTJA1UtO8nJKmsdLomkBtb9yRUbMqGRIq1E98cRt+TTrD+pW76mRi2k+6Hthr0yYcZHY8QEyiHuuySPfi5izhigZUPVLjRz008XYWR6YLIeudtBYvF8vXcZkUNnXS7oRATJhaaZU7n6gs3eUROzEKKES5t8hTZM2oHTrCRop2JEiqdgp+VLYW4HW+aM1ErgZYrFjXbHT5ASJhSb9YtehC6it65sYq8QpoLc9JVbtMwnWbK4xNvrhIHjiCm9sCh0UQ8bUxFhohggkw+2xsbC3BtHv4WLQK0i1E66GpXgRU5Hn6BP2NqwwJTZ8VE8fDE5pCNNTiA2nB4E7NGuIqTXobvUyDcjTE47pb25Ad55waN68fimtQHlTd6ZermTSoWtavVqHaFfoqY+uLWhvbl+fTAfxuG7GeuQIxENrWz1a8NRrXFCXrhmon9yiLpONfGhmqCNbQ79cUx05AfrZ7XV4RPqlef6Ls4P+Bvd/GTP/B8Cj/Y9k4/+BbMN/XOoJ/Dm8+F8Xj2uI5alYR4dc/9elu2uEzxRglTxyqjkLrhzXKC3Pw4IYucsELnuNGylpWkC2EZxjzWseeGtZaL+KSDFjErRdpX+IYLbWQKuQn1yjn0+BxrnXxdDZX4xBNAVhgmDE0JiPMZgpB7BjMEFGoSQAx2DUYhhIKYzbmBSf/QWK4d7/yFGdMVIAxpyCBziF44EQT38h/PmfoAieWBHFKILpl0eTYv/Ke4lRn/lw8UgA9TKOEfh+uf2bCOjFUwTtpJx5awT0st1moNKUgRdaBq2ICNtuQRHQyiPIXhSCFhREir0YRbBotwhcUlQSLnbLQWS4kKKKHUSKLmNkoIIzWHQIUyGEeSFEB3H4V7EjuPn7QgYnp4pHBJszC45AvYRol7aJgLHQM2hFLQL1cnImg02xI/BUnv3hyOH2j48JqJcr3zhJwFO59DgRzGV/OgJcmjJYFBFKJUS7jAykhRGBXewIeEShvjAiQAVl0JOYS28ZuKAMVHoGHqW1DKbSFcE4JjFKy+D068s0Iti8uwPHDDhT7Ay2AqQQWiHI3jKwizJY3LQMRhnOoAuYk3AIDeDWnQxcbj+fweK5yxmo7LZBoAwmA3YGc2nKQAJEhrOLgtiEYILsCmKThB3EVEYIGxVnsG3APDKIsglwCgDzyCBKJ7ERYGfQCFIKYhiQMpgJ4jDI8dkjYGfwdBKP7YExMri+A+wMdi2IXghh0SEMA/OUgQvKYC6tPaLoGUwlxQZgZ9BVRgYCmKcQGOBfPw4BwHQ3A4PzWuf6ezJo/973nmR/NgND7gev0noGAEKkqIZjOP8Ocjx5V1cMiJaD6Y5BNGJsYKUgLHI0SkGYIKUkiNE4B9goBtOTGKwaKKOZViqn2aatwoLiN7XRKkKEYHd+yWBVBgQ/3sNeJVRNMGmMdfy3CVa1Ch8UyRqrMhy01/jPW5FWSbAwWq2cFfYq4KB9/9+sLgrkGgCbtkooRK7ZwG4dgaHZfrOKpZBci8/eWSUpi1xNhj//fRWCzwbOX8xgI8PVCxkI4KRnsNiUwUaAyFClK4NhYDiDuUgZGOAwZ6ByHBlEWUDKoEoPbEMQUUMo4QA7gorDAKQITAV7ATsCOG8Cm5aBPgpIITRgHhk0gKYMuoBty2CxKYPZQUiAnUEDOIwMRunKAPPyvfX043oxxCtZiS/G87tTL8Zh7F+00VYZALPXiL5ZnLbrHpOxjTSPhoSEwLTjj376+Us7JiPbSLKwbUkUBL7ky1Yd95sGA1UGvj2XyRyfevyTHdywG2bQGkNN2B7f/+9nTtEaklEZQJOQjf968cbNn3zzTWuo3D6ssX/KOa2EzQMNiLqgMbn1hrEwIKqpIkRBZLRNwoBAGGYXY492Ih7WCECA8WHeSYi6YEAs+9B38/E732r/n27OwC+//VgzksFjTBbA+L/fJ+C17OOfvYSRPdQkD5vDD+4B//0uD21ID1ZQOCC4NQAAcMEAnQEqywA2AT4pEIZCIaELfL7kDAFCWkAyQ7+Wa2MTJjzzQfXoyGtyHznGnY/zOhd/8B+F/6q/Hvxn/W+D/k2+Mfwf+Z9K/Iv1X/UHql9Zf5X+N9JPAP5g6jvuXwN9yjsP/A9Bf2t+/97z9O+tv2E/Yj4Bv1c9M/7x+w/mn+G+wl+a/2R92z/H/+//C9NP17/8/9r8Dn7C9EB7RH6ppQrdaUWf9rdljywFLuazHOjmA2T65nWHXt+V9sqemuHk+JT6G0GrbofLpLevNN4dUNTauDe62V8phVqfqKtJxQAtU6vCYQcPfqkVVsWxfnyWVndXUBcEcgbHUT7fdFwwNEVES78VbaKBAFXmR6OulImKvWZNsUjFFHDVB8iPAHWJIBTAcu9/E/7yyLfCAwEyH1FYkxEskAD2Vw56D+fEtvCYbaeRqF5mHknWLb+TIYRQiZ7D9DxP5JR+zdg4EhmnPYuKpzI8O5tFitRL5KDdVjHr/yRzeu/MCwvqWlnVuO93Lq27cg7ymiFLo0BcZxOS82uaHEn9K81Y45PXzKPI3myAtXev/f6Tf8BEKyrcb7TG5slob4DQAv602Ur3yadti4ATWp5lPbeEgs0CUetscB88sCCn+4Fv5TYgwnGHNFj18/gIA8Uf+pCwTKxgrRoasNx5B7bOnFSynFpXfBPYb6U3AjqvsDHIjMmyKzGqHHMOKdGqASqAeRyeuzU5NHEjWE+JpDw+gpnRCwVCup+nUWid3dkD3+4Z0rPtMei8jyFP4laCS81gXLJm0rKHJH9dvK35J/H+x6mQ6odYakkx0qfzo/SiApZpjvAnRNiTgjPWqAAOYNylRAg1u4rP/ytHbCsP/L+TrixyE9fGO7f/IuM/BJNmMiUmEVO+9i1Dp6fDkcIUQKLK39BMM9up676buob0Ie/tsIjjeS5lCNnG+hGcdjRcumWJ5ojIh+SqZ2KQ2RHWMdE5s7rnjhZvIGuXuq2dh3opRH+ZtGHnDlOYmjseqLZ2jJep1j9KJvoYp3Zm7LN0fv/aFtUEyN2DML4rwtLgcsg8j5+ZIie7aTcuGyrRKnmnHa281N6wehi8X60hLbTTzMa2Uq3o4auq6tQ179blLcGxqpu69WYER3r+aUSY/9W4TcTwUQ2TlrsFYM6T3zvOi/cudgwOzV2P42JVLXVDm07ROy/iclyOdMYRrODR0gsjNOfQQGp4Ilt4ZmQWa7Fo0OcjRh43ISFBTE1YkV2vp/voWG/ILu/r5/fOStRVPRqIUFwsOVl73jL4kj+YSv10tkUMyKyEjvx5cP/MZ8uKXWzB9EtNhL8LlFoE35qLsHDJihAyi7+3OWCmIJHYk6CLg80esyiCmkTHdm1rxLCkF0we++tutgEahpj/erZddmGP9eNGz02z5FbLSsB9LZ0+Ha52m3OAUsW42gqz00sZiJC396jnpA/OylM1MaGn+gLw1sb8h7V2CySP7cYUN3TUYDE7QrLdkj3Ud2qPM9s9ZbUN3FoyPBTI+NqudIa5Zanx+UWZ/aTO9r6/z/sCkcbiveDtAZ6KrO2otnFfmat8QltLIjEIGYiDsCGaujbtf6VXMxv4tJ3BiMPNz0Y5QbJn3XMRTYqKrl3cYQzHcICidpviQcF8V88BeQnD6E520ddO1ZDbTYIDC7rYe+L4ocbxS6Ih2Tt57jlKhZo9z61wpLAOjG35XUja+NJxAx3alvrBeh7ZeBulY1upXNQGRIcAJqaClQs5RME6DmvSdNcYH4QisE5PNDrAATtf3b0wY/TU8AhYT04Si9FS/iLw1wknSoK+XoAmF90MM6JzLD/EKZzAvK18OHwqw96fHosCyvwBUB/V2FRqVLFs56C+noMny6CF6ibgwrJc6sfGGJf6Qn0w6PGCcWWxLcFvmbg3fWIVJIGx6nw/iAX6lGo9Wv/uEu1TqyuakxDJQy2PaPXw/+ablrWtngEEQgyNwRVGDKCtcxtc9Iu3NrBeur8GPyxqKjI4UGb+lPIWELmS1l+pRKy4CcGEHnqun17ValcdNP08/GK9Ov7SxnGC5JB3zc3HnhtcoLvP3StMMdp3JFWQbsAA/v9gGAETqUk2ajwTn4l0zrNbTc7FmVWiBVbVDGmYvpovasdnTTZuHhZPo/7zJ6Tl6xD18cmcFWSJeGIGVEyY4h2OXj1Vt6Hc3NJ7kN7yREpr2pO4Lf6c5m/FJKT03a+jTzqsMJ2m9Cl6aMm8mSKpr2TsbemvPYr1JAxSWxA4VWXJHnaFYU5fxOFCRnSa8gPqkWjWTeFV34n/iexY/j6XPVlWVPd8X2hR0R1Qa2dA+0AFMt5bU/gvkEzobH1rb41eBdr0P2e8VezKGKDFZ5OF8mW2fIKRM5bt7LaNv4d2zpRtFHF9EvVcJnYsFkgb9gfD/KO/acC+zW9zpg/7zxNn4c73EF9Wk3+Sw0sKkMLleQ0/bCRmeCNUAznoHzkTDFbOj2Gio+SbSazCvctY4ow/QBcZORTFSXqqOqbwRIjVQFz0qptzTqI2KyE+/yqPk5pnafW1vW4BxNsBuNwID9lWcwbVHZo2UtpiTqmRqoWvLIFSWFrGZ8NHCWvSZi/5BLsQD93v4OaF6Y8X4zvVkB9VJW+KzVJ1nu44Lv/34F/9LdtXJXWQaIdApy2f7Vp/vkgjP29izXMM/48YPJVWoOcoTxYpO/UAAGr8lAhz5puBGXQ0L97V/Hlda7Fh41du0bEvNCqjnOM6XVWRBk+3VCMEBCswgSVuZ1jAgyy+rbIIQZ8gPWxr5JTNkmbQNR7cFWUxiJYMzft13TRLyR+5lYSkeDxZq7BlRWV5Jeaprd9Xrr0xHH/C2cxe4yxONo2vezhoiivJAfvriF4xBPAzxPUvkQieV+KgGK02OcGjEOnedZLf8HSceeT6a4NBhcSQYhT3JMdr1hQ5UPehmAFo9UTTne1pIqKyGLq6G1Bac8QhEuWZOxKEGjRKtXPdy2859nCSFA7tPfTcVLhy0bKm6Ed0/gqzX0tqkGcJJnS5fNQdvW6TFvwxSFB01CSb00WxLmlZnip2St6TKZVT9dnWAezjOYQnD+i98QiN8HE7PVxRDg4RfGunovWyxvfg4sEWsAtdfT/WHEhyno7nTu3Jdqnitli054gnFC+2NnW0CCs3xyxYH0fK5fd1Ihmr+Gta5IxC7OcyjKydbMZzMA0wAFeDr6srmGisiFbs24T+pV/CitU9jPBQU7zBH1Xwl1MxOSTqEgTw8YyCOTdxw3behnAdhs8HiwIcsg+t0mZcLwBJM1R3T+1dKJGeOsnqzB0BVvQhKfGJapmRt0zpH/ATOFKKCwvbrxR1jQ81E9OYZm+vsRj4dXa/xQ043YI2jV9vZ6b5qLGAjY06ZN9lgG1gLr6Md7iffwHQxux904ylubPmb2AfFYQblr+7wpgS1SboUERUbZYWBeo5g8i+P8+uZ4c05tMouDWBUKJ/mr9EF2nMgijACyKWT/wX3Xe3o8M9ntjbliMVOFyNr9L6TySB6KmjINJauH+s8L2OyICF8RnxO+zKP7KfFnUYldQX6ygaBES+AbywDzrPgBBVoNkZbJUzFH+YDk6nYf87zhnlsBKq4jsrlihf31Hvf47UxiSpAv6Ubixre6bIc7d2IYmj3fuSeK3R1fnz7SDDrazDfcBfS950bNZJIXl8iFpvkheUMwD8zyUp4VG0saZL+42sfQ2yFIYk84CyZxxLi4g7TMo0/mOsLV3Lz8BLI2JTNhFglbPDnLqmrCSHw+hGxylEIZM7GouGK7urr6GCBE3ibrFkIWcFVOHxtjDIzVhWwpgqVL1TdvWqEVkiqGh1JWB0PmgHwA1xicSMhLbKkMPsD3eRmMw/46AKemeChX75HRaalcGnbDMETKtLmWGaM54H/htlWnYg7wbCsGeN2Bfj10d+b3LuTdJnYI1FHS8n3/DrMLm1lxf3r0ccPFpE86PXYehMLqdnZQ5nrZEWKNgfUpoMJMYPhQBvZZIpmpsuHrNLuOtZDOtWYMXJduEodNe48LrutWCsMOy/Ss6uPNc7SXrok0kKxinUioYNw0mtCasMds5tfTd3jLukN5Bbl8SU5Ja8nu61JGIxldt+QVG25TsBXqi9JXiW2WyL1qpT7LDAPUY/F8wMr+fTiMkVa3qwO1aXSDkfViH6TIXejRVEjFwYdaDKaUwDMcpHjFWjhdg/yTxB3B5hmkwYgCJmGMDh+Uli80Q33VCswJYshnnndovUGdyA997qu55feB89FaUZVzZ2jv1MA9jpc2tLw1qcQPAVioS3VfNLR2yhZ4ksYJ4p9m5e+wwH/bgm8RX/vE7bbx8WpZWYaqOvteS2+RQ1Nc17zPuPkuiKw/qdLS7w/OxLaU9JQFnSoxb4oP51NLeiPb94YnnGaBzOsNd7bUNCJJ9wORzx+lhxeGdPCht3PEp2L6qKHm+9zDxosVvPiUDhpPfaCvcJJM9wdlEBu4BUWN9XWvVW/6jbsiE7s+bN5ZpeciFfzjidEjiBEoxCqSQlibcZhinLJoGqRMjYpPEmbKA+4tCFaaeWpuzPm4bcbUX8fo7CRWakIjyCuw9/jLH7PPOWUAweYXdGE/aOUPk6qHW1tnIuoepBToFet4B/mKl5bxYIrpD+/evnIomAOpHVYp5CZlagRnTFs8FuJKIk3vuky5np6PktcAMdbvlgel6s3m0cG3dQik8zJ4y5ex/Sm+mSsuK8IiDDXM42ozoyiwVe3cTVEt3QPOOEfTcPQGY8nQbJflm24gK2J7kiq22Yaa9igTpvuArGYAit2q0uIQuFaZJQv9NUXklvzkL76WDFLQ+5lBYGBoplqwB9trUEPu0KJaY88P9BUrrd+rnsok9DqWRnQDHVnoqoScHv0YiR4iK1bCvEXbtg2OeQwSNgSmUHxMQRhTr+XfgY1KXT1sXK7x3OuDrwpEfU7A9j4otusm243ok09f3RZ/FnPPzfHBpfcxLi6Inz0U+maSzo9rvWDb0hn4ZWf2Jm40WznMb52Y5fbmGxzvSGWpIIGdbUKfrYVjAT6mwfUCEnj8gvfbIbB9ec/43O9R2p15SnA7QhR8Uinw/0Z478R6lINVS22rYDv8TkwvASTO8rOp5WxvhD0XLTvPv2ogWHbGhnNcGyub3947pNOf/2xkd8xoAD4XiWplu1VV3d7HpMf7Vrp8cKGDljmGvOADlohP4E9OUsSEcLdHib9aFudf+hsjKVZuSWNiyQyCDPIFQ91oQZgxtD73C1UCRJubvcompWlJx9/KwVti6yxCm3FKbIfPOdrD32H/BrpnRZtf+zFpbR1AtFn5RQPjDCAoM8e55+hFJWK8ROduS50jqZGB0SwI/LH8Rp6LlWVW+7emT8ZAfOhZji11ieNIMIb4Eq70vYLq2w052CWP57xAIAn8eVxUlRjQNNmldeTjexTIG8qjfhORToFtY08uAFe7ItunBfDtjflrxKR9jTFP0rb0YW1N1swdTihoxoWipmKviKg8tvj1sCCuaxNqJaiEb8KZNkDbNGhLq+qSF/iZgAMhrFE4gz9lQDHBwQT0mquuhXNW0OKAoNzMy4I9Nd5wcjCUi9Aul2iVXjnHK5lWfX+YsjK8zW4ZOiSSvvjoFl8vc5c9QawRK/A5tx9Yzepz3RArlGmgR5rD3bL3K05dV4IlHw8jTMoVySiZKGk2qTvZRy6LNh7DTCPNHXQ/xVoi5/E6NmQccejdL8ug8RBrsF8FlYi621AZHvEPk4o8UdADwxfoQlgfEaZy3LsjZHoSAPN9pVcyKKnBTMtkXuAbZCxeEjhw5jaNvWSQ02RGerxFhCA9oS+QCBxKl/V9wvQIbOjrjpt2L6TBdi9zEUUGxHnkhCrlpOQd1krrJw2qu57zVsId65L3pF1Sz+nGSYES3p4D07XyGa9lRcSETolcdOdlfVg3DyuDj+w0KVwsnSBjffe8Ie15QaUFJhS0bU4VfskePdEtS6BnKpWazfX22PVcCNfhN/nRyOWaB2asFCcsky5im0RzDgnQ3o0VBLSm/bY5Hu+bcEtSLDPAeUvZLpjmGVr6KyOBWRn3orD6zANr0grsSVDLdyTaAYvpS2bOIRYxmm/aoK+v/xb5zNjHdYNoJjRMIyQe5qapJh1GYj2ovx+f8HSuydrv631Dbe61GSBDW+K/iha5wgKxupVH61dRES3N4CvJPQ7HOJCe/soIvPCR/Ux3AEC484lcVm+CZwg29bGVtupHi0sfIccvmyqoJ8YG0KRfT7cndncEYWr9y3pDl8b96IbXrd+WiHQgkVf2M/JTbFfKDCktjIcCOKtjtlpd+rq5/vxZ/MCTpQ43JTpVlu4NrnIzCb9gicqWWUOImY4BtmHmV2pXr0q1f7kCmgw/h7L12TIRR0FG+sH/TSXcXd8FDNO1fy3Jjsd2ChZpVUKQHUk2ih59WwBNSQpEfVxBEXxBdxj0I9UF8MZ8g+DEVryXO8x3rA/Nsa/xqwZFmkcIaUxOKWStjWJo85dbQWpb0qxq6AoCKczYe4EAXeeSA9DwSex5V6HScIPl5iu34xCeh3PfXNOVR7sxt5/6X4se4olqJHSHHKm7+8Y1xRTeEDhjS63/DN5EPYZWBhvIyBoE01KU1D7BSyPGQ8h8fatHDZ1vwDVStz7L34q1yffRQuIJxAkbnPK8R3ZG+XtYlus6zKYMTOVmcD93+xgtKvxlT/GU+pHyH4nxAsto4eRCY3sKpFuPEVFGG2EEnXSe12Puizqa70KAuKM3dLQ/PAG5U2n3AGCKzo1GS84R34B3ZMQ9zzd0fyO0JMMFuNhe9fph8HYRBdnol5TbzW+z6p+bVu2viR+I/C1A/iswdHDPe6v1n5bnnH9fVTepjw8k1zLuTZ78rBanL+pvyCgmOt7AtW5NcZJ9i5Qza1RD+oWW4rop3d01ryg2zoR3Yq49VykuakQ9tHTf2LZgv8Ax66sq9GKZvks8M2poVFZdOG1uIl4XankptD1CVwDBtMphL0vMVgw4HYHW8a5k6xem6kDAmTcxOkDoe91kpmOLy0Nmw6UwYCt575H/YNIMRfB441rrh/FBAqUuKJRN0ZZfS0CEWexJoxYPGVa8qQF+A8UoslZI8Fc9vVsSyD7I/52QWBVkIJ2wxJ7mRm1MrckaeNS/q+wa6VHNNtfuefD5+DAtP4JZex+y6M2Ot9REm+ipHLhJDqredfVSpWH7BSI/FhgXpngdo5Ir3hnm4L6s7BYBD+KPIx57r8zdb4K1Sjo1V+vsQhZ6o+MdQa6AED9e2zhbxmDjtV7cYH53gikDGdIW12LBIVWtSnwElVajLcs+ZPa4GlQ407NIg6iHQoTeZzzQUOd9W4653dHWtjfeV1eywQ0crCudD8AUWYoXPzaKMV0to2/+Wl91iuv2h6eDFV/D1GGLvouRfqm94KQ/jurbL8mTsWYYdGhX9RBCw+Zgz0MrqNIhGxeXfNYl5t+jICLomZvfkGkJAgjs2zjIp9WUhWpnjJO3SflvQZ+OI09ZSK4Wln8+yXnqZs8lZtIiTzVNv0dSLj5JVDfiW/+yDVmvYmJj6mV4d/sxHMPOmUOYjR4X3FpewA9P/SIxoQqBUs9wsq6NnDbcgvCI49p7Z2+vqmYuHkHHdu1ppk2S0QEnKMgKEGrsT156X4Eiz/KQkN57f47FvB0/GtUPoTyzZtmCXbmrQHyE9iDbntXc9RlmZcYUeqGCf9TKO+SXk7wJtEF13NmIeLcq6JG2JZzL1usm6sZwtw5S+ieDwbNrVz7PaQOzvDohlvzGHSqZUFMDfoVHtOvGkPJRPpptUTTzCm+1LdOokYZZ1Z0lu57TzIvFQPR8XMLyJZ0KyZo8IBr0EzWVHS9cRBYRuhSITibZzk+cSD0MH9bGdCBBZsIsVjMyjTZ7bpeuJVMsVZQ5ANbFHfPKVS9eoQ5QS+cu2QC0SyMzuchBIJyNGoaR/aus9E22NFGnwsDl5wCjGNYJiPgtmqpG3RThYRiYrMHA2D+dPvyOr1YtXNvekgdo6egXR51xGuU8oYF9KukaUttdZy/UbaRAMTr6HXupo/ymYv6aFegbyYRDVkEbUelURViPnRAPtmDWcZJajmkK5ytEb1CSVmZhU1DxIjkCgCT9pdRFMuoHUb/Hjum6ScrAfUnXzIUkwo1ylnpoj7jtiRrOMmAfTOdRTeYqWxrMjcDFDDVMFBKVyD6DY3shRW0lbqf4LRVQbOXg6+Jz/Y8j1J8YQwYo0rZ9WOtao1skUkEIt1wZOejyaOUWia6miWHVspn8ZWUr0U7M926yUbfdTY0o2D0W+V1sRyf7PH1ex+ob2wPcnXaJDVB0HjRsizt/3yXmXwLLgB6aawGa1fdP6yumYMrkbNNBofT0LJPRJnXX8S175vYxFQElYfO4GmshxN6ZUXbAhHl3MxtBfOQeqjFswHIep5YlMdViYxc/yKQ5OY42KxdIvCCJj7x1TkkSa5XqAeVP/wn4x8jYYU8K53uaUgdrZe5jIlOAEfXmhA/0hHmpRN5pUIDKgpV1kzDsKUgLyEeRuAf4op1byeZGoyz3WndwR3oL9Jj7resXfhrU5dAbQaGyy32zzeF+/x45KhnomOXulNJrPIRxw/3eWee0P8uyp4d4DNQkjA+pr+j0PWyeU2vBshw2XiVa0yxgXCykAO/eD4GUnRoskhFNYxHG1epbSyteZYtIc8Y+pFIVVKOaYTvsc5kYnvWkBwcJQNHy/jaFqW6F+ue0Xtq+eS6bd/2N31jJF6l7YTTRFVqfNWZFVnGqS/OB6c1ff+toaEGIANEEbdrRYa/b5aO0zCfzdEPDHViKuznMJ3I/kztbwqbsFq/0P1NI5Ml512A5Xrynuuv1tvM4Kb0t7YNxoiXspXabhbrMjjktZupgHABi6Aac4ZKWN3m7Ne5Ob2o00BimZqTou95cdMOr70qb/M68xhI+IHG4MnRw4UYCoLpZuGh4b0wchbsZSdF0hU4nUmP2a35+npNqkUd50yHHhL/yY6Q6CEyM9U/fXBpC4ZUdoeBwVbgq5mgXhT7/JP65IWoLtrx0uzgV6Mx5WdGw75MDuWEUByp7zh2AIp4twU1aP1bwokVjoDoPD/XiUuSLlu1lfR1FPv3bT18rXBEqhbeKi6zeANLwNmVbCkYIvssx+8yOP1ygrh/MMSYutB1HchApMkvBA18n4K46dVPBo8TLLuey1fRUjOcpsNmAGcmYzHUiAKv668QLIOIWOZ6DErll9c1DB59IEYDhHQ8p1dfcVsc5czd16Frb5p9Klb8s/RFECQDhsz5t+HNqOK7kVx5I1nNEpPf/VDiJhsCjqk2JrP3Hv+/RWNWz7YVyawoBzjQlmZfwFU8A2K5KpfTzLMzO4Eqa+2/bn02QdNTAk3XJIzBWomG6AWPasK7bHJJ1xHrLAl+HIw0CuedFZ7L5QBIcE1UbxO+y2y27OgNlVB6N1pNtYFarkisB9HTyYeqpScoCTMxPuhCdX9RQEdQcme2yiwj2OvQD6utr2QoUAFGOaPb7YLzWgAOX/JW5Uwd5OS1Ywi8e2zhKjHMw8kM9WkENtYdpgaFBT9mIy5wr420fs0t05GLFLKFPzUfsrJILM6xPNyOsS4CqygJtKnAJM0fZ0o9TvivBf128QJMbpJKLxEMvzMcoR0N2KyUISvCpP5MhVv/ZAMTSwOGCNxgZFn4HAsIkkyTXbn9gq5hF+y0RRwGi3pPICp4A+hxFHkUQJCjgnCIfU/v7HWiZWCHcQb5lBUYKVH0GdRXgHdoVJKxHy1k470MSoGiyTdKWmhbcYQDFAO12nqUEQqCdj1AK2hsZKHt+Af1ziAs1xb2f/9GnBG3/tdnQyFwsmrrkrUKYI/5mC5wHQ7LJIiW/OxAqT9HwGHSZZsnTlOHnto+LFwnnTaMPPE8wCOHJMlGG6SLUhcvyibTzdkqdtEmteLyaMmoEna7kXdumZnjTGD+D+5x6nVZLsTGsrXXWJHXxdVNHZqCC6FVT6fd7U8LnRSi57sUmdRJaMf3K0W0J+OmNrPAPX1zNpNudYlJa7h37SiSe2UICY3oz5qL19PyWjTmkGa+pGJyornXMu5khz534+FKIkm8G7ckmxYuLG3LKH0+qfCcs0hna6l9omVNLyalV4n1uRHn3ttkvuWYLKBHwPIfHwcjh8k03Uy+XF938+sPzp4mVadtz80p+fA8NB/szTBMGmCD4OyjTVHTy+KliSurR+IOcfWUsNKOWWKE49pmQlsIj9S8AWOJmQlCK0u+cK1Ne0X1AxlFWmDW69MnsNCH1xQHmGZ47SiOB77SXBuc5kWI21GCfcqoW1Zl/0s8iUSBIzy6iku/tqrwcmfeRSEqVbHwm9mD1kEL71624VoXqVGRAmE3JOGkjjO24L6KYIJmlIUNgaGrtzwaIBSat2lrKSMWILVn4/lpN593LOypJsaAmwPl8NxirOuhS45cPgwDIvq1x+SCjbUqnxOf1lulO8yP8AuA2fUaJIF9QNwYyO2ymJ9MsQS9+eH35wd/kJFgsxWbTNQlkvlq3lCiSB3+54okOJLIftuWx3kq4duR2WMP95z1ePs+K8FTYdxPSaS5oONrcWM5FB/4yd2KYPHTe3gdoo8rw5HfOf8JsoYKlQb3dn6oT1vgDRlWUtb10ShQmGvzjFYb2d8OCe/60e+BUbI9RC/wrc/ZRdn+jQ46HOAGPa/m0fk5qaHF5UuMOBmNTJfCzYLNPvU6CvS4fCrq8XjMX4ypeWAWjovaKZBwy2kvmUevGF6ywjGAXxh4V+T0CGUEguWpeWfsDXMbJS3NCN/kxib4pNkDMjuHa226ccQApixb5cEjLtSleXtsiX6sPfVRYgjVJp45SLaJZ6BgnOmhd1xv0ta6cnuE9ibI709tTiJUglygSJSQV9I8TNpdQmGx1QeTTRMiLK94ssOUKG2EfNheOtxVKku/mYDgPdmnAEPGs0dfgrxXGunjj46rUpEkYl3b27nhqpe3FpXqR7MYJ2/2AWOTQldd5gGZb/qE1RaWjQ6GqekMJB7oRx/bPFrMB4OCLi5yHt0y797AMPK4e4QQ85sLLuO5i9GF1vh8dFMSe7YSP1ESk/egL6ZeRmhBvfBGZl5Cu/VV/7dDWW2gMIGW3fvheZhm0WxcNvhcv1Fx45E1JPSYpcqD+Yg9uoDjPPHIJfyq5UeI/y5IzmWK1+u8G4Oaqg6nXwMJ25RhP7Ch2rlTu1LXLL5JMlC24S/yxyEJg658lWwlgJaG/nJy8USix01FPjI3/mCeNwKU1xPAXSl1olgclrrcUL8xSiJCX0AhQVdIf5id/yPz4b0nKrRHDQnCIlRR1e3vuHFQAsyne0kAuSaUPzwO11gUSCSAzy/UBYS3bmEKaEHcVJl/Zo2aeNKJD2p8An7FgOR5J9dWJ7my3A/+WEjRm+efhRTGsi70a5SORAKMQKaSIavc0nK6gwDvrVShr1g271BvbsPR9bzbeNha92SQw3O1SbmK2zdVY4F2faf+A6jjpmhh2YnYJKJijRTAAdtb2w51WedvLSU+Tv4Q97Bj4kLZVUCAZgV2C8T+ZB8AGedG7RPAEv9l5+YJGEZ5dNxLs4gWuEq7uaIl5/YutbqCnVz6Y2x2DdA2p2qvvygAFHlIOBzDcmtIaET2Hg+Vd0RJZlTzMuPPOrREPji96lpYANjB/KhchnTFkG9SgcOdF/KDtPAr+cVe76RwF/spUMrKm7NBLS1eSxcZAR9+jB4Ta9xyLA/athWuaWtY4nMOCMsqyRDlKmJnO6jbaRT1e4FFWqWOjbFKh3eg8pIJaDLnF7MQewbXZe64Y9owM7FcRrOfi83N7Blc8xT7SnEHKiz1xfeKNHLhwIv8s/5N6fq/Iib8BRNhZRI6HtCfwg3nZiYsvur3qQnxFz0ytk4jSm1w4dWU3J00jOzRmpaMVm+OPSeK+mjrgv0kZPiCT7AJtZAkzsDsV5GWihwOK72mgFUIxbEGl8UuyE38b3ALnd6asr8lbMIfYZ5TBAxzVRuWRcl13Zaa2eJt9xCA0QjC9yOuDtGo88Zw6eV4Z1B4WgGZYy4g3KboeDVig3t+fKKvg7oLe/IoUZNUlc7BHdhG6FF8YrYoIokWxfJvKHz/+CvB+6aXCLNGkYsqedNCw1jkW8cjwjU6JBXb1FuimNsUjWBe5mPo5FJ1jPgsGwleMOxP4PhaZsDTytFnMgtRawpod724uTfFDTwX469XgWBWBkMq7xazYMwQPBEluaHTzG7kCuyFf2LvdhTCVPYSAns2PTdFGtgVxbmdH7SqV7j7b7Bz1exm5utxc8kqWDkrF9H1TTRj86nQ8CceJ/252u5PRW+oCQeHlJlZKEE8bo7CcUS4cY9eVjpVEus+E87SaD71iO96r2wkTthfdCPgJdELFfzIPjJ+qOgnt3r1eV/+lfobOyu3L+srWzCAasWvLvLUHI48316FeA1poQYJJmsmTGLFhzLDvOa50pm2PIuSSOkUZ7PZWROtzps06PtayVyrei5HwQrS//Pfg2KEf6y9QNB0+RvjLmfrJqPgeSUQN+sx9oC7QfrUFfgU+PK8zzjMRovNtOvVTknKheJZdBjpzPdBUSd3rSdHVlfvhMDhGLdZ3hO0CyvmaOJ3DamnvInhdlxY7IpE9RYNe8pMtQ19wNolwAvockTKrlQj2i7660CXB+4HZn4reefaGkh2tccfV4P649BwqqfmwP0DqZp5HABEw9vyRtKiPV6ZM/aFvULCClWPErLgM/seIb3vQGm9VPCgdEi9jvsWSoh8Cvw3eworwtRmVGk3MrsEVVcbTBjHIol6EFR5HB+cR9/avDk3OuplPtnCmEhuL9KrFyj0LnshjK9dlhNjQVF7Zd+VDXCmZ31+HAIK3DSm6tViXflkngfPP7quWf1M8JA4N6dtW5UCHQBHwKazgvy5uWW3m25ZhbrKZnToCkcLwKk2MdwMhfcg1BCECS2r/WGXxp+9zkDUOJ8Pj8LErIvLniQ4Fd88huTCcO92prVf1rIKs/l1FT8SZAf+rYVsgMp0alopsScwNpnQ8Zb/RQwYsOPz6SMhAVv1kaDZkKAGcwKsn8/YLe3J1vH+lWNhKIjpZgR4A/TRDtQKWeru6ZUpOO7ns1L9p8hKbn52eXbGXROGGlaSJKlGlTSrbsRzr+TO5B4jNwJickexuYgBgr1NqhpN0dXioBi6BviGAtIf2EgLMmHNcUhXVga+RMEPL/z3fg2DqvdgMvlFr0gN9BPQeRYOs67XAqJLPSKeNeYUjRGyetysjDLUCvdfgShNJCGsZrO21+8cmL6pD56dzL3YQfFxvouuWsH2v3li5Hl4GuwYpsam+b8TsfCsUZ8NZnPf3t66MSCCWmUaCZN90Bd8R923+OQs1PxIDLJq/ZuI0iOtH16f6YO0sJRTCkyxEahpgxnVAqVG6PGpAyytgsDTRa/r7CpbFnnhsr2bXyqK8KG2FMJ2WkppM0Tf+EBiUwAP3AJkKkH8uM4cL38sGstqb/8tk+Hxg4gCrpLSm4901UTc4rOnjiTNdnKCpo95WhRQ2FbqslRsFw8Y834nLteh60KqwNeqx7qlIidVrOIj6COEGwR87QcqagtTTZpLq/RMmybrnIuCzbAmfXHIXeszYhvkepZnUgCej7VnZolxXQyjX2xhjgAmGromI+KNrAzs57bEkm7+DX6m8vYpiASy6yclfd727LBNpFkFD6G2FNbVbKG08bNTZB5vL3O93R/6tt1UOdldVkgGOHZRlNrgVX9XBVC19bV89S6OUf+ZoIGnIoEcB0YzAkuWvlcED15fNK6W4Prp2SveuePmj5D7uIpXG+lxRxEeVdbYrKrF/Z+iUkEqE43Lr4p0N9pGHyPVH8JAbQpp2LU+/a0J4ThA0/jgvpIGHNajtM9uttucbiU1d4i31N78unidB8/2opVDIW/dj14GGghH6FyhmC/r7Hsm5YVHTc4u1YvIQz+9bY//nrV8IdZQuFbzYXzMSiGD7RHZT35+8O/7G7kqm6et/qg0T7p7tgGw6LxB5oY52dretVmKjhbrik0XV00wazW8N4Trm13nWaH0cPZhgCcB/zn79nJj8VV4x71O7bPY7VGcc6xg25lfsSQwAWqBqfqg+cOHxwotZWOgEMyLRK+o0JlcXtWteuaFC5Q0nvVCHlg00y11DZXNwXk6YDrzG59cLHnS4l2hHB314JY1F/UL63foV3ZVH5or8zq0n9ziHwY1m8AhxCR1L1gcis/yq7+k13mOj+jTd2zOL64PBMgWMKwOxgJhvO/AhoNQIwkR3nk4n6nT+2SfEmPMAeTp2+VWxI/fUxkVzGrUTunMAmgX6rcDasE8Qz+hmIe38q1yVZpbGvs3YARDXjZXqLiAxkxHF1sFlla85gxO9yR3UnFpd/sk+3IA2GpO4JoJcfJrNg+9pBM75WZScK+hjZla8ja99ZSUW7+EZysG/TwYoQFYiPXHubqL/UVwDrECMwB0SPNN/SMaswYDuuJ4Ggg/FU4jTws/lHyIYjQL4yM0WgEDIaS95mrj8oktaVwvau3/zXRaC8Lu40Cb4kmfPdlYhPSy2fEUIO+POGmDqcvKtEXcVcPHpPJWJHeSUWceeJdyjhxO6LTmwoOtmdWwX3L6SvP+N4W9WjfV0I6h5NKoPyDdJnTF62yPL6WUtdamEehHCXWNTIoUyxlr68kt8fDHRrWxe+JvuViL3KsJhMaEn87bkqY20QW8NGnSLsRW23Q3a3pu3fYFc5Jo++xJ1EEuE7cK1WkTL5xsiCn8RIFw03zDql2ihVsz05u5Tzns1o0MG6A+ASnK5LlsMU4bi/B/glstmwRwwPWZilZj/FUmktZgmBpwX9i0ycMlZUQfyiTj4jUhvVVSC2PhNdKVFaEDJqJLkiYj4gxz38PlPtcdhnYXKp7vERBxrI7OJjTj4UvBwg0ounQJKwh85zPrtRw+3hzOy9wjGPcET3waSaI3GLA8yICWdrIZSkPqo5DLj1ySQaJiP9v2cCuXB8vVZtrvhzhmtDMoESKK2Expx/M7iinV7je3427+t+MMuhMSqSk/F18D12GlVG7NOyIkfwFbizyzwSyM4VzAcVbBe/eGFRqOM7MoRA7cBzSXmWXhLlK7m07zrSkZb5CAGZHqcLIsvPJ67U5AGJSxzuLPbxG8RElOlMk2nT/9pi1UYdAZH6ZtJkJtSq1ICBNTc/tCSjPMRlP0FpjAoc3guZ9jtWPppiSxzj31IPP8uoBXNzeb4MeDGAQ59pLLpP4CSVF7Kx3P+B0FoMbeDhzSzbT+u8KwmYOrwuJCq2zRe0IabDRQHAvTq98H+YJnmv2n0PXC2Hok+5Adr56jzfnrJyLTqh1FxAJWnXy+MTjr1uy6qhLq5nxhAjTtBBdI34D6m11V12nPjTZDUI48X/Il2bsK9RjjInEnROW4OYPPJq08KLHP/CXKu8449ji2F1KeQlJc+nqPqAR/OhrkLc+GPR+N2e/tkon7peaniKUgXMKz7wTjO8EMu2esLrb5LzlrI+SNGbh2mKxDAIpMA8Nb/c3D1eNwD+WqNpjWiXJ3GnMuwdqIyEO4N8rw55Cr5SoVKIRvtTY4KbdvFblrtpkzE2/QXWvbvY55MVpGZyI3hbE7cDDBdXpO0ZZqcTVHeB6NhvjVcxRhPmBS3j7AnwtSyBpif4L9B3trkRykPoARHZ8/w1z3d3O1ernU3tmylWkbKNBA6r5T+Cd4jMVpAZ0ziNLN0FK1nPcLJY3SzDgW6qHMozm98WjuvfyoxCdJSPumbhx9Eh4IaJK7mEC9+Fb8SDc/P35ZZKymyd9LXJzOLp690GOgt54pxH63lJ/6xXuV0AqMzodQFrMvdqQpdWeSVNMXqOnP/n0/+Q4r8rIhqC96j82ppA/TwMhha4ZBTiM+BFAT70OoljGQmc52cyb14uL3UzAyG2QG/MyVo6JYdQLDqd0Zxo5Vuue6yv0WiElUF+VzOeMZCO/I5c1/z6o4pK4AF00A1fKhKT0dYeEAe0Td9dwb26vPrmiJ8Eivz4xJaObYskEF/5QasIin5nKhUbwGmj2KLRrDBdgIHif2r4wrc3HExqvM2Osk2qG2tUyCMjAYhZ1I9+V944nE9zjZJpDiwxUaedcObvrdlnTD6LvSTnUqD8d/lnbdQUtBSnrkeDyif0Pf5eeALtAmyrwFCTj6eDSqDNI6S+xZByTSC4Yj8c7bDXP4Hv1VBEKxapj/TVBOuSWwZHheQURSfF3G2hDttiwyvqsCFvwH4J35NALJ8PXqdFUWKRblJmc6O9wLOS82vkCX0ZALuS3g9QIVFwLxmcNnNF8pnNVdqgxsKxETB3rnNKHKgBsSt9wma1o9ngC/axKn+bCF8WcuamlsGwp6dlAnzrkAZaC3px3nQojHHc/a7aSX5lE6msHkjeZSObR6uHmk7y9xZrkPuLwKP7Bk8BOJzBm9j7YHu6MLKV+LeERNltEwNxMf5GkC4gbiIwWPAYhPpuheg3evNTJjNSOdr63J0yqjihzO0c2rlkJrn/II99cMcQr4xIdNLT4yt4GvYrqwmwNWs9why+1va1ZOJC11ogqQzHmM+3dyjMvv4lFmdKQGySPvbHIOxKyeIJW995QTAmnFyssU0yNQRVWbtRJjbPPMiPpgHagePzXEYnsJVrwPnhO5PbAilLUAry4WdE8vinnv1KGQ1KugeBT7zc28qqGxV2+MiinvxHexikyJS2yoP+Vh1Y0RYLL2mNpc8W7a7TqwvbVgHR9QzfHcVPV5UiBWIaiSKGfnMq1petGsBZBNnv/lb3DvcyFEAcHkOnidK8ICGW00u5H9dquSs9sjakm3HOKcoRYcaQKK+rVHv3RHmdAvj2HKjjqoBV2cHTSxSR3PMv/TD8loLbGq/Y4FSx0Bj6vpdANK6x7s/BxUfwO/mCzAG+yhOxVfSHvLfL1XnR5j8FnSsXOW9rRYy59ZsS3u5T9DZqMER9wSKIT+zBGD8s3wggjQG4Z01l+owVH4IMFZG1HEpgndWm4al4rCPideL/S6LRleuo/tUlc/Lt85o7TzGIXoGqnQMaiqtfGzsdWywNTGCQQopOPANgaPC5QAujEP16MbSGF7iian9q8vYCERkN5hnMMkUchrFMYBhNG5Y9n5idLOdDF/8vvu12IJn05oYFrvAAQW3ecaa6/lsfKCZaYESOoVFo/DDbvZyIJ2FqxWZSyDzKDYK1pc5SFsx68kppan7xlKGMDykvyEOtxRn9nF7nPAQj6V+V7Nc0QqEUDqEKc8KcIb725PKYBoZ3L9RlP/YPUJC8e45FpNJcV2TeqX1xFB0sb1d4oFt6BwbHe1qBY4/PSra1ZXzMTj4tz60Zm7cnaNNFI3iv+5ymxhMa0s+fAUKFqLjXV/eTnq3tBsBioDuO68gFgeEwTtttPUXoYWG2huTVR0TcZaj9ewFndXEzSiMniFYRfhNW9hAOwrQhXNKvtxz/TfMT6FvSjR/HDn0SX7KX17gT6JnZb+cW5AWazTjZDoJyT0xz0hZPYfxXFYvr3winH1s/ZP7+hv1DyCS7tNg2gwLkJFhZRM1tqonLMZkS1xBMiSeGZnrwu5C+rmZzU7C195rSwZW1usHcJN/7MyeRECNjyuFhjasrkn3NzdU7S6MhiwU0qwd8nU4UKOoqhc5wtnwOgkJsAlUoPVd5FNV3jztg9ArgDtqpgrM1NFmelwicGatcX1u4wJkGQ+0hE3ZXoT0I419IK3zyz4Eb7qM1VxXP1t3C5FfcRwXczxTzcLxm2ir0Vm3XtzR1QJBIlTaUT8Egm2qS3/RviNw4Z3LgLRWqnbCz0WMShUF6reE+SoFZx8cv0jOhC0SCDL8HtK/hWxrR36oOqAZHzbNIkZCIkUTRRtG/g9x3wVIx/V/IfjuNJ/a//+8DtSo/+c/QdnWn3q1x0Ul/GcAa2BHQQN2UEYFvvn6dafvgl4tw1YTp8QUnF7dbNGQlNqpoD4oAvTcK4lisxTZrJmgs6EGh8/E8FKZ2BPgbDvjuoWK/Slai38xeOHxh4KLbhhdigs4xI4f/nJbZcxJQCpGhC/ZAQAWP4B+jao0OvTUO6gX0vv2f9uxtAn8JEZp/Zyrz3rpJ6iVEvKe9X8b0XO90vNcmTEBOBWVj6yooSsYnMWcLgJWTDOxI00CtnYLi4m/fFxy8x0KAtiFdMFzmiYE2SEB8g7YPAKg3G0qSZFXcaxmKHc2709wsoeCN/ARjUhArqTm5EZHqbgA0HsuYQjLgJnnhG3m4gHK1XbD6e0crvpoeXaQ1x5HW8H3AYwGNmUOT/k5T/5M5sZU/WlkJ7dxaSXcHyWRAIDJJknPFa7UoA3A5iA0zl/eZUPKpgrs9hLAVGAQPXjR0ySmvc3gagoAAA" alt="" draggable="false">';
-  const doorTip = () => st.unlocked ? 'Open the door' : !st.inv.key ? 'A key is needed' : 'Use the key and open it';
+  const DOOR = SVG('0 0 34 48', '<path d="M3 46 V18 Q3 3 17 3 Q31 3 31 18 V46Z" fill="#7a4a24" stroke="#3a2010" stroke-width="2"/><path d="M8 44 V19 Q8 9 17 9 Q26 9 26 19 V44Z" fill="#9a6034" stroke="#3a2010" stroke-width="1.4"/><circle cx="23" cy="28" r="2.2" fill="#ffd66b" stroke="#6b4a1a"/><rect x="14" y="31" width="6" height="7" rx="1" fill="#ffd66b" stroke="#6b4a1a" stroke-width="1" class="hunt-lock"/>');
+  const doorTip = () => st.unlocked ? 'Open the door' : !st.inv.key ? 'A key is needed' : st.coins < TOLL ? `The keeper wants ${TOLL} coins` : 'Pay the keeper and open it';
   const KEEPER = SVG('0 0 60 44', '<g stroke="#7a2a14" stroke-width="2" stroke-linecap="round" fill="none"><path d="M12 30 L4 38 M18 34 L12 42 M48 30 L56 38 M42 34 L48 42"/></g><ellipse cx="30" cy="28" rx="18" ry="12" fill="#e8553a" stroke="#7a2a14" stroke-width="2"/><path d="M14 22 C6 20 4 10 10 6 C14 4 18 8 16 12 C20 12 20 18 14 22Z" fill="#f2694c" stroke="#7a2a14" stroke-width="2"/><path d="M46 22 C54 20 56 10 50 6 C46 4 42 8 44 12 C40 12 40 18 46 22Z" fill="#f2694c" stroke="#7a2a14" stroke-width="2"/><circle cx="24" cy="14" r="4" fill="#fff" stroke="#7a2a14" stroke-width="1.5"/><circle cx="36" cy="14" r="4" fill="#fff" stroke="#7a2a14" stroke-width="1.5"/><circle cx="24.5" cy="14.5" r="1.8" fill="#222"/><circle cx="36.5" cy="14.5" r="1.8" fill="#222"/><path d="M26 31 Q30 34 34 31" stroke="#7a2a14" stroke-width="2" fill="none"/>');
-  const keeperLine = () => st.unlocked ? 'Welcome back! Go right in.' : st.inv.key ? 'You have the key! Go on, open the door.' : 'Halt! I keep this door. Bring me the old brass key.';
+  const keeperLine = () => st.unlocked ? 'Welcome back! Go right in.' : `Halt! I keep this door. I want a key and ${TOLL} gold coins. You have ${st.inv.key ? 'the key' : 'no key'} and ${st.coins} coins.`;
   function placeDoor() {
     document.querySelectorAll('.hunt-door, .hunt-keeper').forEach(e => e.remove());
     if (routeNow() !== '/' || root.dataset.mood !== 'tropical') return; const v = document.getElementById('view');
-    const d = document.createElement('button'); d.type = 'button'; d.className = 'hunt-door'; d.setAttribute('aria-label', 'A locked wooden door. A key is needed.'); d.innerHTML = DOOR; d.dataset.tip = doorTip(); v.appendChild(d);
+    const d = document.createElement('button'); d.type = 'button'; d.className = 'hunt-door' + (Date.now() < beckonUntil ? ' beckon' : ''); d.setAttribute('aria-label', 'A small locked door. A key is needed.'); d.innerHTML = DOOR; d.dataset.tip = doorTip(); v.appendChild(d);
     ['pointerenter', 'focus'].forEach(ev => d.addEventListener(ev, () => { d.dataset.tip = doorTip(); }));
-    const k = document.createElement('button'); k.type = 'button'; k.className = 'hunt-keeper'; k.setAttribute('aria-label', 'The doorkeeper, a little crab. Talk to him.'); k.innerHTML = KEEPER; k.dataset.tip = 'Doorkeeper: a key, please'; v.appendChild(k);
+    const k = document.createElement('button'); k.type = 'button'; k.className = 'hunt-keeper'; k.setAttribute('aria-label', 'The doorkeeper, a little crab. Talk to him.'); k.innerHTML = KEEPER; k.dataset.tip = `Doorkeeper: ${TOLL} coins and a key, please`; v.appendChild(k);
+    if (beckonNext) { beckonNext = false; d.dataset.tip = doorTip(); setTimeout(() => toast('You have the key and ' + TOLL + ' coins. The door is right here!'), 350); }
   }
   document.addEventListener('click', e => {
     const egg = e.target.closest('.hunt-egg'); if (egg) { e.preventDefault(); e.stopPropagation(); openChest(egg); return; }
@@ -6557,7 +6577,8 @@ const HUNT = (() => {
     const nope = msg => { d.classList.remove('knock'); void d.offsetWidth; d.classList.add('knock'); toast(msg); };
     if (st.unlocked) go('The door creaks open...');
     else if (!st.inv.key) nope('A key is needed to open this door.');
-    else { st.unlocked = true; save(); go('The key turns, and the door creaks open...'); }
+    else if (st.coins < TOLL) nope(`The doorkeeper wants ${TOLL} gold coins. You have ${st.coins}.`);
+    else { st.coins -= TOLL; st.unlocked = true; save(); go(`You paid the doorkeeper ${TOLL} coins. The key turns, and the door creaks open...`); }
   }, true);
 
   /* ===== after every page change: hide the chests, add the door, and dress the secret pages ===== */
@@ -6569,7 +6590,6 @@ const HUNT = (() => {
   };
   new MutationObserver(() => { clearTimeout(afterT); afterT = setTimeout(after, 90); }).observe(document.getElementById('view'), { childList: true });
   addEventListener('hashchange', () => { clearTimeout(afterT); afterT = setTimeout(after, 140); });
-  document.addEventListener('playtab', () => { clearTimeout(afterT); afterT = setTimeout(after, 60); });
   let fonts = false; const loadFonts = () => { if (fonts) return; fonts = true; const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=Special+Elite&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&display=swap'; document.head.appendChild(l); };
 
   /* ===== the forbidden archives and the captain's quarters ===== */
@@ -6630,7 +6650,7 @@ const HUNT = (() => {
   ];
   const folderHtml = f => `<button type="button" class="ar-folder${st.folders.includes(f.k) ? ' seen' : ''}" data-f="${f.k}"><span class="ar-tab">${f.tab}</span><b>${f.k === 'redacted' ? '<span class="ar-bar" style="width:8ch"></span> <span class="ar-bar" style="width:6ch"></span>' : f.title}</b>${f.sub ? `<small>${f.sub}</small>` : ''}<i class="ar-stamp">${st.folders.includes(f.k) ? 'reviewed' : 'unread'}</i></button>`;
   const archivesHtml = () => `
-    <section class="ar-room">
+    <section class="ar">
       <div class="ar-head"><p class="ar-eyebrow">Access level: extremely nosy</p><h1 class="ar-title">The Forbidden Archives</h1></div>
       <article class="ar-letter">
         <p class="ar-hello">Welcome to the forbidden archives.</p>
@@ -9006,7 +9026,7 @@ document.addEventListener('error', function (e) {
   const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
   const label = k => { const c = document.querySelector('.mood-chip[data-k="' + k + '"]'); return c ? c.textContent.trim() : k; };
   const sync = () => { const h = document.getElementById('mood-hint'); if (!h) return; const k = root.dataset.mood;
-    const t = h.querySelector('.sb-txt'); if (t) t.innerHTML = k ? '<span class="sb-a">now: ' + label(k) + '</span><span class="sb-b">Press to change</span>' : '<span class="sb-a">feeling moody?</span><span class="sb-b">Press here</span>'; };
+    const t = h.querySelector('.sb-txt'); if (t) t.innerHTML = k ? '<span class="sb-a">now: ' + label(k) + '</span><span class="sb-b">Change</span>' : '<span class="sb-a">feeling moody?</span><span class="sb-b">Press here</span>'; };
   const rnd = document.createElement('button'); rnd.type = 'button'; rnd.className = 'mood-random'; rnd.textContent = 'Random'; rnd.setAttribute('aria-label', 'Pick a random mood'); panel.appendChild(rnd);
   rnd.addEventListener('click', e => { e.stopPropagation(); const chips = [...panel.querySelectorAll('.mood-chip')], cur = root.dataset.mood || '';
     const pool = chips.filter(c => c.dataset.k !== cur); if (pool.length) pool[Math.floor(Math.random() * pool.length)].click(); });
@@ -9134,6 +9154,32 @@ document.addEventListener('error', function (e) {
   document.addEventListener('playtab', sync);
   new MutationObserver(() => setTimeout(sync, 0)).observe(document.getElementById('view'), { childList: true });
   sync();
+})();
+</script>
+<script>
+/* shooting star: flies across the page when the name is hovered (or tapped / focused) */
+(() => {
+  let busy = false;
+  const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function shoot() {
+    if (busy || reduce()) return; busy = true;
+    const W = innerWidth, H = innerHeight, left = Math.random() < .5;
+    const y0 = H * (.04 + Math.random() * .22), y1 = y0 + H * (.35 + Math.random() * .25);
+    const x0 = left ? -220 : W + 220, x1 = left ? W + 220 : -220;
+    const a = Math.atan2(y1 - y0, x1 - x0) * 180 / Math.PI, flip = left ? 0 : 180;
+    const el = document.createElement('div'); el.className = 'shoot-star'; el.setAttribute('aria-hidden', 'true');
+    el.innerHTML = '<i class="tail"></i><svg viewBox="0 0 24 24"><polygon points="12,1.5 15,8.6 22.5,9.3 16.8,14.3 18.6,21.7 12,17.8 5.4,21.7 7.2,14.3 1.5,9.3 9,8.6" fill="#ffe27a" stroke="#fff6c4" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+    document.body.appendChild(el);
+    const rot = left ? a : a - 180 + 180;
+    const T = (x, y) => `translate(${x}px, ${y}px) rotate(${rot}deg)`;
+    const anim = el.animate([{ transform: T(x0, y0), opacity: 0 }, { transform: T(x0 + (x1 - x0) * .08, y0 + (y1 - y0) * .08), opacity: 1, offset: .08 }, { transform: T(x0 + (x1 - x0) * .85, y0 + (y1 - y0) * .85), opacity: 1, offset: .85 }, { transform: T(x1, y1), opacity: 0 }], { duration: 1300, easing: 'cubic-bezier(.4,.1,.6,.9)' });
+    const done = () => { el.remove(); busy = false; };
+    anim.onfinish = done; anim.oncancel = done;
+  }
+  const isName = t => t && t.closest && t.closest('.name-btn');
+  document.addEventListener('mouseover', e => { if (isName(e.target) && !isName(e.relatedTarget)) shoot(); });
+  document.addEventListener('focusin', e => { if (isName(e.target)) shoot(); });
+  document.addEventListener('pointerdown', e => { if (e.pointerType === 'touch' && isName(e.target)) shoot(); });
 })();
 </script>
 </body>
