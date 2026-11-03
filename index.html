@@ -274,11 +274,19 @@
   .work-logo { display: block; width: min(300px, 80%); height: auto; margin: 4px 0 22px; }
   .work-logo-link { display: block; width: fit-content; max-width: 100%; }
 
-  /* about: the expandable "My Texas story" under the Austin card */
-  .fact-more { margin-top: 10px; text-align: left; }
-  .fact-more summary { cursor: pointer; font-weight: 700; color: var(--purple); width: fit-content; margin: 0; }
-  .fact-more[open] summary { margin-bottom: 8px; }
-  .fact-more p { margin: 0 0 10px; line-height: 1.55; font-size: .92rem; }
+  /* about: the "Background" preview under the Austin card; it fades out until you expand it */
+  .fact-more { margin-top: 12px; text-align: left; }
+  .fact-more .fm-title { margin: 0 0 4px; font-size: 1.05rem; }
+  .fm-body { max-height: 5.4em; overflow: hidden; transition: max-height .6s var(--ease);
+             -webkit-mask-image: linear-gradient(#000 35%, transparent); mask-image: linear-gradient(#000 35%, transparent); }
+  .fm-body.open { max-height: 60em; -webkit-mask-image: none; mask-image: none; }
+  .fm-body p { margin: 0 0 10px; line-height: 1.55; font-size: .92rem; }
+  .fm-toggle { margin-top: 6px; padding: 0; background: none; border: 0; font: inherit; font-size: .9rem; font-weight: 700; color: var(--purple); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { .fm-body { transition: none; } }
+  /* about: hobbies under the soccer card */
+  .hobby-title { margin: 16px 0 8px; font-size: 1.05rem; }
+  .hobby-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .hobby-list li { padding: 4px 13px 6px; border-radius: 18px; background: rgba(132, 88, 179, .14); border: 1.5px solid rgba(132, 88, 179, .35); font-size: .88rem; line-height: 1.3; max-width: 100%; }
   /* the name matches the rest of the text in the default look */
   html:not([data-mood]) .home h1 { color: var(--ink); }
   /* goals checklist: the mood styles turned each row into a block bubble, so the circle sat right against the words */
@@ -6260,11 +6268,15 @@ const pages = {
       <div class="fact reveal" style="--k:4">
         <svg viewBox="0 0 48 48" class="ico ico-pin" aria-hidden="true"><ellipse class="pinshadow" cx="24" cy="43" rx="9" ry="2.4" fill="#494D5F" opacity=".2"/><g class="pinbody"><path d="M24 4 C14 4 8 11 8 19 C8 30 24 42 24 42 C24 42 40 30 40 19 C40 11 34 4 24 4 Z" fill="#8458B3"/><circle cx="24" cy="19" r="6" fill="#E5EAF5"/></g></svg>
         <h2>Austin, Texas</h2><p>Texas born and raised.</p>
-        <details class="fact-more"><summary>My Texas story</summary>
-          <p>I was born in downtown Fort Worth and grew up on farmland near Waco. We had goats, pigs, chickens, geese, a mean rooster, and a sweet cow named Bonnie.</p>
-          <p>My sister Emily and I loved jumping on the trampoline with the water hose and chasing the animals around. We also had a super crappy tree house, but it was one of our favorite places to hide and stay outside as long as we could.</p>
-          <p>Later I lived in Canyon Lake and went to Canyon Lake High School, where I played soccer, ran track, and was a cheerleader.</p>
-        </details>
+        <div class="fact-more">
+          <h3 class="fm-title">Background</h3>
+          <div class="fm-body" id="fm-body">
+            <p>I was born in downtown Fort Worth and grew up on farmland near Waco. We had goats, pigs, chickens, geese, a mean rooster, and a sweet cow named Bonnie.</p>
+            <p>My sister Emily and I loved jumping on the trampoline with the water hose and chasing the animals around. We also had a super crappy tree house, but it was one of our favorite places to hide and stay outside as long as we could.</p>
+            <p>Later I lived in Canyon Lake and went to Canyon Lake High School, where I played soccer, ran track, and was a cheerleader.</p>
+          </div>
+          <button type="button" class="fm-toggle" aria-expanded="false" aria-controls="fm-body">Read more</button>
+        </div>
       </div>
       <div class="fact reveal" style="--k:5">
         <svg viewBox="0 0 48 48" class="ico ico-cap" aria-hidden="true"><polygon points="24,10 44,19 24,28 4,19" fill="#494D5F"/><path d="M12 24 V32 Q24 40 36 32 V24 L24 29 Z" fill="#6b6f84"/><g class="tassel"><line x1="40" y1="20" x2="40" y2="32" stroke="#8458B3" stroke-width="2"/><circle cx="40" cy="34" r="2.6" fill="#8458B3"/></g></svg>
@@ -6274,6 +6286,8 @@ const pages = {
       <div class="fact reveal" style="--k:6">
         <svg viewBox="0 0 48 48" class="ico ico-ball" aria-hidden="true"><ellipse cx="24" cy="44" rx="10" ry="2.4" fill="#494D5F" opacity=".2"/><g class="ball"><defs><clipPath id="ballclip"><circle cx="24" cy="22" r="17"/></clipPath></defs><circle cx="24" cy="22" r="17" fill="#fff"/><g clip-path="url(#ballclip)"><g stroke="#494D5F" stroke-width="1.3" stroke-linecap="round"><line x1="24.0" y1="17.0" x2="24.0" y2="8.2"/><line x1="28.8" y1="20.5" x2="37.1" y2="17.7"/><line x1="26.9" y1="26.0" x2="32.1" y2="33.2"/><line x1="21.1" y1="26.0" x2="15.9" y2="33.2"/><line x1="19.2" y1="20.5" x2="10.9" y2="17.7"/><line x1="19.6" y1="5.0" x2="35.2" y2="6.6"/><line x1="28.4" y1="5.0" x2="12.8" y2="6.6"/><line x1="38.8" y1="12.6" x2="42.1" y2="27.9"/><line x1="41.5" y1="20.9" x2="35.2" y2="6.6"/><line x1="37.5" y1="33.2" x2="24.0" y2="41.0"/><line x1="30.4" y1="38.3" x2="42.1" y2="27.9"/><line x1="17.6" y1="38.3" x2="5.9" y2="27.9"/><line x1="10.5" y1="33.2" x2="24.0" y2="41.0"/><line x1="6.5" y1="20.9" x2="12.8" y2="6.6"/><line x1="9.2" y1="12.6" x2="5.9" y2="27.9"/></g><polygon points="24.0,8.2 19.6,5.0 21.3,-0.1 26.7,-0.1 28.4,5.0" fill="#494D5F" stroke="#494D5F" stroke-width=".8" stroke-linejoin="round"/><polygon points="37.1,17.7 38.8,12.6 44.2,12.6 45.9,17.7 41.5,20.9" fill="#494D5F" stroke="#494D5F" stroke-width=".8" stroke-linejoin="round"/><polygon points="32.1,33.2 37.5,33.2 39.2,38.3 34.8,41.5 30.4,38.3" fill="#494D5F" stroke="#494D5F" stroke-width=".8" stroke-linejoin="round"/><polygon points="15.9,33.2 17.6,38.3 13.2,41.5 8.8,38.3 10.5,33.2" fill="#494D5F" stroke="#494D5F" stroke-width=".8" stroke-linejoin="round"/><polygon points="10.9,17.7 6.5,20.9 2.1,17.7 3.8,12.6 9.2,12.6" fill="#494D5F" stroke="#494D5F" stroke-width=".8" stroke-linejoin="round"/><polygon points="24.0,17.0 28.8,20.5 26.9,26.0 21.1,26.0 19.2,20.5" fill="#494D5F" stroke="#494D5F" stroke-width=".8" stroke-linejoin="round"/></g><circle cx="24" cy="22" r="17" fill="none" stroke="#494D5F" stroke-width="2"/></g></svg>
         <h2>The beautiful game</h2><p>I play in a women's league and co-ed soccer.</p>
+        <h3 class="hobby-title">Hobbies</h3>
+        <ul class="hobby-list"><li>Art &amp; crafts</li><li>Hiking</li><li>Hosting parties with friends</li><li>Pickleball</li><li>Picnics</li><li>Cleaning</li><li>Swimming</li></ul>
       </div>
       <div class="fact reveal" style="--k:7">
         <svg viewBox="0 0 48 48" class="ico ico-wave" aria-hidden="true"><polygon points="2,30 16,10 24,22 32,12 46,30" fill="#8458B3"/><polygon points="16,10 12,16 16,15 19,17" fill="#fff"/><polygon points="32,12 28,18 32,17 35,19" fill="#fff"/><clipPath id="wvc"><rect x="0" y="30" width="48" height="16"/></clipPath><g clip-path="url(#wvc)"><rect y="30" width="48" height="16" fill="#A0D2EB"/><path class="wv" d="M-24 36 q6 -5 12 0 t12 0 t12 0 t12 0 t12 0 t12 0 t12 0" fill="none" stroke="#fff" stroke-width="2"/><path class="wv w2" d="M-24 42 q6 -5 12 0 t12 0 t12 0 t12 0 t12 0 t12 0 t12 0" fill="none" stroke="#E5EAF5" stroke-width="2"/></g></svg>
@@ -6649,6 +6663,11 @@ const HUNT = (() => {
   new MutationObserver(() => { clearTimeout(afterT); afterT = setTimeout(after, 90); }).observe(document.getElementById('view'), { childList: true });
   addEventListener('hashchange', () => { clearTimeout(afterT); afterT = setTimeout(after, 140); });
   document.addEventListener('playtab', () => { clearTimeout(afterT); afterT = setTimeout(after, 60); });
+  document.addEventListener('click', e => {
+    const t = e.target.closest('.fm-toggle'); if (!t) return;
+    const body = document.getElementById(t.getAttribute('aria-controls')); if (!body) return;
+    const open = body.classList.toggle('open'); t.setAttribute('aria-expanded', String(open)); t.textContent = open ? 'Show less' : 'Read more';
+  });
   let fonts = false; const loadFonts = () => { if (fonts) return; fonts = true; const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=Special+Elite&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&display=swap'; document.head.appendChild(l); };
 
   /* ===== the forbidden archives and the captain's quarters ===== */
