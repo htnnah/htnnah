@@ -307,7 +307,7 @@
   .sp-dots i.on { background: #fff; }
   .hot-take { max-width: 900px; margin: 22px auto 0; padding: 14px 20px 16px; border-radius: 18px; border: 2px dashed var(--purple); background: var(--mist); color: var(--ink); font-size: 1.05rem; line-height: 1.5; }
   .hot-take .ht-tag { display: inline-block; margin-right: 8px; padding: 1px 12px 3px; border-radius: 999px; background: var(--purple); color: #fff; font-weight: 700; font-size: .85rem; letter-spacing: .03em; text-transform: uppercase; }
-  #food-restaurants { margin-top: 10px; } #food-bars .spots { margin-bottom: 128px; }
+  #food-restaurants { margin-top: 10px; } #food-bars .spots { margin-bottom: 56px; }
   /* the name matches the rest of the text in the default look */
   html:not([data-mood]) .home h1 { color: var(--ink); }
   /* goals checklist: the mood styles turned each row into a block bubble, so the circle sat right against the words */
@@ -6263,10 +6263,11 @@ function selectPlayTab(k, focus) {
   document.dispatchEvent(new Event('playtab'));
 }
 const FAV_EATS = [
-  { n: 'Chicken Express (Chicken E)', k: 'Fried chicken', img: ['chicken-express'], fit: 'contain' },
+  { n: 'Yamas Greek Kitchen', k: 'Greek', img: ['yamas'] },
   { n: 'Shanghai Chinese Restaurant', k: 'Dim sum', img: ['shanghai'], pos: '50% 55%' },
   { n: 'Taco Joint', k: 'Tacos', img: ['taco-joint'], pos: '50% 60%' },
   { n: "Raising Cane's", k: 'Chicken, but mainly for the sauce', img: ['raising-canes.png'], fit: 'contain' },
+  { n: 'Chicken Express (Chicken E)', k: 'Fried chicken', img: ['chicken-express'], fit: 'contain' },
   { n: 'Sushi Warrior', k: 'Sushi buffet', img: ['sushi-warrior'], pos: '50% 60%' },
   { n: 'Chipotle', k: 'Guilty pleasure', img: ['chipotle'], pos: '50% 62%' },
   { n: 'Thai Fresh', k: 'Thai food', img: ['thai-fresh'] },
@@ -6281,7 +6282,6 @@ const FAV_EATS = [
   { n: 'Casa Colombia', k: 'Colombian', img: ['casa-colombia'], pos: '50% 55%' },
   { n: 'Salt Grass', k: 'Steakhouse', img: ['salt-grass'] },
   { n: 'Potbelly', k: 'Sandwiches', img: ['potbelly'] },
-  { n: 'Amaya', k: 'Mediterranean', img: ['amaya'], pos: '50% 68%' },
   { n: 'Taco Bell', k: 'Late-night snack', img: ['taco-bell'], pos: '50% 55%' },
   { n: 'Smoothie King', k: 'Smoothies', img: ['smoothie-king'], pos: '50% 60%' }
 ];
@@ -6411,8 +6411,8 @@ const pages = {
     ${back('#/loves', 'loves')}
     <h1>Food &amp; drinks</h1>
     <p class="lead">The things I could eat and drink all day, and where I like to get them.</p>
-    <div class="foodnav">${foodSections.map(sec => `<button type="button" data-jump="food-${sec.id}">${sec.title}</button>`).join('')}<button type="button" data-jump="food-restaurants">Restaurants</button><button type="button" data-jump="food-bars">Drink spots</button></div>
-    ${foodSections.map(sec => `<section class="foodsec" id="food-${sec.id}"><h2>${sec.title}</h2><div class="cards food">${foodCardsHtml(sec.items)}</div></section>`).join('')}${spotsHtml()}` },
+    <div class="foodnav"><button type="button" data-jump="food-restaurants">Restaurants</button><button type="button" data-jump="food-bars">Drink spots</button>${foodSections.map(sec => `<button type="button" data-jump="food-${sec.id}">${sec.title}</button>`).join('')}</div>
+    ${spotsHtml()}${foodSections.map(sec => `<section class="foodsec" id="food-${sec.id}"><h2>${sec.title}</h2><div class="cards food">${foodCardsHtml(sec.items)}</div></section>`).join('')}` },
 
   '/loves/friends': { title: 'friends & family', html: () => `
     ${back('#/loves', 'loves')}
