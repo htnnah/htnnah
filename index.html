@@ -906,8 +906,8 @@
 
   /* cursor: a cute character per page (plane, rocket, ball, heart, ice cream, note, brush, mug) */
   html.has-plane, html.has-plane * { cursor: none !important; }
-  #trail { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 99; pointer-events: none; }
-  #plane { position: fixed; left: 0; top: 0; z-index: 100; pointer-events: none; opacity: 0; transition: opacity .2s; will-change: transform; }
+  #trail { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 2147481900; pointer-events: none; }
+  #plane { position: fixed; left: 0; top: 0; z-index: 2147482000; pointer-events: none; opacity: 0; transition: opacity .2s; will-change: transform; }
   #plane.on { opacity: 1; }
   #plane .pl-rot { position: absolute; left: -42.4px; top: -12.5px; width: 44px; height: 25px; transform-origin: 42.4px 12.5px; display: none; }
   html:not([data-cur]) #plane .pl-rot, html[data-cur="plane"] #plane .pl-rot, html[data-cur="rocket"] #plane .pl-rot { display: block; }
@@ -933,6 +933,8 @@
   html[data-cur="wish"] .pl-s.wish { display: block; }
   html:has(.mf-coin:hover) .pl-s.wish .hcoin, html:has(.mf-coin.grab) .pl-s.wish .hcoin { display: none; }   /* the real coin takes over while you hold it */
   .pl-s.heart { animation: plBeat 1.1s ease-in-out infinite; }
+  .pl-s.lovearrow { --hx: 6; --hy: 4; } html[data-cur="lovearrow"] .pl-s.lovearrow { display: block; filter: drop-shadow(0 2px 3px rgba(30, 0, 6, .45)); }
+  .pl-s.lovearrow .lahrt { transform-box: fill-box; transform-origin: 50% 70%; animation: plBeat 1.1s ease-in-out infinite; }
   @keyframes plBeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.1); } 30% { transform: scale(1); } 45% { transform: scale(1.07); } }
   .pl-s .steam { animation: plSteam 1.8s ease-in-out infinite; transform-box: fill-box; }
   .pl-s .steam.s2 { animation-delay: -.6s; } .pl-s .steam.s3 { animation-delay: -1.2s; }
@@ -1735,9 +1737,9 @@
   .mx-hit { pointer-events: auto; }
 
 
-  html[data-mood="tropical"] #view :is(p, .lead, li), html[data-mood="western"] #view :is(p, .lead, li), html[data-mood="dreamy"] #view :is(p, .lead, li) { text-shadow: 0 0 6px var(--navbg), 0 0 12px var(--navbg); font-weight: 600; }
-  html[data-mood="y2k"] #view :is(p, li) { text-shadow: 0 0 5px #fff, 0 0 10px #fff; }
-  html[data-mood="arcade"] #view :is(p, li) { text-shadow: 2px 2px 0 #000; }
+  html[data-mood="tropical"] #view :is(p, .lead, li):not(.os *), html[data-mood="western"] #view :is(p, .lead, li):not(.os *), html[data-mood="dreamy"] #view :is(p, .lead, li):not(.os *) { text-shadow: 0 0 6px var(--navbg), 0 0 12px var(--navbg); font-weight: 600; }
+  html[data-mood="y2k"] #view :is(p, li):not(.os *) { text-shadow: 0 0 5px #fff, 0 0 10px #fff; }
+  html[data-mood="arcade"] #view :is(p, li):not(.os *) { text-shadow: 2px 2px 0 #000; }
   html[data-mood="western"][data-route="home"] #view .tag { text-shadow: 0 2px 12px rgba(0, 0, 0, .8); }
   /* ===== Tommy Bahama ===== */
   html[data-mood="tropical"] { --sky: #f4efdc; --lilac: #e6dcc0; --mist: rgba(255, 251, 240, .9); --purple: #1b7a63; --ink: #17453b; --navbg: rgba(255, 251, 240, .94); --script: "Pacifico", cursive; }
@@ -1755,23 +1757,23 @@
   html[data-mood="y2k"] { --sky: #ff9ed6; --lilac: #ffd1ec; --mist: rgba(255, 240, 250, .93); --purple: #ff1493; --ink: #3d0a5c; --navbg: rgba(255, 228, 246, .95); --script: "Audiowide", sans-serif; }
   html[data-mood="y2k"] #mood-bg { background-image: linear-gradient(rgba(255, 190, 225, .32), rgba(255, 190, 225, .32)), url("photos/mood-y2k-collage.jpg"); background-position: center; }
   html[data-mood="y2k"] #mood-bg::before, html[data-mood="y2k"] #mood-bg::after { display: none; }
-  html[data-mood="y2k"] :is(h1, h2) { font-weight: 900; -webkit-text-stroke: 1.5px #3d0a5c; text-shadow: 3px 3px 0 #fff, 6px 6px 0 rgba(255, 20, 147, .55); }
+  html[data-mood="y2k"] :is(h1, h2):not(.os *) { font-weight: 900; -webkit-text-stroke: 1.5px #3d0a5c; text-shadow: 3px 3px 0 #fff, 6px 6px 0 rgba(255, 20, 147, .55); }
   html[data-mood="y2k"] .home h1 { color: #ff1493; -webkit-text-stroke: 3px #3d0a5c; text-shadow: 5px 5px 0 #fff, 10px 10px 0 rgba(61, 10, 92, .35); }
   html[data-mood="y2k"] nav :is(.brand, ul) { border: 3px solid #ff1493; box-shadow: 5px 5px 0 #ff1493, 0 0 0 3px #fff; font-weight: 800; }
   html[data-mood="y2k"] nav ul a { font-weight: 800; }
   html[data-mood="y2k"] :is(.hub a, .fact, .backlink, .enter) { border: 3px solid #ff1493; box-shadow: 6px 6px 0 #ff1493; font-weight: 800; }
   html[data-mood="y2k"] .hub a:hover { background: #ffe14d; }
-  html[data-mood="y2k"] p, html[data-mood="y2k"] li { font-weight: 600; }
-  html[data-mood="y2k"] #view :is(.lead, .tag) { text-shadow: 0 0 6px #fff, 0 0 12px #fff; font-weight: 700; }
+  html[data-mood="y2k"] p:not(.os *), html[data-mood="y2k"] li:not(.os *) { font-weight: 600; }
+  html[data-mood="y2k"] #view :is(.lead, .tag):not(.os *) { text-shadow: 0 0 6px #fff, 0 0 12px #fff; font-weight: 700; }
   #mx-load { position: fixed; inset: 0; z-index: 11; pointer-events: none; display: grid; place-items: center; background: #dd5b97; clip-path: inset(0 100% 0 0); }
   #mx-load img { width: min(70vh, 80vw); height: auto; display: block; }
   #mx-load .bar { position: absolute; left: 50%; bottom: 8vh; width: min(52vw, 420px); height: 22px; margin-left: calc(min(52vw, 420px) / -2); border: 4px solid #fff; border-radius: 6px; padding: 3px; background: rgba(255, 255, 255, .25); }
   #mx-load .bar i { display: block; height: 100%; width: 0; background: repeating-linear-gradient(90deg, #ffe14d 0 12px, #ff9ad6 12px 16px); }
 
 
-  html[data-mood="y2k"] #view :is(p, li, .lead, .tag, figcaption, .cap, dd, dt):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open) *) {
+  html[data-mood="y2k"] #view :is(p, li, .lead, .tag, figcaption, .cap, dd, dt):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open, .os) *) {
         display: block; width: fit-content; max-width: 100%; background: rgba(255, 236, 247, .88); border-radius: 16px; padding: .4em .8em .5em; box-shadow: 0 4px 16px rgba(255, 20, 147, .2); text-shadow: none; color: #3d0a5c; }
-  html[data-mood="y2k"] #view :is(li):not(:is(.fact, .hub, .polaroid, .card, .face, button, .job-cs, .songs) *) { margin-block: .35em; }
+  html[data-mood="y2k"] #view :is(li):not(:is(.fact, .hub, .polaroid, .card, .face, button, .job-cs, .songs, .os) *) { margin-block: .35em; }
 
   /* ---------- one-line pressable name + mood hint ---------- */
   .home h1 { font-size: clamp(3rem, 11.5vw, 9.5rem); margin-bottom: 4px; }
@@ -1833,7 +1835,7 @@
   html[data-mood="arcade"] { --tbg: rgba(16, 10, 50, .93); --tink: #e8f3ff; }
   html[data-mood="western"] { --tbg: rgba(255, 247, 250, .97); --tink: #1c3f80; }
   html[data-mood="disco"] { --tbg: rgba(36, 10, 60, .94); --tink: #fff0ff; }
-  html:is([data-mood="tropical"], [data-mood="dreamy"], [data-mood="academia"], [data-mood="oldmoney"], [data-mood="arcade"], [data-mood="western"], [data-mood="disco"]) #view :is(p, li, .lead, .tag, figcaption, .cap, dd, dt, h1, h2):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open, .stars-game, .home) *) {
+  html:is([data-mood="tropical"], [data-mood="dreamy"], [data-mood="academia"], [data-mood="oldmoney"], [data-mood="arcade"], [data-mood="western"], [data-mood="disco"]) #view :is(p, li, .lead, .tag, figcaption, .cap, dd, dt, h1, h2):not(:is(.fact, .hub, .polaroid, .card, .face, button, .mf, .job-cs, .songs, .foodnav, .art-open, .stars-game, .home, .os) *) {
         display: block; width: fit-content; max-width: 100%; background: var(--tbg); color: var(--tink); border-radius: 14px; padding: .3em .75em .4em; text-shadow: none; -webkit-text-stroke: 0; box-shadow: 0 3px 12px rgba(0, 0, 0, .12); }
   html[data-mood] .skyline { display: none; }
   /* the Thatch logo gets its own white backing so a busy picture never hides it */
@@ -2339,7 +2341,7 @@
   html[data-mood="arcade"][data-route="goals"] #mood-bg { background-image: linear-gradient(rgba(10, 5, 40, .32), rgba(10, 5, 40, .32)), url("photos/mood-synth4.jpg"); }
   html[data-mood="arcade"][data-route="work"] #mood-bg { background-image: linear-gradient(rgba(10, 5, 40, .32), rgba(10, 5, 40, .32)), url("photos/mood-synth5.jpg"); }
   html[data-mood="arcade"] #mood-bg::after { display: none; }
-  html[data-mood="arcade"] nav .brand, html[data-mood="arcade"] nav ul a, html[data-mood="arcade"] .enter, html[data-mood="arcade"] .backlink, html[data-mood="arcade"] .hub a, html[data-mood="arcade"] #view button:not(.name-btn):not(.mood-hint), html[data-mood="arcade"] #mood-btn, html[data-mood="arcade"] #mood-reset {
+  html[data-mood="arcade"] nav .brand, html[data-mood="arcade"] nav ul a, html[data-mood="arcade"] .enter, html[data-mood="arcade"] .backlink, html[data-mood="arcade"] .hub a, html[data-mood="arcade"] #view button:not(.name-btn):not(.mood-hint):not(.os *), html[data-mood="arcade"] #mood-btn, html[data-mood="arcade"] #mood-reset {
         font-family: "Press Start 2P", monospace; text-transform: uppercase; letter-spacing: 0; color: #fff; border: 3px solid #000; border-radius: 6px; text-shadow: 2px 2px 0 rgba(0, 0, 0, .55);
         background: linear-gradient(#ff7be5, #d63aa8); box-shadow: inset 0 3px 0 rgba(255, 255, 255, .45), 0 6px 0 #7a1b66, 0 9px 0 #000; transition: transform .08s, box-shadow .08s; cursor: pointer; }
   html[data-mood="arcade"] nav ul { background: none; box-shadow: none; padding: 0; gap: 12px; -webkit-backdrop-filter: none; backdrop-filter: none; }
@@ -2350,11 +2352,11 @@
   html[data-mood="arcade"] .hub a small { font-size: .55rem; opacity: .85; }
   html[data-mood="arcade"] .enter { font-size: 1rem; padding: 16px 28px; background: linear-gradient(#7dff8a, #1fbf3a); box-shadow: inset 0 3px 0 rgba(255, 255, 255, .5), 0 7px 0 #0d6b1e, 0 10px 0 #000; animation: mxBlink 1.1s steps(2) infinite; }
   html[data-mood="arcade"] .backlink { font-size: .7rem; padding: 10px 14px 11px; background: linear-gradient(#ff8a8a, #e02d2d); box-shadow: inset 0 3px 0 rgba(255, 255, 255, .45), 0 6px 0 #7d1010, 0 9px 0 #000; }
-  html[data-mood="arcade"] :is(nav ul a, .enter, .backlink, .hub a, #view button:not(.name-btn):not(.mood-hint), #mood-btn, #mood-reset):hover { transform: translateY(-2px); }
-  html[data-mood="arcade"] :is(nav ul a, nav .brand, .enter, .backlink, .hub a, #view button:not(.name-btn):not(.mood-hint), #mood-btn, #mood-reset):active { transform: translateY(6px); box-shadow: inset 0 3px 0 rgba(255, 255, 255, .3), 0 0 0 #000, 0 3px 0 #000; }
+  html[data-mood="arcade"] :is(nav ul a, .enter, .backlink, .hub a, #view button:not(.name-btn):not(.mood-hint):not(.os *), #mood-btn, #mood-reset):hover { transform: translateY(-2px); }
+  html[data-mood="arcade"] :is(nav ul a, nav .brand, .enter, .backlink, .hub a, #view button:not(.name-btn):not(.mood-hint):not(.os *), #mood-btn, #mood-reset):active { transform: translateY(6px); box-shadow: inset 0 3px 0 rgba(255, 255, 255, .3), 0 0 0 #000, 0 3px 0 #000; }
   html[data-mood="arcade"] #mood-btn, html[data-mood="arcade"] #mood-reset { font-size: .62rem; padding: 10px 14px 11px; background: linear-gradient(#ffe45c, #ff9e1f); color: #fff; }
   html[data-mood="arcade"] .home h1 { text-shadow: 4px 4px 0 #000, 0 0 18px rgba(255, 79, 216, .7); }
-  html[data-mood="arcade"] :is(h1, h2) { text-shadow: 3px 3px 0 #000; }
+  html[data-mood="arcade"] :is(h1, h2):not(.os *) { text-shadow: 3px 3px 0 #000; }
   @keyframes mxBlink { 50% { filter: brightness(1.25); } }
   .mx-coin { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 4; pointer-events: none; font-family: "Press Start 2P", monospace; font-size: .7rem; color: #ffe45c; text-shadow: 2px 2px 0 #000; animation: mxBlinkTxt 1s steps(2) infinite; white-space: nowrap; }
   @keyframes mxBlinkTxt { 50% { opacity: 0; } }
@@ -6943,11 +6945,11 @@ const HUNT = (() => {
       { src: 'photos/oshen-4-family-12.jpg', pos: '50% 60%', ar: '1 / 1' },
       { src: 'photos/oshen-4-family-13.jpg', pos: '50% 50%', ar: '4 / 5' }
     ],
-    [   // Visiting him at UVA: graduation first, then the rooftop sunsets, Potter's, and Pippin Hill
+    [   // Visiting him at UVA: graduation first, the Pippin Hill map behind it, then Potter's, the rooftop selfie, pizza, and the night sunset
       { src: 'photos/oshen-5-uva-01.jpg', pos: '50% 30%', ar: '4 / 5' },
-      { src: 'photos/oshen-5-uva-02.jpg', pos: '50% 50%', ar: '1 / 1' },
-      { src: 'photos/oshen-5-uva-03.jpg', pos: '50% 40%', ar: '1 / 1' },
       { src: 'photos/oshen-5-uva-04.jpg', pos: '50% 50%', ar: '1 / 1' },
+      { src: 'photos/oshen-5-uva-03.jpg', pos: '50% 40%', ar: '1 / 1' },
+      { src: 'photos/oshen-5-uva-02.jpg', pos: '50% 50%', ar: '1 / 1' },
       { src: 'photos/oshen-5-uva-05.jpg', pos: '35% 50%', ar: '1 / 1' },
       { src: 'photos/oshen-5-uva-06.jpg', pos: '60% 50%', ar: '1 / 1' }
     ],
@@ -6989,6 +6991,61 @@ const HUNT = (() => {
     for (let i = 0; i < 9; i++) { const t = (i + .5) / 9, x = 1000 * t, y = q(18, 96, 18, t) + 3; pins += `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(osRnd(i, 3) * 14 - 7).toFixed(1)})"><rect x="-4" y="-6" width="8" height="20" rx="2" fill="#d9b88a" stroke="#8d6e44" stroke-width="1"/><g transform="translate(-17 8) scale(.34)"><path d="${HEART_D}" fill="${cols[i % 3]}" stroke="rgba(60,8,16,.35)" stroke-width="2"/></g></g>`; }
     return `<svg class="os-line" viewBox="0 0 1000 150" aria-hidden="true"><path d="M0 18 Q500 96 1000 18" fill="none" stroke="#e9d9bd" stroke-width="3"/>${pins}</svg>`;
   };
+  /* ===== the collage look: crumpled paper backings, kisses, hearts on a string, pearls, a pressed sprig, a love letter ===== */
+  const osf = n => +n.toFixed(1);
+  const osDefs = `<svg class="os-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs>
+    <linearGradient id="osdRed" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e23a50"/><stop offset="1" stop-color="#8a1022"/></linearGradient>
+    <radialGradient id="osdPearl" cx="34%" cy="30%" r="72%"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#f3eadf"/><stop offset="1" stop-color="#c3b39e"/></radialGradient>
+    <linearGradient id="osdLeaf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a3bd8c"/><stop offset="1" stop-color="#5d7f4e"/></linearGradient>
+    <filter id="osdPrint" x="-8%" y="-14%" width="116%" height="128%"><feTurbulence type="fractalNoise" baseFrequency=".06" numOctaves="2" seed="7" result="w"/><feDisplacementMap in="SourceGraphic" in2="w" scale="3.4" result="d"/><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="3" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.8 0 0 0 -.55" result="holes"/><feComposite in="d" in2="holes" operator="in"/></filter>
+    <symbol id="osdLips" viewBox="0 0 120 64"><g filter="url(#osdPrint)"><path d="M3 31 C14 20 28 11 44 12 C52 12.5 57 15 60 19 C63 15 68 12.5 76 12 C92 11 106 20 117 31 C106 47 86 56 60 56 C34 56 14 47 3 31Z" fill="#a31a2c"/></g><path d="M7 31 C30 38.5 90 38.5 113 31" fill="none" stroke="#5e0b18" stroke-width="2" stroke-linecap="round" opacity=".7"/><path d="M26 25 C38 18.5 50 20 57 24 M94 25 C82 18.5 70 20 63 24" fill="none" stroke="#e0606c" stroke-width="2" stroke-linecap="round" opacity=".45"/></symbol>
+    <symbol id="osdLipsPale" viewBox="0 0 120 64"><g filter="url(#osdPrint)"><path d="M3 31 C14 20 28 11 44 12 C52 12.5 57 15 60 19 C63 15 68 12.5 76 12 C92 11 106 20 117 31 C106 47 86 56 60 56 C34 56 14 47 3 31Z" fill="#d98a92" opacity=".85"/></g><path d="M7 31 C30 38.5 90 38.5 113 31" fill="none" stroke="#a24f5b" stroke-width="1.6" stroke-linecap="round" opacity=".6"/></symbol>
+    <symbol id="osdHeart" viewBox="0 0 100 90"><path d="${HEART_D}" fill="url(#osdRed)" stroke="rgba(70,0,12,.4)" stroke-width="1.5"/><path d="M20 20 C22 14 28 10 34 10" stroke="rgba(255,255,255,.7)" stroke-width="4" fill="none" stroke-linecap="round"/></symbol>
+    <symbol id="osdSprig" viewBox="0 0 170 130"><path d="M8 122 C48 104 92 72 150 18" fill="none" stroke="#6f5d3c" stroke-width="3" stroke-linecap="round"/>
+      <g fill="url(#osdLeaf)" stroke="#4f6e43" stroke-width="1"><ellipse cx="40" cy="92" rx="30" ry="14" transform="rotate(-38 40 92)"/><ellipse cx="78" cy="78" rx="30" ry="14" transform="rotate(28 78 78)"/><ellipse cx="108" cy="46" rx="28" ry="13" transform="rotate(-48 108 46)"/><ellipse cx="136" cy="34" rx="22" ry="11" transform="rotate(24 136 34)"/></g>
+      <g fill="none" stroke="#4f6e43" stroke-width="1" opacity=".7"><path d="M20 106 L58 78"/><path d="M60 88 L96 68"/><path d="M92 58 L124 32"/></g>
+      <g fill="#b01c35"><circle cx="118" cy="82" r="8"/><circle cx="132" cy="90" r="8"/><circle cx="124" cy="102" r="8"/><circle cx="108" cy="96" r="7"/><circle cx="140" cy="76" r="7"/><circle cx="116" cy="110" r="6.5"/></g><g fill="#fff" opacity=".5"><circle cx="115" cy="79" r="2"/><circle cx="129" cy="87" r="2"/><circle cx="121" cy="99" r="2"/><circle cx="137" cy="73" r="1.8"/></g></symbol>
+    <symbol id="osdEnv" viewBox="0 0 170 130"><path d="M8 46 L162 46 L162 124 L8 124Z" fill="#d6bb8e" stroke="#b49866" stroke-width="1.5"/><path d="M8 46 L85 10 L162 46Z" fill="#cbae80" stroke="#b49866" stroke-width="1.5"/>
+      <path d="${HEART_D}" transform="translate(48 18) scale(.74)" fill="#b8202f"/><path d="M8 124 L84 80 L162 124Z" fill="#c7aa7c" opacity=".75"/>
+      <text x="22" y="76" font-family="Caveat, 'Segoe Script', cursive" font-size="19" font-weight="700" fill="#47362e" transform="rotate(-5 85 70)">P.S. I love you!</text></symbol>
+  </defs></svg>`;
+  const OSVB = { osdLips: [120, 64], osdLipsPale: [120, 64], osdHeart: [100, 90], osdSprig: [170, 130], osdEnv: [170, 130] };
+  const osSt = (sym, w, left, top, rot, extra = '') => { const [vw, vh] = OSVB[sym]; return `<svg class="os-st" viewBox="0 0 ${vw} ${vh}" style="width:${w}px;height:${Math.round(w * vh / vw)}px;left:${left};top:${top};transform:rotate(${rot}deg);${extra}" aria-hidden="true"><use href="#${sym}" width="${vw}" height="${vh}"/></svg>`; };
+  /* hearts strung on a thread */
+  const osGarland = (seed, h, n, pos) => {
+    const X = t => 32 + 16 * Math.sin(t * 5.4 + seed), pts = []; for (let k = 0; k <= 40; k++) pts.push(`${k ? 'L' : 'M'}${osf(X(k / 40))} ${osf(k / 40 * h)}`);
+    let hearts = ''; for (let i = 0; i < n; i++) { const t = (i + .6) / (n + .2), x = X(t), y = t * h, s = 20 + osRnd(seed + i, 5) * 14, rot = (osRnd(seed + i, 6) * 70 - 35).toFixed(0); hearts += `<use href="#osdHeart" x="${osf(x - s / 2)}" y="${osf(y - s * .45)}" width="${osf(s)}" height="${osf(s * .9)}" transform="rotate(${rot} ${osf(x)} ${osf(y)})"/>`; }
+    return `<svg class="os-st" viewBox="0 0 64 ${h}" style="width:64px;height:${h}px;${pos}" aria-hidden="true"><path d="${pts.join('')}" fill="none" stroke="#a31a2c" stroke-width="1.6"/>${hearts}</svg>`;
+  };
+  /* a strand of pearls */
+  const osPearls = (w, sag, n, r, pos) => {
+    const q = (a, b, c, t) => (1 - t) * (1 - t) * a + 2 * (1 - t) * t * b + t * t * c; let o = '';
+    for (let i = 0; i <= n; i++) { const t = i / n; o += `<circle cx="${osf(q(r, w / 2, w - r, t))}" cy="${osf(q(r, r + sag * 2, r, t))}" r="${r}" fill="url(#osdPearl)" stroke="rgba(110,90,70,.35)" stroke-width=".6"/>`; }
+    return `<svg class="os-st" viewBox="0 0 ${w} ${sag + 2 * r}" style="width:${w}px;height:${sag + 2 * r}px;${pos}" aria-hidden="true">${o}</svg>`;
+  };
+  /* torn-all-round paper edge */
+  const osTornAll = seed => {
+    const P = [], n = 22, e = k => (osRnd(seed, k) * 9).toFixed(1);
+    for (let i = 0; i <= n; i++) P.push(`${(i / n * 100).toFixed(1)}% ${e(i)}px`);
+    for (let i = 1; i <= 10; i++) P.push(`calc(100% - ${e(i + 30)}px) ${(i / 10 * 100).toFixed(1)}%`);
+    for (let i = n; i >= 0; i--) P.push(`${(i / n * 100).toFixed(1)}% calc(100% - ${e(i + 60)}px)`);
+    for (let i = 9; i >= 1; i--) P.push(`${e(i + 90)}px ${(i / 10 * 100).toFixed(1)}%`);
+    return `polygon(${P.join(',')})`;
+  };
+  const LOVEW = ['love', 'loved', 'loves', 'lovely', 'loving', 'lover', 'Love', 'LOVE', 'love?', 'love.', 'lovers'];
+  const osBack = (i, kind) => {
+    const k = kind || ['kraft', 'news', 'letter', 'fabric', 'kraft', 'news'][i % 6], r = (osRnd(i, 21) * 3.2 - 1.6).toFixed(2); let inner = '';
+    if (k === 'news') { let t = ''; for (let w = 0; w < 300; w++) t += LOVEW[Math.floor(osRnd(i * 13 + w, 2) * LOVEW.length)] + ' '; inner = `<div class="os-nt">${t}</div>`; }
+    else if (k === 'letter') inner = `<div class="os-lt">i love you, i love you, i love you, i love you, i love you, i love you, i love you, i love you, i love you, i love you, i love you</div>`;
+    return `<div class="os-bw" style="--br:${r}deg"><div class="os-back ${k}" style="clip-path:${osTornAll(i + 70)}">${inner}</div></div>`;
+  };
+  /* a few stickers around each memory (corners only, so no words are covered) */
+  const osDeco = i => [
+    () => osSt('osdLips', 80, '-2.6%', '-34px', -16) + osPearls(240, 34, 15, 6, 'right:2%;bottom:-40px;transform:rotate(3deg)') + osSt('osdHeart', 30, '97%', '-14px', 14),
+    () => osGarland(2, 210, 7, 'right:-10px;top:-44px') + osSt('osdSprig', 138, '-1.5%', 'calc(100% - 96px)', -6),
+    () => osSt('osdLipsPale', 84, '-2%', '-30px', 12) + osSt('osdEnv', 136, 'calc(100% - 118px)', 'calc(100% - 72px)', 7),
+    () => osPearls(280, 30, 17, 6, 'left:26%;top:-38px;transform:rotate(-2deg)') + osSt('osdLips', 70, '-1.5%', 'calc(100% - 44px)', 14) + osSt('osdHeart', 26, '95%', 'calc(100% - 30px)', -12)
+  ][i % 4]();
   /* one polaroid, or a little stack when a topic has several photos */
   const osPolaroids = (i, pr) => {
     const front = `<figure class="os-pola" style="--r:${pr}deg"><i class="os-tape"></i>${osPhoto(i)}<figcaption>${roman(i - 1)}.</figcaption></figure>`, behind = osList(i).slice(1, 2);
@@ -6999,30 +7056,46 @@ const HUNT = (() => {
   const osNote = (m, i) => {
     const v = ['cream', 'gingham', 'kraft'][i % 3], flip = i % 2 ? ' rev' : '', rot = (osRnd(i, 2) * 2 - 1).toFixed(1), pr = (osRnd(i, 1) * 9 - 4.5).toFixed(1);
     return `<article class="os-spread${flip}${osList(i).length > 1 ? ' has-stack' : ''}">
+      ${osBack(i)}
       ${osPolaroids(i, pr)}
       <div class="os-note ${v}" style="--r:${rot}deg">${v === 'gingham' ? `<div class="os-gingham" style="clip-path:${osTorn(i + 20)}"></div>` : ''}<div class="os-paper" style="clip-path:${osTorn(i)}"><h3>${m.h}</h3><p>${m.t}</p></div><i class="os-tape t2"></i></div>
       ${osGallery(i)}
+      ${osDeco(i)}
     </article>`;
   };
   /* the first memory runs as the front page of a little newspaper */
   const osNews = (m, i) => `<article class="os-news-wrap"><div class="os-news">
       <div class="os-news-back b1"></div><div class="os-news-back b2"></div>
       <div class="os-news-front"><div class="os-mast">NEWS</div><div class="os-nsub">a love story, starring two people and one jump scare</div>
-        <h3>${m.h}</h3><div class="os-cols"><div class="os-nphoto">${osPhoto(i)}</div><p>${m.t}</p></div></div></div></article>`;
+        <h3>${m.h}</h3><div class="os-cols"><div class="os-nphoto">${osPhoto(i)}</div><p>${m.t}</p></div></div>${osGarland(3, 210, 7, 'right:-26px;top:-46px')}${osSt('osdLips', 78, '-3.2%', 'calc(100% - 54px)', 16)}</div></article>`;
 
-  /* photos for the swipeable heart at the top of the page (people swipe, tap the arrows, or tap a photo to see it big).
-     These five are placeholders from the page: add yours as { src: 'photos/your-file.jpg', pos: '50% 40%' } (pos = where the faces are), and delete any you don't want. */
+  /* photos for the swipeable heart at the top of the page. People swipe, tap the arrows, or tap a photo to see it big.
+     src = the file in the photos folder, pos = where the faces are, cap = the caption under the heart. Reorder or add lines as you like. */
   const OSHEN_HEART_PHOTOS = [
-    { src: 'photos/oshen-3-europe-01.jpg', pos: '50% 35%' },
-    { src: 'photos/oshen-3-europe-05.jpg', pos: '50% 30%' },
-    { src: 'photos/oshen-5-uva-02.jpg', pos: '50% 50%' },
-    { src: 'photos/oshen-7-festivals-01.jpg', pos: '50% 45%' },
-    { src: 'photos/oshen-2-ocean-1.jpg', pos: '50% 40%' }
+    { src: 'photos/oshen-heart-01.jpg', pos: '50% 51%', cap: 'me and my love in Antigua, Guatemala' },
+    { src: 'photos/oshen-heart-02.jpg', pos: '50% 76%', cap: 'te amo' },
+    { src: 'photos/oshen-heart-03.jpg', pos: '50% 98%', cap: 'casual kiss next to an active volcano' },
+    { src: 'photos/oshen-heart-04.jpg', pos: '50% 0%', cap: 'When life gives you lemons... hike Mount Lemmon!' },
+    { src: 'photos/oshen-heart-05.jpg', pos: '50% 0%', cap: 'my 28th birthday party' },
+    { src: 'photos/oshen-heart-06.jpg', pos: '50% 28%', cap: 'Wine bar in Winter Park!' },
+    { src: 'photos/oshen-heart-07.jpg', pos: '50% 14%', cap: 'let\'s travel the world' },
+    { src: 'photos/oshen-heart-08.jpg', pos: '50% 42%', cap: 'a drink in Montreal' },
+    { src: 'photos/oshen-heart-09.jpg', pos: '96% 50%', cap: 'relaxing after a hike up Volcán Acatenango' },
+    { src: 'photos/oshen-heart-10.jpg', pos: '50% 42%', cap: 'smiling big because I have you' },
+    { src: 'photos/oshen-heart-11.jpg', pos: '50% 52%', cap: 'he loves his oranges' },
+    { src: 'photos/oshen-heart-12.jpg', pos: '50% 71%', cap: 'my favorite singing partner' },
+    { src: 'photos/oshen-heart-13.jpg', pos: '50% 58%', cap: 'he tells me so much tea' },
+    { src: 'photos/oshen-heart-14.jpg', pos: '50% 84%', cap: 'my cowboy' },
+    { src: 'photos/oshen-heart-15.jpg', pos: '50% 21%', cap: 'you make me smile' },
+    { src: 'photos/oshen-heart-16.jpg', pos: '50% 88%', cap: '“I love you.” “I know.”' },
+    { src: 'photos/oshen-heart-17.jpg', pos: '50% 0%', cap: 'you + me forever & ever & everrrrrr' }
   ];
   const osHeart = () => {
     const L = OSHEN_HEART_PHOTOS.map(osNorm); if (!L.length) return '';
-    const slides = L.map((p, k) => `<img class="os-hs-img" src="${p.src}" alt="Photo ${k + 1} of ${L.length} of us" role="button" tabindex="0" data-gal="heart" data-k="${k}" data-full="${p.src}" data-cap="Us" ${k > 7 ? 'loading="lazy"' : ''} decoding="async" draggable="false" style="${p.pos ? `object-position:${p.pos}` : ''}">`).join('');
+    const escH = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'), capOf = p => p.cap || 'us';
+    const slides = L.map((p, k) => `<img class="os-hs-img" src="${p.src}" alt="${escH(capOf(p))}" role="button" tabindex="0" data-gal="heart" data-k="${k}" data-full="${p.src}" data-cap="${escH(capOf(p))}" ${k > 7 ? 'loading="lazy"' : ''} decoding="async" draggable="false" style="${p.pos ? `object-position:${p.pos}` : ''}">`).join('');
     return `<section class="os-heart" aria-label="Photos of us">
+      ${osSt('osdLipsPale', 92, '3%', '8%', -20)}${osGarland(4, 240, 8, 'right:3%;top:2%')}
       <div class="os-hwrap">
         <svg class="os-hlace" viewBox="0 0 100 90" aria-hidden="true">
           <path d="${HEART_D}" fill="#fbf1e2" stroke="#fbf1e2" stroke-width="6" stroke-linejoin="round"/>
@@ -7033,8 +7106,9 @@ const HUNT = (() => {
         <div class="os-hwin"><div class="os-htrack" tabindex="0" aria-label="Photos of us. Swipe or use the arrow keys.">${slides}</div></div>
         <button type="button" class="os-hnav prev" aria-label="Previous photo">&#8249;</button><button type="button" class="os-hnav next" aria-label="Next photo">&#8250;</button>
       </div>
+      <p class="os-hcap" aria-live="polite">${escH(capOf(L[0]))}</p>
       <div class="os-hdots" aria-hidden="true">${L.map((_, k) => `<i${k ? '' : ' class="on"'}></i>`).join('')}</div>
-      <p class="os-hhint">swipe for more</p>
+      <p class="os-hhint">swipe for more &middot; tap a photo to see it big</p>
     </section>`;
   };
   function oshenLoveHtml() {
@@ -7075,12 +7149,14 @@ const HUNT = (() => {
   }
   pages['/oshen'] = { title: "for o'shen", html: () => { osFonts(); return `
     <section class="dd os">
+      ${osDefs}
       <a class="backlink" href="#/about">&larr; about</a>
-      <div class="os-taped"><i class="os-tape a"></i><i class="os-tape b"></i>
+      <div class="os-taped">${osBack(1, 'kraft')}<i class="os-tape a"></i><i class="os-tape b"></i>
         <div class="dd-sheet dd-first" role="img" aria-label="${OSHEN_LINES.join(' ').replace('|', ' ')}">
           <p class="dd-text" aria-hidden="true">${OSHEN_LINES.map((l, i) => `<span style="--d:${.5 + i * .9}s">${l.replace('|', '<span class="dd-br"> </span>')}</span>`).join('')}</p>
           ${pineSvg()}
         </div>${osBow}
+        ${osPearls(300, 40, 17, 6, 'left:-30px;top:-34px;transform:rotate(-12deg)')}${osSt('osdLips', 88, '-3.4%', 'calc(100% - 56px)', 12)}${osGarland(5, 230, 8, 'right:11%;top:-56px')}
       </div>
       ${osHeart()}
       <section class="os-mem">
@@ -7090,7 +7166,7 @@ const HUNT = (() => {
       </section>
       ${osLine()}
       ${oshenLoveHtml()}
-      <p class="os-iloveyou">i love you</p>
+      <div class="os-closing">${osSt('osdEnv', 150, 'max(0px, calc(50% - 500px))', '-4px', -8)}${osSt('osdLips', 92, 'min(calc(100% - 100px), calc(50% + 310px))', '14px', 14)}${osPearls(260, 30, 15, 6, 'left:calc(50% - 130px);top:calc(100% + 4px)')}<p class="os-iloveyou">i love you<span class="os-sign">- H</span></p></div>
     </section>`; } };
   return { state: () => st };
 })();
@@ -7281,6 +7357,9 @@ document.addEventListener('error', function (e) {
     <ellipse cx="14" cy="14" rx="4.5" ry="2.6" fill="#fff" opacity=".6" transform="rotate(-35 14 14)"/>
     <circle cx="18" cy="21" r="2" fill="#7a1636"/><circle cx="30" cy="21" r="2" fill="#7a1636"/><path d="M20.5 26 q3.5 3.6 7 0" fill="none" stroke="#7a1636" stroke-width="1.8" stroke-linecap="round"/>
     <circle cx="14.5" cy="25.5" r="2.4" fill="#ffb3c6"/><circle cx="33.5" cy="25.5" r="2.4" fill="#ffb3c6"/></svg>`;
+  const LOVEARROW = `<svg class="pl-s lovearrow" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="laG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6b8e"/><stop offset="1" stop-color="#c9183f"/></linearGradient></defs>
+    <path d="M6 4 L6 34 L13.4 27.3 L18.4 39.4 L24.2 37 L19.3 25 L29.4 25Z" fill="#fbeee4" stroke="#7d1022" stroke-width="2.4" stroke-linejoin="round"/>
+    <g class="lahrt"><path d="M33 31 C25.5 25.8 24 21.5 24 18.6 C24 15.6 26.2 13.6 28.7 13.6 C30.6 13.6 32.1 14.8 33 16.6 C33.9 14.8 35.4 13.6 37.3 13.6 C39.8 13.6 42 15.6 42 18.6 C42 21.5 40.5 25.8 33 31Z" fill="url(#laG)" stroke="#7d1022" stroke-width="1.8" stroke-linejoin="round"/><ellipse cx="28.6" cy="17.6" rx="2.2" ry="1.3" fill="#fff" opacity=".7" transform="rotate(-35 28.6 17.6)"/></g></svg>`;
   const CONE = `<svg class="pl-s cone" viewBox="0 0 48 48" aria-hidden="true"><path d="M13 26 L35 26 L24 47Z" fill="#e8b46c" stroke="#b8803a" stroke-width="2" stroke-linejoin="round"/>
     <path d="M17.5 30 L30 38 M21 27 L33 34.5 M30.5 30 L18 38 M27 27 L15.2 34.5" stroke="#b8803a" stroke-width="1.2" stroke-linecap="round" opacity=".7"/>
     <circle cx="24" cy="12" r="8.5" fill="#fff3c4" stroke="#d8b96a" stroke-width="2"/><circle cx="24" cy="22" r="12" fill="#f7a1c4" stroke="#d9739f" stroke-width="2"/>
@@ -7311,9 +7390,10 @@ document.addEventListener('error', function (e) {
     <path d="M38 38 C33 33 28 29 23 24" fill="none" stroke="${INKC}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 38 C33 33 28 29 23 24" fill="none" stroke="#ffd9b8" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 40 C28 34 33 31 40 32 C47 33 52 38 52 44 C52 50 47 55 40 55 L36 55 C31 55 28 51 28 47Z" fill="#ffd9b8" stroke="${INKC}" stroke-width="2.2" stroke-linejoin="round"/><path d="M31 48 C23 48 17 42 15 33 C14 29 14 27 14 25" fill="none" stroke="${INKC}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M31 48 C23 48 17 42 15 33 C14 29 14 27 14 25" fill="none" stroke="#ffd9b8" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"/><g fill="none" stroke="${INKC}" stroke-width="1.8" stroke-linecap="round"><path d="M37 39 C41 40 45 40 49 39"/><path d="M36 45 C41 46 46 46 50 45"/><path d="M36 51 C40 52 44 52 47 51"/></g><g class="hcoin"><circle cx="18" cy="14" r="9" fill="#ffd66b" stroke="#a9760a" stroke-width="2.2"/><circle cx="18" cy="14" r="5.6" fill="none" stroke="#e0a82e" stroke-width="1.5"/><path d="M18 9.6 L19.3 12.7 L22.6 13 L20.1 15.2 L20.9 18.4 L18 16.7 L15.1 18.4 L15.9 15.2 L13.4 13 L16.7 12.7Z" fill="#fff3b0"/></g>
   </svg>`;
   const SABER = `<svg class="pl-s saber" viewBox="0 0 64 64" aria-hidden="true"><g class="blade"><line x1="21" y1="43" x2="58" y2="6" style="stroke:var(--blade)" stroke-width="9" stroke-linecap="round" opacity=".5"/><line x1="21" y1="43" x2="58" y2="6" style="stroke:var(--blade)" stroke-width="5.5" stroke-linecap="round"/><line x1="22" y1="42" x2="57" y2="7" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></g><line x1="22" y1="42" x2="6" y2="58" stroke="#3a3f58" stroke-width="8" stroke-linecap="round"/><line x1="22" y1="42" x2="7" y2="57" stroke="#cfd3e6" stroke-width="5" stroke-linecap="round"/><line x1="19" y1="45" x2="22" y2="42" stroke="#8d94b6" stroke-width="9" stroke-linecap="round"/><line x1="15" y1="49" x2="11" y2="53" stroke="#6b7088" stroke-width="5.4" opacity=".85"/><circle cx="14" cy="47" r="1.7" fill="#ff5a5a"/></svg>`;
-  const CUR = { popcorn: { lean: 14 }, saber: { lean: 26 }, plane: { dir: 1 }, rocket: { dir: 1 }, ball: { roll: 1 }, heart: { lean: 16 }, cone: { lean: 20 }, note: { lean: 12 }, brush: { lean: 10 }, mug: { lean: 14 }, wish: { lean: 8 }, swordfish: { lean: 10 }, y2kmouse: { lean: 6 }, candle: { lean: 12 }, umbrella: { lean: 14 }, wand: { lean: 14 }, sword: { lean: 12 }, hoof: { lean: 10 }, discoball: { roll: 1 } };
+  const CUR = { popcorn: { lean: 14 }, saber: { lean: 26 }, plane: { dir: 1 }, rocket: { dir: 1 }, ball: { roll: 1 }, heart: { lean: 16 }, cone: { lean: 20 }, note: { lean: 12 }, brush: { lean: 10 }, mug: { lean: 14 }, wish: { lean: 8 }, lovearrow: { lean: 3 }, swordfish: { lean: 10 }, y2kmouse: { lean: 6 }, candle: { lean: 12 }, umbrella: { lean: 14 }, wand: { lean: 14 }, sword: { lean: 12 }, hoof: { lean: 10 }, discoball: { roll: 1 } };
   const themeFor = h => {
     const r = (h || '').replace(/^#/, '') || '/';
+    if (r.startsWith('/oshen')) return 'lovearrow';
     if (r.startsWith('/about')) return 'cone';
     if (r.startsWith('/goals')) return 'rocket';
     if (r.startsWith('/work')) return 'mug';
@@ -7324,13 +7404,13 @@ document.addEventListener('error', function (e) {
     if (r === '/loves' || r.startsWith('/loves/friends')) return 'heart';
     return 'plane';
   };
-  const setTheme = () => { root.dataset.cur = mf ? 'wish' : saber ? 'saber' : (root.dataset.mxcur || themeFor(location.hash)); };
+  const setTheme = () => { root.dataset.cur = mf ? 'wish' : saber ? 'saber' : ((location.hash || '').startsWith('#/oshen') ? 'lovearrow' : (root.dataset.mxcur || themeFor(location.hash))); };
   setTheme();
 
   if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const plane = document.createElement('div');
     plane.id = 'plane'; plane.setAttribute('aria-hidden', 'true');
-    plane.innerHTML = `<div class="pl-rot">${PLANE}${ROCKET}</div><div class="pl-free">${BALL}${HEART}${CONE}${NOTE}${BRUSH}${MUG}${POPCORN}${WISH}${SABER}</div>`;
+    plane.innerHTML = `<div class="pl-rot">${PLANE}${ROCKET}</div><div class="pl-free">${BALL}${HEART}${CONE}${NOTE}${BRUSH}${MUG}${POPCORN}${WISH}${SABER}${LOVEARROW}</div>`;
     const rot = plane.querySelector('.pl-rot'), free = plane.querySelector('.pl-free');
     const cv = document.createElement('canvas'); cv.id = 'trail'; cv.setAttribute('aria-hidden', 'true');
     document.body.append(cv, plane);
@@ -7357,7 +7437,7 @@ document.addEventListener('error', function (e) {
 
     const emit = (th, now) => {
       const r = Math.random, bx = x - vx * 1.5, by = y - vy * 1.5;
-      if (th === 'heart') parts.push({ k: 'h', x: bx + (r() - .5) * 10, y: by + (r() - .5) * 10, vx: (r() - .5) * .5, vy: -.4 - r() * .6, s: 5 + r() * 6, c: HEARTS[(r() * 4) | 0], t: now, life: 950 });
+      if (th === 'heart' || th === 'lovearrow') parts.push({ k: 'h', x: bx + (r() - .5) * 10, y: by + (r() - .5) * 10, vx: (r() - .5) * .5, vy: -.4 - r() * .6, s: 5 + r() * 6, c: HEARTS[(r() * 4) | 0], t: now, life: 950 });
       else if (th === 'note') parts.push({ k: 'n', x: bx + (r() - .5) * 10, y: by + (r() - .5) * 10, vx: (r() - .5) * .6, vy: -.35 - r() * .5, s: 13 + r() * 8, c: NOTEC[(r() * 4) | 0], g: NOTES[(r() * 3) | 0], t: now, life: 1050 });
       else if (th === 'cone') parts.push({ k: 's', x: bx + (r() - .5) * 14, y: by + (r() - .5) * 14, vx: (r() - .5) * .8, vy: .2 + r() * .6, a: r() * 6, s: 6 + r() * 3, c: SPR[(r() * 6) | 0], t: now, life: 750 });
       else if (th === 'mug') parts.push({ k: 'm', x: bx + (r() - .5) * 8, y: by + (r() - .5) * 8, vx: (r() - .5) * .3, vy: -.5 - r() * .4, s: 5 + r() * 4, t: now, life: 1000 });
@@ -9363,11 +9443,12 @@ document.addEventListener('error', function (e) {
   const freeEl = document.querySelector('#plane .pl-free'); if (freeEl) freeEl.insertAdjacentHTML('beforeend', CURSVG);
   const CURS = { tropical: 'swordfish', y2k: 'y2kmouse', academia: 'candle', oldmoney: 'umbrella', dreamy: 'wand', arcade: 'sword', western: 'hoof', disco: 'discoball' };
   const themeForHash = h => { const r = (h || '').replace(/^#/, '') || '/';
+    if (r.startsWith('/oshen')) return 'lovearrow';
     if (r.startsWith('/about')) return 'cone'; if (r.startsWith('/goals')) return 'rocket'; if (r.startsWith('/work')) return 'mug'; if (r.startsWith('/loves/artists')) return 'note'; if (r.startsWith('/loves/art')) return 'brush';
     if (r.startsWith('/loves/food')) return 'cone'; if (r.startsWith('/loves/movies') || r.startsWith('/loves/tv')) return 'popcorn'; if (r === '/loves' || r.startsWith('/loves/friends')) return 'heart'; return 'plane'; };
   function applyCursor(k) {
     if (CURS[k] && freeEl) root.dataset.mxcur = CURS[k]; else delete root.dataset.mxcur;
-    if (!root.hasAttribute('data-saber') && !root.classList.contains('mf-open')) root.dataset.cur = root.dataset.mxcur || themeForHash(location.hash);
+    if (!root.hasAttribute('data-saber') && !root.classList.contains('mf-open')) root.dataset.cur = (location.hash || '').startsWith('#/oshen') ? 'lovearrow' : (root.dataset.mxcur || themeForHash(location.hash));
   }
 
   /* ===== helpers for little things that cross the screen ===== */
@@ -11612,8 +11693,8 @@ window.__book = { open, close, turn };
   background-blend-mode: multiply, normal, normal, normal;
   box-shadow: 0 22px 50px rgba(73,77,95,.3), inset 0 0 110px rgba(70,66,58,.14); }
 .dd-first { min-height: clamp(420px, 66vh, 640px); }
-.dd-text { position: absolute; left: clamp(26px, 9%, 120px); top: clamp(56px, 15%, 110px); width: min(90%, 820px); margin: 0; transform: rotate(15deg); transform-origin: left top;
-  font: italic 400 clamp(22px, 3.3vw, 42px)/1.5 "EB Garamond", "Cormorant Garamond", "IM Fell English", Georgia, "Times New Roman", serif; letter-spacing: .012em; color: #26262c; opacity: 1; text-shadow: 0 0 .6px rgba(20,20,25,.4); }
+.dd-text { position: absolute; left: clamp(22px, 7%, 96px); top: clamp(48px, 13%, 100px); width: min(94%, 1000px); margin: 0; transform: rotate(15deg); transform-origin: left top;
+  font: italic 400 clamp(30px, 5vw, 66px)/1.42 "EB Garamond", "Cormorant Garamond", "IM Fell English", Georgia, "Times New Roman", serif; letter-spacing: .012em; color: #26262c; opacity: 1; text-shadow: 0 0 .6px rgba(20,20,25,.4); }
 .dd-text > span { display: block; opacity: 0; animation: ddin 1.6s var(--d, 0s) cubic-bezier(.3,.7,.2,1) forwards; }
 .dd-text > span + span { margin-left: -.55em; }
 @keyframes ddin { from { opacity: 0; filter: blur(7px); transform: translateY(10px); } to { opacity: 1; filter: none; transform: none; } }
@@ -11632,7 +11713,7 @@ window.__book = { open, close, turn };
 .dd-list .t { display: block; }
 .dd-list .mt { display: block; margin-bottom: 6px; font: italic 400 clamp(23px, 3vw, 34px)/1.2 "EB Garamond", "IM Fell English", Georgia, serif; color: #26262c; }
 .dd-list .mb { display: block; font: 400 clamp(17.5px, 2vw, 22px)/1.55 "EB Garamond", "IM Fell English", Georgia, serif; color: #3a3a42; }
-@media (max-width: 640px) { .dd-br { display: block; font-size: 0; height: 0; } .dd-br::after { content: none; } .dd-text { top: 18%; left: 14%; width: 82%; font-size: 21px; } .dd-text > span + span { margin-left: 0; } .dd-pine { width: 98%; right: -90px; bottom: -60px; } }
+@media (max-width: 640px) { .dd-br { display: block; font-size: 0; height: 0; } .dd-br::after { content: none; } .dd-text { top: 15%; left: 9%; width: 88%; font-size: 25px; } .dd-text > span + span { margin-left: 0; } .dd-pine { width: 98%; right: -90px; bottom: -60px; } }
 @media (prefers-reduced-motion: reduce) { .dd-text > span, .dd-list li { animation: none; opacity: 1; } .dd-pine { animation: none; } }
 .bk-link { color: #8458B3; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 </style>
@@ -11701,7 +11782,7 @@ html[data-route="oshen"] {
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1  0 0 0 0 0  0 0 0 0 .02  0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-attachment: fixed; }
 html[data-route="oshen"] :is(#mood-bg, #mood-fx) { display: none !important; }
-.os { --cream: #fbeee4; --ink: #4a1a20; --red: #a01f31; position: relative; overflow-x: clip; }
+.os { --cream: #fbeee4; --ink: #4a1a20; --red: #a01f31; position: relative; overflow-x: clip; margin-inline: -36px; padding-inline: 36px; }
 .os .backlink { position: relative; z-index: 2; }
 
 /* the dedication page, taped to the felt */
@@ -11731,7 +11812,7 @@ html[data-route="oshen"] :is(#mood-bg, #mood-fx) { display: none !important; }
 .os-nphoto { float: left; width: min(42%, 250px); margin: 4px 18px 8px 0; padding: 6px; background: #fff; box-shadow: 0 3px 8px rgba(0, 0, 0, .25); filter: grayscale(.25); }
 
 /* polaroids and torn-paper notes */
-.os-spread { display: grid; grid-template-columns: minmax(190px, 270px) 1fr; gap: clamp(22px, 4.5vw, 54px); align-items: center; margin: 44px 0; }
+.os-spread { display: grid; grid-template-columns: minmax(190px, 270px) 1fr; gap: clamp(22px, 4.5vw, 54px); align-items: center; margin: 70px 0; }
 .os-spread.rev { grid-template-columns: 1fr minmax(190px, 270px); } .os-spread.rev .os-pola, .os-spread.rev .os-stack { order: 2; }
 .os-pola { position: relative; width: 100%; max-width: 270px; justify-self: center; margin: 0; padding: 12px 12px 10px; background: #fffdf8; box-shadow: 0 16px 28px rgba(30, 0, 6, .5); transform: rotate(var(--r, 0deg)); transition: transform .35s cubic-bezier(.3, 1.4, .5, 1); }
 .os-pola:hover { transform: rotate(0deg) scale(1.04); }
@@ -11770,6 +11851,7 @@ html[data-route="oshen"] :is(#mood-bg, #mood-fx) { display: none !important; }
 .os-love .lv-heart svg { filter: drop-shadow(0 10px 10px rgba(30, 0, 6, .45)); }
 .os-love .lv-cap { min-height: 2.6em; margin: 18px auto 0; max-width: 22ch; font: 700 clamp(32px, 4.2vw, 46px)/1.12 "Caveat", "Segoe Script", cursive; color: var(--cream); text-shadow: 0 2px 0 rgba(50, 6, 14, .5); }
 .os-love .lv-mini { background: #ffd6cf; }
+.os-sign { display: block; margin-top: -.08em; font-size: .52em; letter-spacing: .02em; }
 .os-iloveyou { margin: 26px 0 0; text-align: center; font: 700 clamp(54px, 9vw, 100px)/1 "Caveat", "Segoe Script", cursive; color: var(--cream); transform: rotate(-3deg); text-shadow: 0 4px 0 rgba(50, 6, 14, .55); opacity: 1; }
 
 @media (max-width: 720px) {
@@ -11801,8 +11883,8 @@ html[data-route="oshen"] :is(#mood-bg, #mood-fx) { display: none !important; }
 @media (max-width: 720px) { #os-lb .lb-nav { top: auto; bottom: 18px; margin: 0; } #os-lb .lb-prev { left: calc(50% - 64px); } #os-lb .lb-next { right: calc(50% - 64px); } #os-lb img { max-height: 66vh; } }
 @media (prefers-reduced-motion: reduce) { #os-lb, #os-lb figure, .os-gp { transition: none; } }
 /* the swipeable heart */
-.os-heart { margin: -14px 0 46px; text-align: center; }
-.os-hwrap { position: relative; width: min(540px, 88vw); aspect-ratio: 100 / 90; margin: 0 auto; filter: drop-shadow(0 20px 22px rgba(30, 0, 6, .5)); animation: osBob 7s ease-in-out infinite alternate; }
+.os-heart { position: relative; margin: -14px 0 46px; text-align: center; }
+.os-hwrap { position: relative; width: min(780px, 100%); aspect-ratio: 100 / 90; margin: 0 auto; filter: drop-shadow(0 20px 22px rgba(30, 0, 6, .5)); animation: osBob 7s ease-in-out infinite alternate; }
 @keyframes osBob { from { transform: translateY(-4px) rotate(-.6deg); } to { transform: translateY(4px) rotate(.6deg); } }
 .os-hlace { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .os-hwin { position: absolute; left: 10%; top: 9%; width: 80%; height: 80%; overflow: hidden; background: #f3e4d6;
@@ -11815,12 +11897,44 @@ html[data-route="oshen"] :is(#mood-bg, #mood-fx) { display: none !important; }
 .os-hnav { position: absolute; top: 50%; z-index: 3; display: grid; place-items: center; width: 44px; height: 44px; margin-top: -22px; padding: 0 0 4px; border-radius: 50%; border: 2px solid #fbf1e2; background: rgba(116, 18, 31, .88); color: #fbeee4; font: 400 28px/1 sans-serif; cursor: pointer; box-shadow: 0 6px 12px rgba(30, 0, 6, .4); transition: transform .2s, background .2s; }
 .os-hnav:hover { transform: scale(1.1); background: #a01f31; } .os-hnav:focus-visible { outline: 3px solid #ffd27a; outline-offset: 3px; }
 .os-hnav.prev { left: -6px; } .os-hnav.next { right: -6px; }
-.os-hdots { display: flex; gap: 9px; justify-content: center; margin-top: 18px; }
-.os-hdots i { width: 10px; height: 10px; border-radius: 50%; background: rgba(251, 238, 228, .35); transition: background .3s, transform .3s; }
+.os-hcap { min-height: 2.3em; margin: 16px auto 0; max-width: 24ch; font: 700 clamp(30px, 4vw, 42px)/1.1 "Caveat", "Segoe Script", "Bradley Hand", cursive; color: #fbeee4; text-shadow: 0 2px 0 rgba(50, 6, 14, .5); transition: opacity .2s; }
+.os-hcap.swap { opacity: 0; }
+.os-hdots { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 340px; margin: 6px auto 0; }
+.os-hdots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(251, 238, 228, .35); transition: background .3s, transform .3s; }
 .os-hdots i.on { background: #fbeee4; transform: scale(1.35); }
 .os-hhint { margin: 8px 0 0; font: 700 24px/1 "Caveat", "Segoe Script", cursive; color: rgba(251, 238, 228, .8); opacity: 1; }
 @media (max-width: 720px) { .os-hnav { width: 38px; height: 38px; margin-top: -19px; font-size: 24px; } .os-hnav.prev { left: -2px; } .os-hnav.next { right: -2px; } .os-heart { margin-top: -22px; } }
 @media (prefers-reduced-motion: reduce) { .os-hwrap { animation: none; } }
+/* his page keeps its own look in every mood */
+html[data-route="oshen"] #view .os .backlink { font: 600 1.15rem/1.2 "Quicksand", ui-rounded, system-ui, sans-serif; text-transform: none; letter-spacing: 0; color: #4a1a20; text-shadow: none; padding: 5px 20px 8px; background: rgba(251, 238, 228, .92); border: 2px solid #a01f31; border-radius: 999px; box-shadow: 0 6px 16px rgba(30, 0, 6, .35); }
+html[data-route="oshen"] #view .os .backlink:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 10px 22px rgba(30, 0, 6, .45); }
+/* ===== the collage look ===== */
+.os-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.os-st { position: absolute; z-index: 5; pointer-events: none; overflow: visible; filter: drop-shadow(0 3px 3px rgba(30, 0, 6, .38)); }
+.os-spread, .os-taped, .os-news-wrap { isolation: isolate; }
+.os-spread { position: relative; }
+.os-bw { position: absolute; inset: -24px -26px; z-index: 0; pointer-events: none; transform: rotate(var(--br, 0deg)); filter: drop-shadow(0 12px 14px rgba(30, 0, 6, .5)); }
+.os-back { position: absolute; inset: 0; overflow: hidden; }
+.os-spread > :not(.os-bw):not(.os-st), .os-taped > .dd-sheet { position: relative; z-index: 1; }
+.os-back.kraft { background-color: #cdb48a; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.011 .017' numOctaves='4' seed='8' result='n'/%3E%3CfeDiffuseLighting in='n' surfaceScale='5' diffuseConstant='1.05' lighting-color='%23d8c19a'%3E%3CfeDistantLight azimuth='235' elevation='62'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E"); background-size: 520px 520px; }
+.os-back.news { background: #eee3cc; }
+.os-nt { position: absolute; inset: -6px; font: 400 13px/1.3 "Special Elite", "Courier New", monospace; color: rgba(54, 40, 30, .72); text-align: justify; word-spacing: 2px; overflow: hidden; }
+.os-back.letter { background-color: #efe6d6; background-image: repeating-linear-gradient(0deg, transparent 0 33px, rgba(140, 110, 90, .3) 33px 34px); }
+.os-lt { position: absolute; left: 5%; right: -12%; top: 6%; font: 700 38px/48px "Caveat", "Segoe Script", cursive; color: rgba(44, 32, 30, .74); transform: rotate(-5deg); }
+.os-back.fabric { background-color: #d3cac5; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='%23c3283b'%3E%3Cpath d='M16 22 C10 17 8 13 8 10.5 C8 8 10 6.5 12 6.5 C13.7 6.5 15.2 7.5 16 9 C16.8 7.5 18.3 6.5 20 6.5 C22 6.5 24 8 24 10.5 C24 13 22 17 16 22Z'/%3E%3Cpath transform='translate(32 32)' d='M16 22 C10 17 8 13 8 10.5 C8 8 10 6.5 12 6.5 C13.7 6.5 15.2 7.5 16 9 C16.8 7.5 18.3 6.5 20 6.5 C22 6.5 24 8 24 10.5 C24 13 22 17 16 22Z'/%3E%3C/g%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .3  0 0 0 0 .25  0 0 0 0 .2  0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+/* masking tape instead of candy stripes */
+.os-tape { background: linear-gradient(180deg, rgba(236, 220, 178, .94), rgba(214, 190, 140, .94)); box-shadow: none;
+  clip-path: polygon(0 0, 3% 14%, 0 28%, 3% 42%, 0 57%, 3% 71%, 0 85%, 2% 100%, 98% 100%, 100% 85%, 97% 71%, 100% 57%, 97% 42%, 100% 28%, 97% 14%, 100% 0); }
+.os-tape::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, rgba(120, 90, 40, .07) 0 1px, transparent 1px 4px), linear-gradient(180deg, rgba(255, 255, 255, .28), transparent 45%, rgba(110, 80, 30, .12)); }
+
+.os-closing { position: relative; margin-top: 8px; }
+.os-closing .os-st { z-index: 2; }
+@media (max-width: 720px) { .os-closing > .os-st:nth-of-type(1) { left: 6% !important; top: -92px !important; } .os-closing > .os-st:nth-of-type(2) { display: none; } .os-closing { margin-top: 70px; } }
+@media (max-width: 640px) { .os { margin-inline: -20px; padding-inline: 20px; } }
+@media (max-width: 720px) { .os-heart .os-st { display: none; } .os-st { scale: .62; } .os-bw { inset: -16px -14px; } .os-nt { font-size: 11px; } .os-lt { font-size: 30px; line-height: 40px; } }
+
+
 
 </style>
 <script>
@@ -11863,7 +11977,8 @@ html[data-route="oshen"] :is(#mood-bg, #mood-fx) { display: none !important; }
   const trackOf = el => { const h = el.closest('.os-heart'); return h && h.querySelector('.os-htrack'); };
   const index = t => Math.round(t.scrollLeft / Math.max(1, t.clientWidth));
   const go = (t, i) => { const n = t.children.length; i = (i + n) % n; t.scrollTo({ left: i * t.clientWidth, behavior: reduce() ? 'auto' : 'smooth' }); };
-  const paint = t => { const i = index(t), h = t.closest('.os-heart'); h.querySelectorAll('.os-hdots i').forEach((d, k) => d.classList.toggle('on', k === i)); const hint = h.querySelector('.os-hhint'); if (hint && i > 0) hint.style.visibility = 'hidden'; };
+  const paint = t => { const i = index(t), h = t.closest('.os-heart'); h.querySelectorAll('.os-hdots i').forEach((d, k) => d.classList.toggle('on', k === i)); const hint = h.querySelector('.os-hhint'); if (hint && i > 0) hint.style.visibility = 'hidden';
+    const c = h.querySelector('.os-hcap'), cap = t.children[i] && t.children[i].dataset.cap; if (c && cap && c.textContent !== cap) { c.classList.add('swap'); setTimeout(() => { c.textContent = cap; c.classList.remove('swap'); }, 130); } };
   let held = 0;
   const hold = () => { held = Date.now() + 12000; };
   document.addEventListener('click', e => {
@@ -11876,7 +11991,7 @@ html[data-route="oshen"] :is(#mood-bg, #mood-fx) { display: none !important; }
   setInterval(() => {
     const t = document.querySelector('.os-htrack'); if (!t || reduce() || document.hidden || Date.now() < held || document.getElementById('os-lb')) return;
     const r = t.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return; go(t, index(t) + 1);
-  }, 4200);
+  }, 5600);
 })();
 </script>
 </body>
