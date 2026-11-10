@@ -933,7 +933,7 @@
   html[data-cur="wish"] .pl-s.wish { display: block; }
   html:has(.mf-coin:hover) .pl-s.wish .hcoin, html:has(.mf-coin.grab) .pl-s.wish .hcoin { display: none; }   /* the real coin takes over while you hold it */
   .pl-s.heart { animation: plBeat 1.1s ease-in-out infinite; }
-  .pl-s.lovearrow { --hx: 6; --hy: 4; } html[data-cur="lovearrow"] .pl-s.lovearrow { display: block; filter: drop-shadow(0 2px 3px rgba(30, 0, 6, .45)); }
+  .pl-s.lovearrow { --hx: 6; --hy: 4; } html[data-cur="lovearrow"] .pl-s.lovearrow { display: block; filter: drop-shadow(0 0 2px rgba(217, 193, 191, .6)) drop-shadow(0 2px 3px rgba(10, 2, 1, .55)); }
   .pl-s.lovearrow .lahrt { transform-box: fill-box; transform-origin: 50% 70%; animation: plBeat 1.1s ease-in-out infinite; }
   @keyframes plBeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.1); } 30% { transform: scale(1); } 45% { transform: scale(1.07); } }
   .pl-s .steam { animation: plSteam 1.8s ease-in-out infinite; transform-box: fill-box; }
@@ -7087,7 +7087,7 @@ const HUNT = (() => {
       const top = k === 0, r = top ? osRnd(i, 31) * 4 - 2 : osRnd(i * 9 + k, 32) * 30 - 15, dx = top ? 0 : osRnd(i * 9 + k, 33) * 18 - 9, dy = top ? 0 : osRnd(i * 9 + k, 34) * 12 - 6;
       return `<figure class="os-pc${top ? ' top' : ''}" ${top ? `role="button" tabindex="0" aria-label="Open photo 1 of ${n}: ${tq}"` : 'aria-hidden="true"'} data-gal="${i}" data-k="${k}" data-full="${p.src}" data-cap="${tq}" style="--r:${r.toFixed(1)}deg;--dx:${dx.toFixed(1)}%;--dy:${dy.toFixed(1)}%;--z:${n - k}"><div class="os-pcp" style="background-image:url('${p.src}');${p.pos ? `background-position:${p.pos};` : ''}aspect-ratio:${p.ar || '1 / 1'}"></div></figure>`;
     }).join('');
-    return `<div class="os-pwrap"><div class="os-pile">${cards}</div><p class="os-phint">${n > 1 ? `tap the pile to see all ${n} photos` : 'tap to see it big'}</p></div>`;
+    return `<div class="os-pwrap"><div class="os-pile">${cards}</div><p class="os-phint">${n > 1 ? 'tap the pile to see them all' : 'tap to see it big'}</p></div>`;
   };
   const osMem = (m, i) => `<article class="os-m${i % 2 ? ' rev' : ''}${osList(i).length ? '' : ' nop'}"><div class="os-card"><h3>${m.h}</h3><p>${m.t}</p></div>${osPile(i)}</article>`;
   /* the first memory runs as the front page of a little newspaper (old look) */
@@ -7111,16 +7111,19 @@ const HUNT = (() => {
     { src: 'photos/oshen-heart-10.jpg', pos: '0% 50%', cap: 'smiling big because I have you' },
     { src: 'photos/oshen-heart-11.jpg', pos: '50% 45%', cap: 'he loves his oranges' },
     { src: 'photos/oshen-heart-12.jpg', pos: '50% 50%', cap: 'my favorite singing partner' },
-    { src: 'photos/oshen-heart-13.jpg', pos: '50% 60%', cap: 'he tells me so much tea' },
+    { src: 'photos/oshen-heart-13.jpg', pos: '50% 60%', cap: 'he tells me so much tea', zoom: 2, zo: '6% 32%' },   // zoom = how far in, zo = the point that stays put (change both to re-crop)
     { src: 'photos/oshen-heart-14.jpg', pos: '97% 50%', cap: 'my cowboy' },
     { src: 'photos/oshen-heart-15.jpg', pos: '50% 0%', cap: 'you make me smile' },
     { src: 'photos/oshen-heart-16.jpg', pos: '50% 100%', cap: '“I love you.” “I know.”' },
     { src: 'photos/oshen-heart-17.jpg', pos: '50% 50%', cap: 'you + me forever & ever & everrrrrr' }
   ];
+  /* zoom a photo in without touching the file: scale it, then clip it back to its own frame */
+  const osZoom = p => { if (!p.zoom) return ''; const z = p.zoom, [ox, oy] = (p.zo || '50% 50%').split(' ').map(parseFloat), L = ox * (1 - 1 / z), T = oy * (1 - 1 / z), R = 100 - L - 100 / z, B = 100 - T - 100 / z; return `transform:scale(${z});transform-origin:${ox}% ${oy}%;clip-path:inset(${T.toFixed(2)}% ${R.toFixed(2)}% ${B.toFixed(2)}% ${L.toFixed(2)}%);`; };
+  const osZst = p => `aspect-ratio:5/6;width:min(86vw,calc(74vh*5/6));height:auto;object-fit:cover;${p.pos ? `object-position:${p.pos};` : ''}${osZoom(p)}`;
   const osHeart = () => {
     const L = OSHEN_HEART_PHOTOS.map(osNorm); if (!L.length) return '';
     const escH = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'), capOf = p => p.cap || 'us';
-    const slides = L.map((p, k) => `<img class="os-hs-img" src="${p.src}" alt="${escH(capOf(p))}" role="button" tabindex="0" data-gal="heart" data-k="${k}" data-full="${p.src}" data-cap="${escH(capOf(p))}" ${k > 7 ? 'loading="lazy"' : ''} decoding="async" draggable="false" style="${p.pos ? `object-position:${p.pos}` : ''}">`).join('');
+    const slides = L.map((p, k) => `<img class="os-hs-img" src="${p.src}" alt="${escH(capOf(p))}" role="button" tabindex="0" data-gal="heart" data-k="${k}" data-full="${p.src}" data-cap="${escH(capOf(p))}" ${k > 7 ? 'loading="lazy"' : ''} decoding="async" draggable="false" ${p.zoom ? `data-zst="${osZst(p)}"` : ''} style="${p.pos ? `object-position:${p.pos};` : ''}${osZoom(p)}">`).join('');
     return `<section class="os-heart" aria-label="Photos of us">
       ${osSt('osdLipsPale', 92, '3%', '8%', -20)}${osGarland(4, 240, 8, 'right:3%;top:2%')}
       <div class="os-hwrap">
@@ -7141,12 +7144,13 @@ const HUNT = (() => {
     const hearts = OSHEN_LOVES.map((l, i) => {
       const red = i % 2 === 0, size = 146 + Math.round(osRnd(i, 1) * 44), dx = Math.round(-22 + osRnd(i, 2) * 44), dy = Math.round(-26 + osRnd(i, 3) * 52), rot = (-6 + osRnd(i, 4) * 12).toFixed(1);
       const dur = (9 + osRnd(i, 5) * 8).toFixed(1), del = (-osRnd(i, 6) * 12).toFixed(1), mt = Math.round(osRnd(i, 7) * 34);
-      const g = OS_CLASSIC ? (red ? ['#d6364b', '#7d1022', 'rgba(255,225,215,.4)'] : ['#fbdccf', '#eaa093', 'rgba(120,30,40,.3)']) : (red ? ['#a23560', '#4f1230', 'rgba(224,220,214,.28)'] : ['#cdb39f', '#8f725e', 'rgba(35,33,36,.22)']);
-      return `<button type="button" class="lv-heart ${red ? 'red' : 'peach'}" data-f="${l.f.replace(/"/g, '&quot;')}" style="--s:${size}px;--dx:${dx}px;--dy:${dy}px;--r:${rot}deg;--dur:${dur}s;--del:${del}s;margin-top:${mt}px">
+      const g = OS_CLASSIC ? (red ? ['#d6364b', '#7d1022', 'rgba(255,225,215,.4)'] : ['#fbdccf', '#eaa093', 'rgba(120,30,40,.3)']) : (red ? ['#b02a36', '#5c0a14', 'rgba(217,193,191,.32)'] : ['#8a1e2a', '#47080f', 'rgba(217,193,191,.28)']);
+      return `<button type="button" class="lv-heart ${red ? 'red' : 'peach'}" data-f="${l.f.replace(/"/g, '&quot;')}" style="--s:${size}px;--dx:${dx}px;--dy:${dy}px;--r:${rot}deg;--dur:${dur}s;--del:${del}s;--rd:${(i * .3 + osRnd(i, 9) * .35).toFixed(2)}s;margin-top:${mt}px">
         <svg viewBox="0 0 100 90" aria-hidden="true"><defs><linearGradient id="lvg${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${g[0]}"/><stop offset="1" stop-color="${g[1]}"/></linearGradient></defs><path d="${HEART_D}" fill="url(#lvg${i})" stroke="${g[2]}" stroke-width="1.2"/><path d="M20 20 C22 14 28 10 34 10" stroke="rgba(255,255,255,.7)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
         <span class="lv-t">${l.s}</span></button>`;
     }).join('');
-    return `<section class="os-love">
+    return `<section class="os-love" hidden>   <!-- stays hidden until the secret keys (up, up, down, down, right) are pressed -->
+        
         <h2 class="os-h">Things I love about him</h2>
         <div class="lv-field" id="lv-field">${hearts}</div>
         <p class="lv-cap" id="lv-cap" aria-live="polite">Tap a heart.</p>
@@ -7384,9 +7388,9 @@ document.addEventListener('error', function (e) {
     <ellipse cx="14" cy="14" rx="4.5" ry="2.6" fill="#fff" opacity=".6" transform="rotate(-35 14 14)"/>
     <circle cx="18" cy="21" r="2" fill="#7a1636"/><circle cx="30" cy="21" r="2" fill="#7a1636"/><path d="M20.5 26 q3.5 3.6 7 0" fill="none" stroke="#7a1636" stroke-width="1.8" stroke-linecap="round"/>
     <circle cx="14.5" cy="25.5" r="2.4" fill="#ffb3c6"/><circle cx="33.5" cy="25.5" r="2.4" fill="#ffb3c6"/></svg>`;
-  const LOVEARROW = `<svg class="pl-s lovearrow" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="laG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6b8e"/><stop offset="1" stop-color="#c9183f"/></linearGradient></defs>
-    <path d="M6 4 L6 34 L13.4 27.3 L18.4 39.4 L24.2 37 L19.3 25 L29.4 25Z" fill="#fbeee4" stroke="#7d1022" stroke-width="2.4" stroke-linejoin="round"/>
-    <g class="lahrt"><path d="M33 31 C25.5 25.8 24 21.5 24 18.6 C24 15.6 26.2 13.6 28.7 13.6 C30.6 13.6 32.1 14.8 33 16.6 C33.9 14.8 35.4 13.6 37.3 13.6 C39.8 13.6 42 15.6 42 18.6 C42 21.5 40.5 25.8 33 31Z" fill="url(#laG)" stroke="#7d1022" stroke-width="1.8" stroke-linejoin="round"/><ellipse cx="28.6" cy="17.6" rx="2.2" ry="1.3" fill="#fff" opacity=".7" transform="rotate(-35 28.6 17.6)"/></g></svg>`;
+  const LOVEARROW = `<svg class="pl-s lovearrow" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="laG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dcaeab"/><stop offset="1" stop-color="#8c4b4b"/></linearGradient></defs>
+    <g transform="translate(6 4) rotate(45)"><path d="M10 0 L37 0" stroke="#40110d" stroke-width="6" stroke-linecap="round"/><path d="M10 0 L37 0" stroke="#d9c1bf" stroke-width="2.8" stroke-linecap="round"/><path d="M0 0 L14 -8 L10.5 0 L14 8Z" fill="#d9a3a0" stroke="#40110d" stroke-width="2" stroke-linejoin="round"/>
+    <g transform="translate(38 0) rotate(90) scale(1.1)"><g class="lahrt"><path d="M0 6 C-7 1 -9 -2.5 -9 -4.8 C-9 -7.6 -6.8 -9 -4.7 -9 C-2.7 -9 -0.9 -7.8 0 -6 C0.9 -7.8 2.7 -9 4.7 -9 C6.8 -9 9 -7.6 9 -4.8 C9 -2.5 7 1 0 6Z" fill="url(#laG)" stroke="#40110d" stroke-width="1.6" stroke-linejoin="round"/><ellipse cx="-4.4" cy="-5.4" rx="2" ry="1.2" fill="#fff" opacity=".6" transform="rotate(-35 -4.4 -5.4)"/></g></g></g></svg>`;
   const CONE = `<svg class="pl-s cone" viewBox="0 0 48 48" aria-hidden="true"><path d="M13 26 L35 26 L24 47Z" fill="#e8b46c" stroke="#b8803a" stroke-width="2" stroke-linejoin="round"/>
     <path d="M17.5 30 L30 38 M21 27 L33 34.5 M30.5 30 L18 38 M27 27 L15.2 34.5" stroke="#b8803a" stroke-width="1.2" stroke-linecap="round" opacity=".7"/>
     <circle cx="24" cy="12" r="8.5" fill="#fff3c4" stroke="#d8b96a" stroke-width="2"/><circle cx="24" cy="22" r="12" fill="#f7a1c4" stroke="#d9739f" stroke-width="2"/>
@@ -7431,8 +7435,9 @@ document.addEventListener('error', function (e) {
     if (r === '/loves' || r.startsWith('/loves/friends')) return 'heart';
     return 'plane';
   };
-  const setTheme = () => { root.dataset.cur = mf ? 'wish' : saber ? 'saber' : ((location.hash || '').startsWith('#/oshen') ? 'lovearrow' : (root.dataset.mxcur || themeFor(location.hash))); };
+  const setTheme = () => { root.dataset.cur = mf ? 'wish' : saber ? 'saber' : (((location.hash || '').startsWith('#/oshen') || document.querySelector('#view .os')) ? 'lovearrow' : (root.dataset.mxcur || themeFor(location.hash))); };
   setTheme();
+  { const v0 = document.getElementById('view'); if (v0) new MutationObserver(setTheme).observe(v0, { childList: true }); }   // his page also gets its pointer when the web address can't be read (a preview panel)
 
   if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const plane = document.createElement('div');
@@ -7464,7 +7469,7 @@ document.addEventListener('error', function (e) {
 
     const emit = (th, now) => {
       const r = Math.random, bx = x - vx * 1.5, by = y - vy * 1.5;
-      if (th === 'heart' || th === 'lovearrow') parts.push({ k: 'h', x: bx + (r() - .5) * 10, y: by + (r() - .5) * 10, vx: (r() - .5) * .5, vy: -.4 - r() * .6, s: 5 + r() * 6, c: HEARTS[(r() * 4) | 0], t: now, life: 950 });
+      if (th === 'heart' || th === 'lovearrow') parts.push({ k: 'h', x: bx + (r() - .5) * 10, y: by + (r() - .5) * 10, vx: (r() - .5) * .5, vy: -.4 - r() * .6, s: 5 + r() * 6, c: (th === 'lovearrow' ? ['#bf8f8f', '#d9c1bf', '#8c5d5d', '#a86a6a'] : HEARTS)[(r() * 4) | 0], t: now, life: 950 });
       else if (th === 'note') parts.push({ k: 'n', x: bx + (r() - .5) * 10, y: by + (r() - .5) * 10, vx: (r() - .5) * .6, vy: -.35 - r() * .5, s: 13 + r() * 8, c: NOTEC[(r() * 4) | 0], g: NOTES[(r() * 3) | 0], t: now, life: 1050 });
       else if (th === 'cone') parts.push({ k: 's', x: bx + (r() - .5) * 14, y: by + (r() - .5) * 14, vx: (r() - .5) * .8, vy: .2 + r() * .6, a: r() * 6, s: 6 + r() * 3, c: SPR[(r() * 6) | 0], t: now, life: 750 });
       else if (th === 'mug') parts.push({ k: 'm', x: bx + (r() - .5) * 8, y: by + (r() - .5) * 8, vx: (r() - .5) * .3, vy: -.5 - r() * .4, s: 5 + r() * 4, t: now, life: 1000 });
@@ -9475,7 +9480,7 @@ document.addEventListener('error', function (e) {
     if (r.startsWith('/loves/food')) return 'cone'; if (r.startsWith('/loves/movies') || r.startsWith('/loves/tv')) return 'popcorn'; if (r === '/loves' || r.startsWith('/loves/friends')) return 'heart'; return 'plane'; };
   function applyCursor(k) {
     if (CURS[k] && freeEl) root.dataset.mxcur = CURS[k]; else delete root.dataset.mxcur;
-    if (!root.hasAttribute('data-saber') && !root.classList.contains('mf-open')) root.dataset.cur = (location.hash || '').startsWith('#/oshen') ? 'lovearrow' : (root.dataset.mxcur || themeForHash(location.hash));
+    if (!root.hasAttribute('data-saber') && !root.classList.contains('mf-open')) root.dataset.cur = ((location.hash || '').startsWith('#/oshen') || document.querySelector('#view .os')) ? 'lovearrow' : (root.dataset.mxcur || themeForHash(location.hash));
   }
 
   /* ===== helpers for little things that cross the screen ===== */
@@ -11965,7 +11970,6 @@ html[data-route="oshen"] #view .os .backlink:hover { background: #fff; transform
 /* ===== arcade mood only: romantic video-game couples keep him company in the page margin as you scroll ===== */
 .os-arc { --w: clamp(100px, 11vw, 200px); display: none; }
 html[data-mood="arcade"] .os-arc { display: block; }
-html:not([data-route="oshen"]) .os-arc { display: none; }
 .os-arc-c { position: fixed; bottom: 66px; z-index: 5; width: var(--w); height: auto; pointer-events: none; user-select: none; visibility: hidden; opacity: 0; transform: translateY(34px); transition: opacity .2s steps(3), visibility 0s .2s; filter: drop-shadow(0 4px 0 rgba(30, 0, 6, .5)); }
 .os-arc-c.l { left: max(12px, calc(50vw - 550px - var(--w) - 14px)); }
 .os-arc-c.r { right: max(12px, calc(50vw - 550px - var(--w) - 14px)); }
@@ -11981,43 +11985,46 @@ html:not([data-route="oshen"]) .os-arc { display: none; }
 
 </style>
 <style id="os-dark">
-/* ===== o'shen page: dark, romantic, moody and classy (the "Rich Romance" palette). Delete this whole block to go back to the red felt look. ===== */
-html[data-route="oshen"] { --caviar: #232124; --vapor: #e0dcd6; --anemone: #8a2b4a; --mauve: #a85a64; --gilt: #b89c85;
-  background-color: #141114;
-  background-image: radial-gradient(55% 38% at 10% 6%, rgba(138, 43, 74, .42), transparent 72%), radial-gradient(42% 30% at 94% 22%, rgba(168, 90, 100, .24), transparent 72%), radial-gradient(50% 34% at 6% 62%, rgba(184, 156, 133, .12), transparent 72%), radial-gradient(58% 40% at 92% 96%, rgba(138, 43, 74, .34), transparent 72%), radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, .55) 100%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .85  0 0 0 0 .78  0 0 0 0 .72  0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+/* ===== o'shen page: dark, romantic, moody and classy. Colours: "Poetic Plum" (rustic auburn #591f12, bordeaux noir #40110d, dusty rosewood #8c5d5d, soft maroon #bf8f8f, ivory blush #d9c1bf) plus the charcoal gray #28252b on the cards.
+   It switches on whenever his page is on screen. Delete this whole block to go back to the red felt look. ===== */
+html:is([data-route="oshen"], :has(#view .os)) { --auburn: #591f12; --noir: #40110d; --rosewood: #8c5d5d; --maroon: #bf8f8f; --blush: #d9c1bf; --char: #28252b;
+  background-color: #34100c;
+  background-image: radial-gradient(75% 48% at 50% -4%, rgba(120, 48, 34, .75), transparent 72%), radial-gradient(48% 34% at 8% 30%, rgba(140, 93, 93, .3), transparent 72%), radial-gradient(44% 32% at 96% 52%, rgba(191, 143, 143, .16), transparent 72%), radial-gradient(60% 40% at 50% 104%, rgba(89, 31, 18, .9), transparent 72%), radial-gradient(125% 95% at 50% 50%, transparent 52%, rgba(18, 4, 3, .6) 100%), linear-gradient(180deg, #591f12 0%, #40110d 100%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .85  0 0 0 0 .7  0 0 0 0 .66  0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-attachment: fixed; }
-.os { --cream: #e0dcd6; --ink: #e0dcd6; --red: #b89c85; }
-.os ::selection { background: #8a2b4a; color: #e0dcd6; }
+html:is([data-route="oshen"], :has(#view .os)) :is(#mood-bg, #mood-fx) { display: none !important; }
+html:has(#view .os) #rabbit-hole-host { display: none !important; }
+.os { --cream: #d9c1bf; --ink: #d9c1bf; --red: #bf8f8f; }
+.os ::selection { background: #8c5d5d; color: #f3e6e3; }
 .os-tape { display: none; }
-html[data-route="oshen"] #view .os .backlink { font: italic 500 1.2rem/1.2 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: #e0dcd6; background: rgba(35, 33, 36, .72); border: 1px solid #b89c85; padding: 5px 20px 7px; box-shadow: 0 8px 20px rgba(0, 0, 0, .4); }
-html[data-route="oshen"] #view .os .backlink:hover { background: rgba(138, 43, 74, .55); transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0, 0, 0, .5); }
+html:is([data-route="oshen"], :has(#view .os)) #view .os .backlink { font: italic 500 1.2rem/1.2 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: #d9c1bf; background: rgba(40, 37, 43, .82); border: 1px solid #bf8f8f; padding: 5px 20px 7px; box-shadow: 0 8px 20px rgba(0, 0, 0, .4); }
+html:is([data-route="oshen"], :has(#view .os)) #view .os .backlink:hover { background: rgba(140, 93, 93, .75); color: #f3e6e3; transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0, 0, 0, .5); }
 
 /* the dedication */
 .os-taped { transform: none; }
-.os .dd-sheet { color: #e0dcd6; border-radius: 3px; background: radial-gradient(90% 80% at 18% 8%, rgba(138, 43, 74, .4), transparent 66%), radial-gradient(70% 70% at 96% 100%, rgba(168, 90, 100, .22), transparent 60%), #1c191d; background-blend-mode: normal;
-  box-shadow: 0 28px 64px rgba(0, 0, 0, .65), inset 0 0 0 1px rgba(184, 156, 133, .55), inset 0 0 0 10px #1c191d, inset 0 0 0 11px rgba(184, 156, 133, .26); }
-.os .dd-text { color: #e0dcd6; text-shadow: none; font-family: "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; font-weight: 500; }
-.os .dd-pine { opacity: .85; filter: drop-shadow(5px 8px 6px rgba(0, 0, 0, .5)); }
-.os-taped .os-bow { filter: drop-shadow(0 4px 5px rgba(0, 0, 0, .55)); }
+.os .dd-sheet { color: #d9c1bf; border-radius: 3px; background: radial-gradient(90% 80% at 18% 8%, rgba(89, 31, 18, .6), transparent 66%), radial-gradient(70% 70% at 96% 100%, rgba(140, 93, 93, .22), transparent 60%), #28252b; background-blend-mode: normal;
+  box-shadow: 0 28px 64px rgba(10, 2, 1, .7), inset 0 0 0 1px rgba(191, 143, 143, .55), inset 0 0 0 10px #28252b, inset 0 0 0 11px rgba(191, 143, 143, .26); }
+.os .dd-text { color: #d9c1bf; text-shadow: none; font-family: "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; font-weight: 500; }
+.os .dd-pine { opacity: .85; filter: drop-shadow(5px 8px 6px rgba(10, 2, 1, .55)); }
+.os-taped .os-bow { filter: drop-shadow(0 4px 5px rgba(10, 2, 1, .6)); }
 
 /* headings */
-.os-h { font: italic 500 clamp(40px, 5.6vw, 66px)/1.08 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: #e0dcd6; text-shadow: none; letter-spacing: .005em; }
-.os-h::after { content: ""; display: block; width: 64px; height: 1px; margin: 14px auto 0; background: #b89c85; }
+.os-h { font: italic 500 clamp(40px, 5.6vw, 66px)/1.08 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: #d9c1bf; text-shadow: none; letter-spacing: .005em; }
+.os-h::after { content: ""; display: block; width: 64px; height: 1px; margin: 14px auto 0; background: #bf8f8f; }
 
 /* the swipeable heart */
-.os-hwrap { filter: drop-shadow(0 24px 30px rgba(0, 0, 0, .65)); }
-.os-hlace path:nth-child(1) { fill: #d9d4cc; stroke: #d9d4cc; }
-.os-hlace path:nth-child(2) { stroke: #d9d4cc; }
-.os-hlace path:nth-child(3) { stroke: rgba(138, 43, 74, .6); }
-.os-hlace path:nth-child(4) { stroke: #b89c85; }
-.os-hpola { background: #ebe7e1; box-shadow: 0 22px 38px rgba(0, 0, 0, .6); }
-.os-hwin { background: #cfc9c1; }
-.os-htrack:focus-visible { box-shadow: inset 0 0 0 4px #b89c85; }
-.os-hcap { font: italic 500 clamp(22px, 2.5vw, 29px)/1.1 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: #5a1a30; }
-.os-hnav { border: 1px solid #b89c85; background: rgba(35, 33, 36, .88); color: #e0dcd6; box-shadow: 0 6px 14px rgba(0, 0, 0, .5); }
-.os-hnav:hover { background: #8a2b4a; }
-.os-hdots i { background: rgba(184, 156, 133, .4); } .os-hdots i.on { background: #e0dcd6; }
-.os-hhint { font: italic 400 20px/1 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: rgba(224, 220, 214, .75); }
+.os-hwrap { filter: drop-shadow(0 24px 30px rgba(10, 2, 1, .7)); }
+.os-hlace path:nth-child(1) { fill: #d9c1bf; stroke: #d9c1bf; }
+.os-hlace path:nth-child(2) { stroke: #d9c1bf; }
+.os-hlace path:nth-child(3) { stroke: rgba(89, 31, 18, .55); }
+.os-hlace path:nth-child(4) { stroke: #bf8f8f; }
+.os-hpola { background: #ecdcd9; box-shadow: 0 22px 38px rgba(10, 2, 1, .65); }
+.os-hwin { background: #c9b0ad; }
+.os-htrack:focus-visible { box-shadow: inset 0 0 0 4px #bf8f8f; }
+.os-hcap { font: italic 500 clamp(22px, 2.5vw, 29px)/1.1 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: #591f12; }
+.os-hnav { border: 1px solid #bf8f8f; background: rgba(40, 37, 43, .9); color: #d9c1bf; box-shadow: 0 6px 14px rgba(10, 2, 1, .5); }
+.os-hnav:hover { background: #8c5d5d; }
+.os-hdots i { background: rgba(191, 143, 143, .4); } .os-hdots i.on { background: #d9c1bf; }
+.os-hhint { font: italic 400 20px/1 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: rgba(217, 193, 191, .78); }
 
 /* memories: a simple card and a pile of photos */
 .os-m { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 520px); gap: clamp(28px, 4.5vw, 56px); align-items: center; margin: clamp(56px, 8vw, 100px) 0; }
@@ -12026,43 +12033,51 @@ html[data-route="oshen"] #view .os .backlink:hover { background: rgba(138, 43, 7
 .os-m.rev .os-card { grid-column: 2; } .os-m.rev .os-pwrap { grid-column: 1; }
 .os-m.nop { grid-template-columns: minmax(0, 680px); justify-content: center; }
 .os-m.nop .os-card { grid-column: 1; }
-.os-card { position: relative; padding: clamp(28px, 3.4vw, 46px) clamp(24px, 3.4vw, 44px); background: linear-gradient(165deg, rgba(50, 42, 48, .95), rgba(30, 26, 30, .95)); box-shadow: 0 24px 54px rgba(0, 0, 0, .5), inset 0 0 0 1px rgba(184, 156, 133, .4); }
-.os-card::before { content: ""; position: absolute; inset: 7px; box-shadow: inset 0 0 0 1px rgba(184, 156, 133, .16); pointer-events: none; }
-.os-card h3 { margin: 0 0 16px; font: italic 500 clamp(30px, 3.3vw, 42px)/1.12 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: #b89c85; }
-.os-card p { margin: 0; font: 400 clamp(19px, 1.7vw, 22px)/1.62 "EB Garamond", "Cormorant Garamond", Georgia, "Times New Roman", serif; color: rgba(224, 220, 214, .93); }
+.os-card { position: relative; padding: clamp(28px, 3.4vw, 46px) clamp(24px, 3.4vw, 44px); background: linear-gradient(165deg, #2d2a30, #25222a); box-shadow: 0 24px 54px rgba(10, 2, 1, .55), inset 0 0 0 1px rgba(191, 143, 143, .4); }
+.os-card::before { content: ""; position: absolute; inset: 7px; box-shadow: inset 0 0 0 1px rgba(191, 143, 143, .16); pointer-events: none; }
+.os-card h3 { margin: 0 0 16px; font: italic 500 clamp(30px, 3.3vw, 42px)/1.12 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: #bf8f8f; }
+.os-card p { margin: 0; font: 400 clamp(19px, 1.7vw, 22px)/1.62 "EB Garamond", "Cormorant Garamond", Georgia, "Times New Roman", serif; color: rgba(225, 205, 202, .94); }
 .os-pwrap { width: 100%; }
 .os-pile { position: relative; width: 100%; aspect-ratio: 520 / 595; }
-.os-pc { position: absolute; left: 50%; top: 50%; z-index: var(--z); width: 80%; margin: 0; padding: 10px; background: #e6e2dc; box-shadow: 0 18px 34px rgba(0, 0, 0, .6); cursor: zoom-in;
+.os-pc { position: absolute; left: 50%; top: 50%; z-index: var(--z); width: 80%; margin: 0; padding: 10px; background: #ead9d6; box-shadow: 0 18px 34px rgba(10, 2, 1, .62); cursor: zoom-in;
   transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) + var(--lift, 0px))) rotate(var(--r)); transition: transform .45s cubic-bezier(.3, 1.3, .5, 1); }
 .os-pc.top:hover, .os-pc.top:focus-visible { --lift: -8px; outline: none; }
-.os-pc.top:focus-visible { box-shadow: 0 18px 34px rgba(0, 0, 0, .6), 0 0 0 3px #b89c85; }
-.os-pcp { width: 100%; background: #bdb5ac center / cover no-repeat; filter: saturate(.92) contrast(1.02); }
-.os-phint { margin: 18px 0 0; text-align: center; font: italic 400 20px/1.2 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: #b89c85; }
+.os-pc.top:focus-visible { box-shadow: 0 18px 34px rgba(10, 2, 1, .62), 0 0 0 3px #bf8f8f; }
+.os-pcp { width: 100%; background: #b79e9b center / cover no-repeat; filter: saturate(.92) contrast(1.02); }
+.os-phint { margin: 18px 0 0; text-align: center; font: italic 400 20px/1.2 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: #bf8f8f; }
 @media (max-width: 900px) {
   .os-m, .os-m.rev { grid-template-columns: minmax(0, 1fr); gap: 30px; justify-items: center; }
   .os-m .os-card, .os-m.rev .os-card { grid-column: 1; grid-row: 2; width: 100%; } .os-m .os-pwrap, .os-m.rev .os-pwrap { grid-column: 1; grid-row: 1; max-width: 500px; }
 }
 
 /* things I love about him */
-.os-love .lv-heart.red { color: #e0dcd6; } .os-love .lv-heart.peach { color: #2a1d22; }
+.os-love .lv-heart.red, .os-love .lv-heart.peach { color: #f3e3e0; }
 .os-love .lv-t { font: italic 500 calc(var(--s) * .155)/1.05 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; }
-.os-love .lv-heart svg { filter: drop-shadow(0 12px 14px rgba(0, 0, 0, .55)); }
-.os-love .lv-cap { font: italic 400 clamp(28px, 3.6vw, 40px)/1.2 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: #e0dcd6; text-shadow: none; }
-.os-love .lv-mini { background: #a85a64; }
+.os-love .lv-heart svg { filter: drop-shadow(0 12px 14px rgba(10, 2, 1, .6)); }
+.os-love .lv-cap { font: italic 400 clamp(28px, 3.6vw, 40px)/1.2 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: #d9c1bf; text-shadow: none; }
+.os-love .lv-mini { background: #d4505c; }
 
 /* closing line */
-.os-iloveyou { font: 400 clamp(84px, 13vw, 160px)/.95 "Italianno", "Pinyon Script", "Snell Roundhand", cursive; color: #e0dcd6; transform: none; text-shadow: 0 0 46px rgba(138, 43, 74, .65); }
-.os-sign { font-size: .4em; margin-top: .1em; color: #b89c85; }
+.os-iloveyou { font: 400 clamp(84px, 13vw, 160px)/.95 "Italianno", "Pinyon Script", "Snell Roundhand", cursive; color: #d9c1bf; transform: none; text-shadow: 0 0 46px rgba(191, 143, 143, .5); }
+.os-sign { font-size: .4em; margin-top: .1em; color: #bf8f8f; }
 
 /* photo viewer */
-#os-lb { background: rgba(12, 9, 12, .93); }
-#os-lb figure { background: #e6e2dc; box-shadow: 0 28px 70px rgba(0, 0, 0, .75); transform: scale(.97); }
+#os-lb { background: rgba(24, 6, 5, .93); }
+#os-lb figure { background: #ead9d6; box-shadow: 0 28px 70px rgba(0, 0, 0, .75); transform: scale(.97); }
 #os-lb.on figure { transform: none; }
-#os-lb figcaption { font: italic 500 clamp(22px, 2.6vw, 28px)/1.2 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: #5a1a30; }
-#os-lb figcaption small { color: #7d6f6b; font-family: "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; font-style: normal; letter-spacing: .12em; }
-#os-lb button { border: 1px solid #b89c85; background: rgba(35, 33, 36, .65); color: #e0dcd6; }
-#os-lb button:hover { background: rgba(138, 43, 74, .8); }
+#os-lb figcaption { font: italic 500 clamp(22px, 2.6vw, 28px)/1.2 "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; color: #591f12; }
+#os-lb figcaption small { display: none; color: #8c6a68; font-family: "Cormorant Garamond", "EB Garamond", Georgia, "Times New Roman", serif; font-style: normal; letter-spacing: .12em; }
+#os-lb button { border: 1px solid #bf8f8f; background: rgba(40, 37, 43, .7); color: #d9c1bf; }
+#os-lb button:hover { background: rgba(140, 93, 93, .85); }
 @media (prefers-reduced-motion: reduce) { .os-pc { transition: none; } }
+/* the secret balloons: "things I love about him" stays out of sight until up, up, down, down, right is pressed */
+.os-love[hidden] { display: none; }
+.os-love .lv-field { padding-bottom: 56px; }
+.os-love .lv-heart::after { content: ""; position: absolute; left: 50%; top: 96%; width: 2px; height: clamp(34px, 4.6vw, 54px); margin-left: -1px; border-radius: 2px; background: linear-gradient(rgba(217, 193, 191, .7), rgba(217, 193, 191, 0)); pointer-events: none; }
+.os-love.os-clip { overflow-y: clip; }
+.os-love.os-rise .lv-heart { animation: lvfloat var(--dur) var(--del) ease-in-out infinite alternate, osBalloon 3.6s var(--rd, 0s) cubic-bezier(.25, .6, .3, 1) both; }
+@keyframes osBalloon { 0% { translate: 0 100vh; opacity: 0; scale: .55; } 8% { opacity: 1; } 35% { translate: 18px 58vh; } 68% { translate: -14px 16vh; scale: 1.04; } 100% { translate: 0 0; opacity: 1; scale: 1; } }
+@media (prefers-reduced-motion: reduce) { .os-love.os-rise .lv-heart { animation: none; } }
 </style>
 <script>
 (() => {
@@ -12071,7 +12086,7 @@ html[data-route="oshen"] #view .os .backlink:hover { background: rgba(138, 43, 7
   const gather = el => [...document.querySelectorAll('[data-full][data-gal="' + el.dataset.gal + '"]')].sort((a, b) => a.dataset.k - b.dataset.k);
   function show(i) {
     idx = (i + items.length) % items.length; const el = items[idx], img = L.querySelector('img');
-    img.src = el.dataset.full; img.alt = 'Photo ' + (idx + 1) + ' of ' + items.length + ': ' + el.dataset.cap;
+    img.setAttribute('style', el.dataset.zst || ''); img.src = el.dataset.full; img.alt = 'Photo ' + (idx + 1) + ' of ' + items.length + ': ' + el.dataset.cap;
     L.querySelector('figcaption').innerHTML = el.dataset.cap + (items.length > 1 ? '<small>' + (idx + 1) + ' of ' + items.length + '</small>' : '');
     L.querySelectorAll('.lb-nav').forEach(b => { b.hidden = items.length < 2; });
     items.length > 1 && [idx - 1, idx + 1].forEach(j => { const n = new Image(); n.src = items[(j + items.length) % items.length].dataset.full; });
@@ -12133,7 +12148,7 @@ html[data-route="oshen"] #view .os .backlink:hover { background: rgba(138, 43, 7
     [...document.querySelectorAll('.os-mem > article')].forEach((a, i) => marks.push([a, map[i] != null ? map[i] : 4]));
     marks.push(['.os-love', 4]);
     let k = 0;
-    marks.forEach(([s, v]) => { const e = typeof s === 'string' ? document.querySelector(s) : s; if (e && e.getBoundingClientRect().top <= y) k = v; });
+    marks.forEach(([s, v]) => { const e = typeof s === 'string' ? document.querySelector(s) : s; if (e && e.getClientRects().length && e.getBoundingClientRect().top <= y) k = v; });
     if (k !== last) { last = k; [...layer.children].forEach((c, i) => c.classList.toggle('on', i === k)); }
   };
   const ask = () => { if (!raf) raf = requestAnimationFrame(pick); };
@@ -12141,6 +12156,27 @@ html[data-route="oshen"] #view .os .backlink:hover { background: rgba(138, 43, 7
   addEventListener('scroll', ask, { passive: true }); addEventListener('resize', ask); addEventListener('hashchange', () => setTimeout(reset, 250));
   new MutationObserver(reset).observe(document.documentElement, { attributes: true, attributeFilter: ['data-mood'] });
   const v = document.getElementById('view'); if (v) new MutationObserver(reset).observe(v, { childList: true });
+})();
+</script>
+<script>
+/* O'Shen's page: the "things I love about him" balloons wait for up, up, down, down, right */
+(() => {
+  const SEQ = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowRight'];
+  let pos = 0, last = 0;
+  const release = sec => {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    sec.hidden = false; sec.classList.remove('os-rise', 'os-clip'); void sec.offsetWidth; sec.classList.add('os-rise', 'os-clip');
+    requestAnimationFrame(() => sec.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }));
+    clearTimeout(sec._t); sec._t = setTimeout(() => sec.classList.remove('os-clip'), 7500);
+  };
+  document.addEventListener('keydown', e => {
+    const sec = document.querySelector('.os-love'); if (!sec) { pos = 0; return; }
+    if (document.getElementById('os-lb') || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    const t = e.target; if (t && t.matches && t.matches('input, textarea, select, [contenteditable]')) return;
+    const now = Date.now(); if (now - last > 4000) pos = 0; last = now;
+    if (e.key === SEQ[pos]) pos++; else pos = e.key === SEQ[0] ? 1 : 0;
+    if (pos === SEQ.length) { pos = 0; release(sec); }
+  });
 })();
 </script>
 </body>
