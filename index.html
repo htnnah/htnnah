@@ -7073,23 +7073,23 @@ const HUNT = (() => {
   /* photos for the swipeable heart at the top of the page. People swipe, tap the arrows, or tap a photo to see it big.
      src = the file in the photos folder, pos = where the faces are, cap = the caption under the heart. Reorder or add lines as you like. */
   const OSHEN_HEART_PHOTOS = [
-    { src: 'photos/oshen-heart-01.jpg', pos: '50% 51%', cap: 'me and my love in Antigua, Guatemala' },
-    { src: 'photos/oshen-heart-02.jpg', pos: '50% 76%', cap: 'te amo' },
-    { src: 'photos/oshen-heart-03.jpg', pos: '50% 98%', cap: 'casual kiss next to an active volcano' },
-    { src: 'photos/oshen-heart-04.jpg', pos: '50% 0%', cap: 'When life gives you lemons... hike Mount Lemmon!' },
-    { src: 'photos/oshen-heart-05.jpg', pos: '50% 0%', cap: 'my 28th birthday party' },
-    { src: 'photos/oshen-heart-06.jpg', pos: '50% 28%', cap: 'Wine bar in Winter Park!' },
-    { src: 'photos/oshen-heart-07.jpg', pos: '50% 14%', cap: 'let\'s travel the world' },
-    { src: 'photos/oshen-heart-08.jpg', pos: '50% 42%', cap: 'a drink in Montreal' },
-    { src: 'photos/oshen-heart-09.jpg', pos: '96% 50%', cap: 'relaxing after a hike up Volcán Acatenango' },
-    { src: 'photos/oshen-heart-10.jpg', pos: '50% 42%', cap: 'smiling big because I have you' },
-    { src: 'photos/oshen-heart-11.jpg', pos: '50% 52%', cap: 'he loves his oranges' },
-    { src: 'photos/oshen-heart-12.jpg', pos: '50% 71%', cap: 'my favorite singing partner' },
-    { src: 'photos/oshen-heart-13.jpg', pos: '50% 58%', cap: 'he tells me so much tea' },
-    { src: 'photos/oshen-heart-14.jpg', pos: '50% 84%', cap: 'my cowboy' },
-    { src: 'photos/oshen-heart-15.jpg', pos: '50% 21%', cap: 'you make me smile' },
-    { src: 'photos/oshen-heart-16.jpg', pos: '50% 88%', cap: '“I love you.” “I know.”' },
-    { src: 'photos/oshen-heart-17.jpg', pos: '50% 0%', cap: 'you + me forever & ever & everrrrrr' }
+    { src: 'photos/oshen-heart-01.jpg', pos: '50% 45%', cap: 'me and my love in Antigua, Guatemala' },
+    { src: 'photos/oshen-heart-02.jpg', pos: '50% 91%', cap: 'te amo' },
+    { src: 'photos/oshen-heart-03.jpg', pos: '50% 100%', cap: 'casual kiss next to an active volcano' },
+    { src: 'photos/oshen-heart-04.jpg', pos: '50% 50%', cap: 'When life gives you lemons... hike Mount Lemmon!' },
+    { src: 'photos/oshen-heart-05.jpg', pos: '83% 50%', cap: 'my 28th birthday party' },
+    { src: 'photos/oshen-heart-06.jpg', pos: '50% 0%', cap: 'Wine bar in Winter Park!' },
+    { src: 'photos/oshen-heart-07.jpg', pos: '50% 0%', cap: 'let\'s travel the world' },
+    { src: 'photos/oshen-heart-08.jpg', pos: '50% 17%', cap: 'a drink in Montreal' },
+    { src: 'photos/oshen-heart-09.jpg', pos: '71% 50%', cap: 'relaxing after a hike up Volcán Acatenango' },
+    { src: 'photos/oshen-heart-10.jpg', pos: '0% 50%', cap: 'smiling big because I have you' },
+    { src: 'photos/oshen-heart-11.jpg', pos: '50% 45%', cap: 'he loves his oranges' },
+    { src: 'photos/oshen-heart-12.jpg', pos: '50% 50%', cap: 'my favorite singing partner' },
+    { src: 'photos/oshen-heart-13.jpg', pos: '50% 60%', cap: 'he tells me so much tea' },
+    { src: 'photos/oshen-heart-14.jpg', pos: '97% 50%', cap: 'my cowboy' },
+    { src: 'photos/oshen-heart-15.jpg', pos: '50% 0%', cap: 'you make me smile' },
+    { src: 'photos/oshen-heart-16.jpg', pos: '50% 100%', cap: '“I love you.” “I know.”' },
+    { src: 'photos/oshen-heart-17.jpg', pos: '50% 50%', cap: 'you + me forever & ever & everrrrrr' }
   ];
   const osHeart = () => {
     const L = OSHEN_HEART_PHOTOS.map(osNorm); if (!L.length) return '';
@@ -7104,10 +7104,9 @@ const HUNT = (() => {
           <path d="${HEART_D}" transform="translate(4.4 3.96) scale(.912)" fill="none" stroke="rgba(116,18,31,.5)" stroke-width="2.1" stroke-dasharray="0 3.8" stroke-linecap="round"/>
           <path d="${HEART_D}" transform="translate(9.5 8.55) scale(.81)" fill="none" stroke="#e3cdb8" stroke-width=".9"/>
         </svg>
-        <div class="os-hwin"><div class="os-htrack" tabindex="0" aria-label="Photos of us. Swipe or use the arrow keys.">${slides}</div></div>
+        <div class="os-hpola"><i class="os-tape"></i><div class="os-hwin"><div class="os-htrack" tabindex="0" aria-label="Photos of us. Swipe or use the arrow keys.">${slides}</div></div><p class="os-hcap" aria-live="polite">${escH(capOf(L[0]))}</p></div>
         <button type="button" class="os-hnav prev" aria-label="Previous photo">&#8249;</button><button type="button" class="os-hnav next" aria-label="Next photo">&#8250;</button>
       </div>
-      <p class="os-hcap" aria-live="polite">${escH(capOf(L[0]))}</p>
       <div class="os-hdots" aria-hidden="true">${L.map((_, k) => `<i${k ? '' : ' class="on"'}></i>`).join('')}</div>
       <p class="os-hhint">swipe for more &middot; tap a photo to see it big</p>
     </section>`;
@@ -11694,10 +11693,10 @@ window.__book = { open, close, turn };
   background-blend-mode: multiply, normal, normal, normal;
   box-shadow: 0 22px 50px rgba(73,77,95,.3), inset 0 0 110px rgba(70,66,58,.14); }
 .dd-first { min-height: clamp(420px, 66vh, 640px); }
-.dd-text { position: absolute; left: clamp(22px, 7%, 96px); top: clamp(48px, 13%, 100px); width: min(94%, 1000px); margin: 0; transform: rotate(15deg); transform-origin: left top;
+.dd-text { position: absolute; left: 50%; top: 44%; text-align: center; width: min(92%, 1000px); margin: 0; transform: translate(-50%, -50%) rotate(8deg); transform-origin: center;
   font: italic 400 clamp(30px, 5vw, 66px)/1.42 "EB Garamond", "Cormorant Garamond", "IM Fell English", Georgia, "Times New Roman", serif; letter-spacing: .012em; color: #26262c; opacity: 1; text-shadow: 0 0 .6px rgba(20,20,25,.4); }
 .dd-text > span { display: block; opacity: 0; animation: ddin 1.6s var(--d, 0s) cubic-bezier(.3,.7,.2,1) forwards; }
-.dd-text > span + span { margin-left: -.55em; }
+.dd-text > span + span { margin-left: 0; }
 @keyframes ddin { from { opacity: 0; filter: blur(7px); transform: translateY(10px); } to { opacity: 1; filter: none; transform: none; } }
 .dd-pine { position: absolute; right: -76px; bottom: -78px; width: min(47%, 480px); height: auto; overflow: visible; transform-origin: 96% 92%;
   filter: drop-shadow(5px 8px 5px rgba(40,40,35,.34)); animation: ddsway 8s ease-in-out infinite alternate; }
@@ -11714,7 +11713,7 @@ window.__book = { open, close, turn };
 .dd-list .t { display: block; }
 .dd-list .mt { display: block; margin-bottom: 6px; font: italic 400 clamp(23px, 3vw, 34px)/1.2 "EB Garamond", "IM Fell English", Georgia, serif; color: #26262c; }
 .dd-list .mb { display: block; font: 400 clamp(17.5px, 2vw, 22px)/1.55 "EB Garamond", "IM Fell English", Georgia, serif; color: #3a3a42; }
-@media (max-width: 640px) { .dd-br { display: block; font-size: 0; height: 0; } .dd-br::after { content: none; } .dd-text { top: 15%; left: 9%; width: 88%; font-size: 25px; } .dd-text > span + span { margin-left: 0; } .dd-pine { width: 98%; right: -90px; bottom: -60px; } }
+@media (max-width: 640px) { .dd-br { display: block; font-size: 0; height: 0; } .dd-br::after { content: none; } .dd-text { top: 47%; left: 50%; width: 88%; font-size: 26px; } .dd-text > span + span { margin-left: 0; } .dd-pine { width: 98%; right: -90px; bottom: -60px; } }
 @media (prefers-reduced-motion: reduce) { .dd-text > span, .dd-list li { animation: none; opacity: 1; } .dd-pine { animation: none; } }
 .bk-link { color: #8458B3; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 </style>
@@ -11885,26 +11884,27 @@ html[data-route="oshen"] :is(#mood-bg, #mood-fx) { display: none !important; }
 @media (prefers-reduced-motion: reduce) { #os-lb, #os-lb figure, .os-gp { transition: none; } }
 /* the swipeable heart */
 .os-heart { position: relative; margin: -14px 0 46px; text-align: center; }
-.os-hwrap { position: relative; width: min(780px, 100%); aspect-ratio: 100 / 90; margin: 0 auto; filter: drop-shadow(0 20px 22px rgba(30, 0, 6, .5)); animation: osBob 7s ease-in-out infinite alternate; }
+.os-hwrap { position: relative; width: min(860px, 100%); aspect-ratio: 100 / 90; margin: 0 auto; filter: drop-shadow(0 20px 22px rgba(30, 0, 6, .5)); animation: osBob 7s ease-in-out infinite alternate; }
 @keyframes osBob { from { transform: translateY(-4px) rotate(-.6deg); } to { transform: translateY(4px) rotate(.6deg); } }
 .os-hlace { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.os-hwin { position: absolute; left: 10%; top: 9%; width: 80%; height: 80%; overflow: hidden; background: #f3e4d6;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 90'%3E%3Cpath d='M50 88 C20 62 2 44 2 26 C2 12 13 2 27 2 C37 2 46 8 50 16 C54 8 63 2 73 2 C87 2 98 12 98 26 C98 44 80 62 50 88Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 90'%3E%3Cpath d='M50 88 C20 62 2 44 2 26 C2 12 13 2 27 2 C37 2 46 8 50 16 C54 8 63 2 73 2 C87 2 98 12 98 26 C98 44 80 62 50 88Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+.os-hpola { position: absolute; left: 50%; top: 51%; z-index: 2; width: 44%; padding: 12px 12px 6px; background: #fffdf8; box-shadow: 0 20px 34px rgba(30, 0, 6, .55); transform: translate(-50%, -50%) rotate(-2.4deg); }
+.os-hpola .os-tape { left: 50%; top: -15px; width: 92px; margin-left: -46px; transform: rotate(-3deg); }
+.os-hwin { position: relative; width: 100%; aspect-ratio: 5 / 6; overflow: hidden; background: #f3e4d6; }
+.os-hwin .os-htrack { position: absolute; inset: 0; width: auto; height: auto; }
 .os-htrack { display: flex; width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; outline: none; }
 .os-htrack::-webkit-scrollbar { display: none; }
 .os-hs-img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: center; scroll-snap-stop: always; cursor: zoom-in; user-select: none; -webkit-user-drag: none; }
 .os-htrack:focus-visible { box-shadow: inset 0 0 0 4px #a01f31; }
 .os-hnav { position: absolute; top: 50%; z-index: 3; display: grid; place-items: center; width: 44px; height: 44px; margin-top: -22px; padding: 0 0 4px; border-radius: 50%; border: 2px solid #fbf1e2; background: rgba(116, 18, 31, .88); color: #fbeee4; font: 400 28px/1 sans-serif; cursor: pointer; box-shadow: 0 6px 12px rgba(30, 0, 6, .4); transition: transform .2s, background .2s; }
 .os-hnav:hover { transform: scale(1.1); background: #a01f31; } .os-hnav:focus-visible { outline: 3px solid #ffd27a; outline-offset: 3px; }
-.os-hnav.prev { left: -6px; } .os-hnav.next { right: -6px; }
-.os-hcap { min-height: 2.3em; margin: 16px auto 0; max-width: 24ch; font: 700 clamp(30px, 4vw, 42px)/1.1 "Caveat", "Segoe Script", "Bradley Hand", cursive; color: #fbeee4; text-shadow: 0 2px 0 rgba(50, 6, 14, .5); transition: opacity .2s; }
+.os-hnav.prev { left: 1%; } .os-hnav.next { right: 1%; }
+.os-hcap { display: flex; align-items: center; justify-content: center; min-height: 2.15em; margin: 6px auto 0; padding: 0 4px; text-align: center; font: 700 clamp(24px, 2.7vw, 31px)/1.04 "Caveat", "Segoe Script", "Bradley Hand", cursive; color: #8b1d2c; text-shadow: none; transition: opacity .2s; }
 .os-hcap.swap { opacity: 0; }
 .os-hdots { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 340px; margin: 6px auto 0; }
 .os-hdots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(251, 238, 228, .35); transition: background .3s, transform .3s; }
 .os-hdots i.on { background: #fbeee4; transform: scale(1.35); }
 .os-hhint { margin: 8px 0 0; font: 700 24px/1 "Caveat", "Segoe Script", cursive; color: rgba(251, 238, 228, .8); opacity: 1; }
-@media (max-width: 720px) { .os-hnav { width: 38px; height: 38px; margin-top: -19px; font-size: 24px; } .os-hnav.prev { left: -2px; } .os-hnav.next { right: -2px; } .os-heart { margin-top: -22px; } }
+@media (max-width: 720px) { .os-hpola { width: 55%; padding: 9px 9px 4px; } .os-hcap { font-size: 22px; } .os-hnav { width: 38px; height: 38px; margin-top: -19px; font-size: 24px; } .os-hnav.prev { left: -2px; } .os-hnav.next { right: -2px; } .os-heart { margin-top: -22px; } }
 @media (prefers-reduced-motion: reduce) { .os-hwrap { animation: none; } }
 /* his page keeps its own look in every mood */
 html[data-route="oshen"] #view .os .backlink { font: 600 1.15rem/1.2 "Quicksand", ui-rounded, system-ui, sans-serif; text-transform: none; letter-spacing: 0; color: #4a1a20; text-shadow: none; padding: 5px 20px 8px; background: rgba(251, 238, 228, .92); border: 2px solid #a01f31; border-radius: 999px; box-shadow: 0 6px 16px rgba(30, 0, 6, .35); }
