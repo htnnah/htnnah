@@ -279,7 +279,7 @@
   .fact-more .fm-title { margin: 0 0 4px; font-size: 1.05rem; }
   .fm-body { max-height: 5.4em; overflow: hidden; transition: max-height .6s var(--ease);
              -webkit-mask-image: linear-gradient(#000 35%, transparent); mask-image: linear-gradient(#000 35%, transparent); }
-  .fm-body.open { max-height: 60em; -webkit-mask-image: none; mask-image: none; }
+  .fm-body.open { max-height: 140em; -webkit-mask-image: none; mask-image: none; }
   .fm-body p { margin: 0 0 10px; line-height: 1.55; font-size: .92rem; }
   .fm-toggle { margin-top: 6px; padding: 0; background: none; border: 0; font: inherit; font-size: .9rem; font-weight: 700; color: var(--purple); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) { .fm-body { transition: none; } }
@@ -6342,9 +6342,11 @@ const pages = {
         <div class="fact-more">
           <h3 class="fm-title">Background</h3>
           <div class="fm-body" id="fm-body">
-            <p>I was born in downtown Fort Worth and grew up on farmland near Waco. We had goats, pigs, chickens, geese, a mean rooster, and a sweet cow named Bonnie.</p>
-            <p>My sister Emily and I loved jumping on the trampoline with the water hose and chasing the animals around. We also had a super crappy tree house, but it was one of our favorite places to hide and stay outside as long as we could.</p>
-            <p>Later I lived in Canyon Lake and went to Canyon Lake High School, where I played soccer, ran track, and was a cheerleader.</p>
+            <p>I was born in downtown Fort Worth and grew up on farmland near Waco. We had goats, pigs, chickens, geese, a mean rooster, and a sweet cow named Bonnie. We also had a super tree house, and it was one of our favorite places to hide and stay outside as long as we could.</p>
+            <p>I have four sisters and one brother, and I love them so, so much. We made a million memories playing, teaching, and chasing each other around. My sister Emily and I loved jumping on the trampoline with the water hose and chasing the animals around. I also owe a huge thank you to my mom and dad, who believed in me from day one and taught me that being my true self is always enough.</p>
+            <p>Later I lived in Canyon Lake and went to Canyon Lake High School, where I played soccer, ran track, and was a cheerleader. Go Hawks! I spent a lot of weekends and the occasional weekday at the lake swimming, cliff jumping, or sometimes taking our boat out.</p>
+            <p>I graduated from Texas A&amp;M, where I was involved in multiple organizations, my favorites being Aggie Gems and CHARRG. I learned so much and met so many good people, including one of my best friends and roommates, Rachel.</p>
+            <p>After I graduated, I traveled on and off for almost a year before settling into a job, exploring and learning about places across the globe. I still travel when I can, but one of my favorite places to call home is wherever the love of my life, O'Shen, is. I now live in Austin, where I keep making friends, have movie nights, and play soccer in my league. I love my life, and I wouldn't change any part of it.</p>
           </div>
           <button type="button" class="fm-toggle" aria-expanded="false" aria-controls="fm-body">Read more</button>
         </div>
@@ -10919,16 +10921,25 @@ css4.textContent = `
 .figure #speaker{width:clamp(112px,19vw,176px)}
 .ghost{position:relative;width:100%;animation:ghostfloat 4.2s ease-in-out infinite;filter:drop-shadow(0 0 14px rgba(190,140,255,.45))}
 .ghost img{width:100%;display:block}
-.geye{position:absolute;width:7.5%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;
-  background:radial-gradient(circle,#fffbe0 0 22%,#ffd24a 40%,#ff8a1f 58%,rgba(255,110,20,0) 74%);
-  box-shadow:0 0 10px 4px rgba(255,170,40,.75),0 0 26px 10px rgba(255,110,20,.45);
+.geye{position:absolute;width:7.5%;aspect-ratio:1;transform:translate(calc(-50% + var(--gx,0px)),calc(-50% + var(--gy,0px)));border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,#ffe9e0 0 20%,#ff6a4a 38%,#e01818 58%,rgba(210,20,20,0) 76%);
+  box-shadow:0 0 10px 4px rgba(255,60,50,.8),0 0 28px 11px rgba(220,20,20,.5);
   animation:eyeglow 2.4s ease-in-out infinite}
 .geye.g1{left:61.2%;top:26.4%}
 .geye.g2{left:69.2%;top:23.8%;animation-delay:.35s}
-@keyframes eyeglow{0%,100%{opacity:.85;transform:translate(-50%,-50%) scale(.92)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.18)}}
+@keyframes eyeglow{0%,100%{opacity:.85;transform:translate(calc(-50% + var(--gx,0px)),calc(-50% + var(--gy,0px))) scale(.92)}50%{opacity:1;transform:translate(calc(-50% + var(--gx,0px)),calc(-50% + var(--gy,0px))) scale(1.18)}}
 @keyframes ghostfloat{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-8px) rotate(1.2deg)}}
 @media (prefers-reduced-motion:reduce){.ghost,.geye{animation:none}.geye{opacity:1}}`;
 shadow.appendChild(css4);
+/* the ghost's eyes follow your cursor (and your finger) */
+addEventListener("pointermove", ev => {
+  R.querySelectorAll(".geye").forEach(e => {
+    const g = e.parentElement.getBoundingClientRect(), r = e.getBoundingClientRect();
+    const dx = ev.clientX - (r.left + r.width / 2), dy = ev.clientY - (r.top + r.height / 2);
+    const d = Math.hypot(dx, dy) || 1, m = Math.min(g.width * .022, d / 30);
+    e.style.setProperty("--gx", (dx / d * m).toFixed(2) + "px"); e.style.setProperty("--gy", (dy / d * m).toFixed(2) + "px");
+  });
+});
 
 
 paintCoins(); updateClues(); placeHome(); setLurk(lurkAllowed());
